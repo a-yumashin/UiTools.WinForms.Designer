@@ -1,0 +1,119 @@
+{
+  "name": "uitools-winforms-designer",
+  "displayName": "UiTools WinForms Designer",
+  "version": "1.0.0",
+  "description": "VSCode extension providing Visual Designer for WinForms forms and usercontrols",
+  "main": "./out/extension.js",
+  "contributes": {
+    "configuration": {
+      "title": "UiTools WinForms Designer",
+      "properties": {
+        "uitools-winforms-designer.designerExePath": {
+          "type": "string",
+          "default": "",
+          "markdownDescription": "Override path to `UiTools.WinForms.Designer.exe` app. Corresponds to the `uitools-winforms-designer.designerExePath` setting. Leave empty to use the built-in app (when full version is installed: `UiTools.WinForms.Designer.Full.vsix`)."
+        }
+      }
+    },
+    "commands": [
+      {
+        "command": "uitools-winforms-designer.addForm",
+        "title": "Add Form (Windows Forms)..."
+      },
+      {
+        "command": "uitools-winforms-designer.addUserControl",
+        "title": "Add UserControl (Windows Forms)..."
+      },
+      {
+        "command": "uitools-winforms-designer.openInDesigner",
+        "title": "Open In UiTools.WinForms.Designer"
+      }
+    ],
+    "menus": {
+      "explorer/context": [
+        {
+          "command": "uitools-winforms-designer.addForm",
+          "when": "explorerResourceIsFolder || (resourceScheme == file && resourceExtname == .csproj)",
+          "group": "7_modification"
+        },
+        {
+          "command": "uitools-winforms-designer.addUserControl",
+          "when": "explorerResourceIsFolder || (resourceScheme == file && resourceExtname == .csproj)",
+          "group": "7_modification"
+        },
+        {
+          "command": "uitools-winforms-designer.openInDesigner",
+          "when": "resourceScheme == file && resourceFilename =~ /.*\\.designer\\.cs$/i",
+          "group": "navigation"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "uitools-winforms-designer.addForm",
+          "when": "view == solutionExplorer && (viewItem == Folder || viewItem == Project || viewItem == SolutionFolder)",
+          "group": "7_modification"
+        },
+        {
+          "command": "uitools-winforms-designer.addUserControl",
+          "when": "view == solutionExplorer && (viewItem == Folder || viewItem == Project || viewItem == SolutionFolder)",
+          "group": "7_modification"
+        },
+        {
+          "command": "uitools-winforms-designer.openInDesigner",
+          "when": "view == solutionExplorer && resourceScheme == file && resourceFilename =~ /.*\\.designer\\.cs$/i",
+          "group": "navigation"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "compile": "tsc",
+    "package-full": "npm run clean-vsix && npm run compile && node ./scripts/prepackage.js && npx vsce package -o VSIX/UiTools.WinForms.Designer.Full.vsix && node ./scripts/postpackage.js",
+    "package-light": "npm run clean-vsix && npm run compile && node ./scripts/prepackage.js --light && npx vsce package -o VSIX/UiTools.WinForms.Designer.Light.vsix && node ./scripts/postpackage.js",
+    "clean-vsix": "(if not exist VSIX mkdir VSIX) & del /q VSIX\\*.vsix 2>nul & exit 0",
+    "build": "npm run compile",
+    "clean": "if exist out rmdir /s /q out"
+  },
+  "keywords": [
+    "WinForms",
+    "Windows",
+    "Forms",
+    "Designer",
+    "DesignSurface",
+    "Editor",
+    "Visual",
+    "Studio",
+    "Form",
+    "UserControl"
+  ],
+  "author": {
+    "name": "Alexey Yumashin",
+    "email": "a.yumashin@yandex.ru"
+  },
+  "publisher": "AlexeyYumashin",
+  "license": "SEE LICENSE IN LICENSE.txt",
+  "pricing": "Free",
+  "icon": "./icon.png",
+  "categories": [
+    "Visualization",
+    "Other"
+  ],
+  "engines": {
+    "vscode": "^1.60.0"
+  },
+  "activationEvents": [
+    "onCommand:uitools-winforms-designer.addForm",
+    "onCommand:uitools-winforms-designer.addUserControl",
+    "onCommand:uitools-winforms-designer.openInDesigner"
+  ],
+  "devDependencies": {
+    "@types/node": "^25.0.7",
+    "@types/vscode": "^1.60.0",
+    "@typescript-eslint/eslint-plugin": "^8.53.0",
+    "@typescript-eslint/parser": "^8.53.0",
+    "@vscode/vsce": "^3.7.1",
+    "eslint": "^9.39.2",
+    "typescript": "^5.9.3"
+  }
+}

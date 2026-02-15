@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>UiTools.WinForms.Designer</RootNamespace>
+    <AssemblyName>UiTools.WinForms.Designer</AssemblyName>
+	<TargetFrameworks>net48</TargetFrameworks>
+    <LangVersion>10.0</LangVersion>
+	<UseWindowsForms>true</UseWindowsForms>
+    <Title>UiTools.WinForms.Designer</Title>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+    <WarningLevel>4</WarningLevel>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <Configurations>Debug;Release;Debug-SelfContained;Debug-Lightweight;Release-SelfContained;Release-Lightweight</Configurations>
+    <ApplicationIcon>Resources\AppLogo.ico</ApplicationIcon>
+    <Copyright>Copyright © 2026 Alexey Yumashin</Copyright>
+    <Authors>Alexey Yumashin</Authors>
+    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+  </PropertyGroup>
+  <ItemGroup>
+	<Reference Include="System.ComponentModel.DataAnnotations" />
+	<Reference Include="System.Design" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="System.Resources.Extensions" Version="8.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\UiTools.WinForms.Designer.Core\UiTools.WinForms.Designer.Core.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="..\README.md" Link="README.md" Pack="true" PackagePath="\">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\LICENSE.txt" Link="LICENSE.txt" Pack="true" PackagePath="\">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Target Name="CleanupVsixBinFolder" AfterTargets="PostBuildEvent" Condition="'$(Configuration)' == 'Debug-Lightweight' or '$(Configuration)' == 'Release-Lightweight' or '$(Configuration)' == 'Debug-SelfContained' or '$(Configuration)' == 'Release-SelfContained'">
+    <Message Importance="high" Text="Target 'CleanupVsixBinFolder': Configuration '$(Configuration)' detected. Wiping 'VSIX-bin' folder to prevent stale binaries..." />
+    <RemoveDir Directories="$(SolutionDir)UiTools.WinForms.Designer.VsCodeExtension\VSIX-bin" />
+  </Target>
+  <Target Name="PopulateVsixBinFolder" AfterTargets="CleanupVsixBinFolder" Condition="'$(Configuration)' == 'Debug-SelfContained' or '$(Configuration)' == 'Release-SelfContained'">
+    <Message Importance="high" Text="Target 'PopulateVsixBinFolder': Configuration '$(Configuration)' detected. Populating 'VSIX-bin' folder with current build artifacts..." />
+    <Exec Command="if not exist &quot;$(SolutionDir)UiTools.WinForms.Designer.VsCodeExtension\VSIX-bin&quot; mkdir &quot;$(SolutionDir)UiTools.WinForms.Designer.VsCodeExtension\VSIX-bin&quot;" />
+    <Exec Command="xcopy &quot;$(TargetDir)*.*&quot; &quot;$(SolutionDir)UiTools.WinForms.Designer.VsCodeExtension\VSIX-bin\&quot; /Y /S /I" />
+  </Target>
+</Project>

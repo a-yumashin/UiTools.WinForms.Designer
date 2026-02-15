@@ -1,0 +1,169 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="{{CSS_PATH}}default.min.css">
+    <style>
+        body {
+            margin: 2px;
+            background-color: #f7f7f7;
+        }
+
+        pre {
+            margin-top: 2px;
+        }
+
+        .type-name {
+            font-weight: 700;
+            color: #2B91AF
+        }
+        /* Override hljs theme styles: */
+        code {
+            width: fit-content;
+            padding: 0 !important;
+        }
+
+        .hljs {
+            background: none;
+            background-color: #f7f7f7;
+            color: black
+        }
+
+        .hljs-keyword {
+            color: blue !important;
+        }
+
+        .hljs-comment {
+            color: green;
+        }
+        /*.hljs-comment:has(.hljs-doctag) {
+            color: gray;
+        }*/
+        .hljs-section, .hljs-title {
+            color: black;
+            font-weight: inherit;
+        }
+
+        .hljs-doctag {
+            font-weight: inherit;
+        }
+
+        .hljs-literal, .hljs-built_in {
+            font-weight: 700;
+            color: blue
+        }
+
+        .hljs-meta {
+            font-weight: 700;
+            color: #2B91AF
+        }
+    </style>
+    <script src="{{JS_PATH}}highlight.min.js"></script>
+    <script>
+        function highlightTypeNames(targetTypeNames, rootElement = document.body) {
+            if (!targetTypeNames || targetTypeNames.length === 0) {
+                console.warn("highlightTypeNames: targetTypeNames is empty or not an array.");
+                return;
+            }
+            // Collect all words (type names) into one large regular expression (it works much faster this way):
+            const escapedTypeNames = targetTypeNames.map(word =>
+                String(word).replace(/[.*+?^${}()|[\]\\]/g, '\\$&') // but first escape special characters
+            );
+            // Form a pattern taking into account word boundaries, using negative lookahead:
+            // (look for the word only if it is not followed by an "=" sign up to ";")
+            const combinedPattern = new RegExp(
+                `\\b(${escapedTypeNames.join('|')})\\b(?![^;]*=)`,
+                'g'
+            );
+
+            // Traverse the DOM using TreeWalker, focusing only on text nodes (NodeFilter.SHOW_TEXT).
+            // Skip nodes inside <script>, <style>, <link>, <noscript>, as well as already created <span> with our
+            // class and <span> containing string literals:
+            const walker = document.createTreeWalker(
+                rootElement,
+                NodeFilter.SHOW_TEXT,
+                {
+                    acceptNode: function (node) {
+                        const parentNode = node.parentNode;
+                        if (parentNode && (
+                            parentNode.nodeName === 'SCRIPT' ||
+                            parentNode.nodeName === 'STYLE' ||
+                            parentNode.nodeName === 'LINK' ||
+                            parentNode.nodeName === 'NOSCRIPT' ||
+                            (parentNode.nodeName === 'SPAN' && parentNode.classList.contains('type-name')) ||
+                            (parentNode.nodeName === 'SPAN' && parentNode.classList.contains('hljs-string'))
+                        )) {
+                            return NodeFilter.FILTER_REJECT;
+                        }
+                        // Empty text nodes do not interest us:
+                        return node.nodeValue.trim() !== '' ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT;
+                    }
+                },
+                false
+            );
+
+            const nodesToProcess = [];
+            let currentNode;
+            while ((currentNode = walker.nextNode())) {
+                nodesToProcess.push(currentNode);
+            }
+
+            // Process nodes AFTER the traversal (so as not to break TreeWalker):
+            nodesToProcess.forEach(textNode => {
+                const text = textNode.nodeValue;
+                let match;
+                let lastIndex = 0;
+                const fragment = document.createDocumentFragment();
+                let lastMatchEnd = 0;
+
+                // Apply the combined regular expression to each text node:
+                while ((match = combinedPattern.exec(text)) !== null) {
+                    // Add text preceding the match:
+                    if (match.index > lastMatchEnd) {
+                        fragment.appendChild(document.createTextNode(text.substring(lastMatchEnd, match.index)));
+                    }
+                    // Wrap the match (match[0]) in a <span>:
+                    const span = document.createElement('span');
+                    span.className = 'type-name';
+                    span.textContent = match[0];
+                    fragment.appendChild(span);
+                    lastMatchEnd = combinedPattern.lastIndex;
+                }
+
+                // Add the text remaining after the last match:
+                if (lastMatchEnd < text.length) {
+                    fragment.appendChild(document.createTextNode(text.substring(lastMatchEnd)));
+                }
+
+                if (fragment.hasChildNodes()) {
+                    // new nodes were added (i.e. at least one word was found and replaced)
+                    // --> replace the original text node with the created fragment containing highlighted words:
+                    textNode.parentNode.replaceChild(fragment, textNode);
+                }
+            });
+        }
+
+        function setWordWrap(enabled) {
+            var pre = document.querySelector('pre');
+            var code = document.querySelector('code');
+
+            if (enabled) {
+                pre.style.whiteSpace = 'pre-wrap';
+                pre.style.wordBreak = 'break-all';
+                code.style.width = 'auto';
+            } else {
+                pre.style.whiteSpace = 'pre';
+                pre.style.wordBreak = 'normal';
+                code.style.width = 'fit-content';
+            }
+        }
+        function setFont(fontFamily, fontSize) {
+            var code = document.querySelector('code');
+            code.style.fontFamily = fontFamily;
+            code.style.fontSize = fontSize;
+        }
+    </script>
+</head>
+<body>
+    <pre><code class="language-csharp">{{SOURCE_CODE}}</code></pre>
+</body>
+</html>
