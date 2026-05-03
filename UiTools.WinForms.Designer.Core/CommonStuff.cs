@@ -1,14 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace UiTools.WinForms.Designer.Core
 {
-    public class CommonStuff
+    public static class CommonStuff
     {
         public static readonly Encoding Utf8WithoutBom = new UTF8Encoding(encoderShouldEmitUTF8Identifier: false);
+
+        public static UiTheme CurrentUiTheme { get; set; }
+
+        public static string GetEmbeddedResource(string res)
+        {
+            using (var reader = new StreamReader(Assembly.GetExecutingAssembly().GetManifestResourceStream(res)))
+            {
+                return reader.ReadToEnd();
+            }
+        }
 
         /// <summary>
         /// Calculates "main" file path from the "designer" file path (e.g. "C:\Path\to\Form1.cs" from "C:\Path\to\Form1.Designer.cs")
@@ -114,6 +125,44 @@ namespace UiTools.WinForms.Designer.Core
                 return GetFriendlyTypeName(nullableType) + "?";
 
             return type.FullName;
+        }
+
+        internal static string EscapeJavaScriptString(string input)
+        {
+            if (string.IsNullOrEmpty(input))
+                return input;
+
+            var sb = new StringBuilder(input.Length + 10);
+
+            for (int i = 0; i < input.Length; i++)
+            {
+                char c = input[i];
+                switch (c)
+                {
+                    case '\\':
+                        sb.Append(@"\\");
+                        break;
+                    case '"':
+                        sb.Append(@"\""");
+                        break;
+                    case '\'':
+                        sb.Append(@"\'");
+                        break;
+                    case '\n':
+                        sb.Append(@"\n");
+                        break;
+                    case '\r':
+                        sb.Append(@"\r");
+                        break;
+                    case '\t':
+                        sb.Append(@"\t");
+                        break;
+                    default:
+                        sb.Append(c);
+                        break;
+                }
+            }
+            return sb.ToString();
         }
     }
 }

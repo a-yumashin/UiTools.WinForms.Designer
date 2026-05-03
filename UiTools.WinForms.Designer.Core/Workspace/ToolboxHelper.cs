@@ -3,14 +3,12 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
-using System.Drawing;
 using System.Drawing.Design;
 using System.Drawing.Printing;
-using System.IO.Ports;
 using System.IO;
+using System.IO.Ports;
 using System.Linq;
 using System.Reflection;
-using System.Reflection.PortableExecutable;
 using System.Windows.Forms;
 
 namespace UiTools.WinForms.Designer.Core
@@ -101,7 +99,7 @@ namespace UiTools.WinForms.Designer.Core
                     {
                         AddPointer(),
                         Add(typeof(BackgroundWorker)),
-                        Add(typeof(DirectoryEntry)),
+                        Add(typeof(System.DirectoryServices.DirectoryEntry)),
                         Add(typeof(System.DirectoryServices.DirectorySearcher)),
                         Add(typeof(ErrorProvider)),
                         Add(typeof(EventLog)),
@@ -206,14 +204,7 @@ namespace UiTools.WinForms.Designer.Core
                     continue; // couldn't find a way to filter out these components based on their attributes or any other formal criteria, so had to hardcode their names
                 if (!t.ShowAsToolboxItem() || !t.IsDesignTimeVisible() || !t.IsBrowsable())
                     continue;
-                var item = new ToolboxItem(t);
-                var imageAttr = (ToolboxBitmapAttribute)TypeDescriptor.GetAttributes(t)[typeof(ToolboxBitmapAttribute)];
-                if (imageAttr != null)
-                {
-                    item.Bitmap = (Bitmap)imageAttr.GetImage(t);
-                    item.OriginalBitmap = (Bitmap)imageAttr.GetImage(t);
-                }
-                items.Add(item);
+                items.Add(new ToolboxItem(t));
             }
             return items;
         }

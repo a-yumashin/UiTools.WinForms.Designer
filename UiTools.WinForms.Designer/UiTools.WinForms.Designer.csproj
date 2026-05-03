@@ -29,6 +29,16 @@
     <ProjectReference Include="..\UiTools.WinForms.Designer.Core\UiTools.WinForms.Designer.Core.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="Properties\DarkThemeMenuItems.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DarkThemeMenuItems.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Properties\LightThemeMenuItems.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>LightThemeMenuItems.resx</DependentUpon>
+    </Compile>
     <Compile Update="Properties\Resources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -36,6 +46,14 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Update="Properties\DarkThemeMenuItems.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>DarkThemeMenuItems.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Properties\LightThemeMenuItems.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>LightThemeMenuItems.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Update="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -48,6 +66,12 @@
     <EmbeddedResource Include="..\LICENSE.txt" Link="LICENSE.txt" Pack="true" PackagePath="\">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\DarkTheme\EditMenu\" />
+    <Folder Include="Resources\DarkTheme\FileMenu\" />
+    <Folder Include="Resources\DarkTheme\FormatMenu\" />
+    <Folder Include="Resources\FileMenu\" />
   </ItemGroup>
   <Target Name="CleanupVsixBinFolder" AfterTargets="PostBuildEvent" Condition="'$(Configuration)' == 'Debug-Lightweight' or '$(Configuration)' == 'Release-Lightweight' or '$(Configuration)' == 'Debug-SelfContained' or '$(Configuration)' == 'Release-SelfContained'">
     <Message Importance="high" Text="Target 'CleanupVsixBinFolder': Configuration '$(Configuration)' detected. Wiping 'VSIX-bin' folder to prevent stale binaries..." />

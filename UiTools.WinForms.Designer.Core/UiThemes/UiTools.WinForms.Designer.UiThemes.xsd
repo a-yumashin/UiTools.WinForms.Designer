@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:complexType name="T_ColorProperty">
+        <xs:attribute name="name" type="xs:string" use="required" />
+        <xs:attribute name="value" type="xs:string" use="required" />
+    </xs:complexType>
+    <xs:complexType name="T_ControlRule">
+        <xs:sequence>
+            <xs:element name="ColorProperty" maxOccurs="unbounded" type="T_ColorProperty" />
+        </xs:sequence>
+        <xs:attribute name="type" type="xs:string" use="required" />
+        <xs:attribute name="includeInheritedTypes" type="xs:boolean" use="optional" default="false" />
+    </xs:complexType>
+    <xs:complexType name="T_AllControlsRule">
+        <xs:sequence>
+            <xs:element name="ColorProperty" maxOccurs="unbounded" type="T_ColorProperty" />
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="T_UiTheme">
+        <xs:sequence>
+            <xs:element name="AllControls" minOccurs="1" maxOccurs="1" type="T_AllControlsRule">
+                <xs:unique name="UniqueColorNameInAllControls">
+                    <xs:selector xpath="ColorProperty" />
+                    <xs:field xpath="@name" />
+                </xs:unique>
+            </xs:element>
+            <xs:element name="Control" minOccurs="0" maxOccurs="unbounded" type="T_ControlRule">
+                <xs:unique name="UniqueColorNameInControl">
+                    <xs:selector xpath="ColorProperty" />
+                    <xs:field xpath="@name" />
+                </xs:unique>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute name="name" type="xs:string" use="required" />
+        <xs:attribute name="font" type="xs:string" use="optional" />
+    </xs:complexType>
+    
+    <xs:element name="UiThemes">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="UiTheme" minOccurs="1" maxOccurs="unbounded" type="T_UiTheme">
+                    <xs:unique name="UniqueControlTypeInTheme">
+                        <xs:selector xpath="Control" />
+                        <xs:field xpath="@type" />
+                    </xs:unique>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+        <xs:unique name="UniqueThemeName">
+            <xs:selector xpath="UiTheme" />
+            <xs:field xpath="@name" />
+        </xs:unique>
+    </xs:element>
+</xs:schema>

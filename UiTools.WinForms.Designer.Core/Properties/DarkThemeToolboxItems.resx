@@ -1,0 +1,343 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="BackgroundWorker" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Toolbox\DarkTheme\ToolboxItems\BackgroundWorker.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BindingNavigator" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Toolbox\DarkTheme\ToolboxItems\BindingNavigator.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BindingSource" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Toolbox\DarkTheme\ToolboxItems\BindingSource.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Button" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Toolbox\DarkTheme\ToolboxItems\Button.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Chart" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Toolbox\DarkTheme\ToolboxItems\Chart.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CheckBox" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Toolbox\DarkTheme\ToolboxItems\CheckBox.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CheckedListBox" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Toolbox\DarkTheme\ToolboxItems\CheckedListBox.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ColorDialog" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Toolbox\DarkTheme\ToolboxItems\ColorDialog.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ComboBox" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Toolbox\DarkTheme\ToolboxItems\ComboBox.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ContextMenu" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Toolbox\DarkTheme\ToolboxItems\ContextMenu.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ContextMenuStrip" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Toolbox\DarkTheme\ToolboxItems\ContextMenuStrip.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="DataGrid" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Toolbox\DarkTheme\ToolboxItems\DataGrid.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="DataGridView" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Toolbox\DarkTheme\ToolboxItems\DataGridView.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="DataSet" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Toolbox\DarkTheme\ToolboxItems\DataSet.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="DateTimePicker" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Toolbox\DarkTheme\ToolboxItems\DateTimePicker.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="DirectoryEntry" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Toolbox\DarkTheme\ToolboxItems\DirectoryEntry.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="DirectorySearcher" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Toolbox\DarkTheme\ToolboxItems\DirectorySearcher.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="DomainUpDown" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Toolbox\DarkTheme\ToolboxItems\DomainUpDown.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ElementHost" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Toolbox\DarkTheme\ToolboxItems\ElementHost.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ErrorProvider" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Toolbox\DarkTheme\ToolboxItems\ErrorProvider.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="EventLog" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Toolbox\DarkTheme\ToolboxItems\EventLog.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FileSystemWatcher" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Toolbox\DarkTheme\ToolboxItems\FileSystemWatcher.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FlowLayoutPanel" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Toolbox\DarkTheme\ToolboxItems\FlowLayoutPanel.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FolderBrowserDialog" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Toolbox\DarkTheme\ToolboxItems\FolderBrowserDialog.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FontDialog" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Toolbox\DarkTheme\ToolboxItems\FontDialog.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="GroupBox" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Toolbox\DarkTheme\ToolboxItems\GroupBox.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="HelpProvider" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Toolbox\DarkTheme\ToolboxItems\HelpProvider.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="HScrollBar" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Toolbox\DarkTheme\ToolboxItems\HScrollBar.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ImageList" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Toolbox\DarkTheme\ToolboxItems\ImageList.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Label" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Toolbox\DarkTheme\ToolboxItems\Label.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="LinkLabel" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Toolbox\DarkTheme\ToolboxItems\LinkLabel.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ListBox" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Toolbox\DarkTheme\ToolboxItems\ListBox.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ListView" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Toolbox\DarkTheme\ToolboxItems\ListView.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="MainMenu" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Toolbox\DarkTheme\ToolboxItems\MainMenu.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="MaskedTextBox" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Toolbox\DarkTheme\ToolboxItems\MaskedTextBox.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="MenuStrip" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Toolbox\DarkTheme\ToolboxItems\MenuStrip.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="MonthCalendar" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Toolbox\DarkTheme\ToolboxItems\MonthCalendar.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="NotifyIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Toolbox\DarkTheme\ToolboxItems\NotifyIcon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="NumericUpDown" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Toolbox\DarkTheme\ToolboxItems\NumericUpDown.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="OpenFileDialog" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Toolbox\DarkTheme\ToolboxItems\OpenFileDialog.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PageSetupDialog" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Toolbox\DarkTheme\ToolboxItems\PageSetupDialog.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Panel" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Toolbox\DarkTheme\ToolboxItems\Panel.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PerformanceCounter" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Toolbox\DarkTheme\ToolboxItems\PerformanceCounter.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PictureBox" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Toolbox\DarkTheme\ToolboxItems\PictureBox.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Pointer" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Toolbox\DarkTheme\ToolboxItems\Pointer.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PrintDialog" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Toolbox\DarkTheme\ToolboxItems\PrintDialog.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PrintDocument" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Toolbox\DarkTheme\ToolboxItems\PrintDocument.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PrintPreviewControl" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Toolbox\DarkTheme\ToolboxItems\PrintPreviewControl.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PrintPreviewDialog" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Toolbox\DarkTheme\ToolboxItems\PrintPreviewDialog.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Process" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Toolbox\DarkTheme\ToolboxItems\Process.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ProgressBar" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Toolbox\DarkTheme\ToolboxItems\ProgressBar.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PropertyGrid" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Toolbox\DarkTheme\ToolboxItems\PropertyGrid.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="RadioButton" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Toolbox\DarkTheme\ToolboxItems\RadioButton.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="RichTextBox" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Toolbox\DarkTheme\ToolboxItems\RichTextBox.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SaveFileDialog" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Toolbox\DarkTheme\ToolboxItems\SaveFileDialog.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SerialPort" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Toolbox\DarkTheme\ToolboxItems\SerialPort.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ServiceController" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Toolbox\DarkTheme\ToolboxItems\ServiceController.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SplitContainer" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Toolbox\DarkTheme\ToolboxItems\SplitContainer.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Splitter" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Toolbox\DarkTheme\ToolboxItems\Splitter.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="StatusBar" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Toolbox\DarkTheme\ToolboxItems\StatusBar.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="StatusStrip" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Toolbox\DarkTheme\ToolboxItems\StatusStrip.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TabControl" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Toolbox\DarkTheme\ToolboxItems\TabControl.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TableLayoutPanel" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Toolbox\DarkTheme\ToolboxItems\TableLayoutPanel.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TextBox" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Toolbox\DarkTheme\ToolboxItems\TextBox.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Timer" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Toolbox\DarkTheme\ToolboxItems\Timer.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ToolBar" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Toolbox\DarkTheme\ToolboxItems\ToolBar.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ToolStrip" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Toolbox\DarkTheme\ToolboxItems\ToolStrip.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ToolStripContainer" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Toolbox\DarkTheme\ToolboxItems\ToolStripContainer.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ToolTip" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Toolbox\DarkTheme\ToolboxItems\ToolTip.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TrackBar" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Toolbox\DarkTheme\ToolboxItems\TrackBar.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TreeView" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Toolbox\DarkTheme\ToolboxItems\TreeView.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="UserControl" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Toolbox\DarkTheme\ToolboxItems\UserControl.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="VScrollBar" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Toolbox\DarkTheme\ToolboxItems\VScrollBar.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="WebBrowser" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Toolbox\DarkTheme\ToolboxItems\WebBrowser.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+</root>

@@ -1,23 +1,12 @@
 ﻿using System;
-using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 namespace UiTools.WinForms.Designer.Core
 {
     public class LinkLabelEx : LinkLabel
     {
-        private const int WM_SETCURSOR = 0x0020;
-        private const int IDC_HAND = 32649;
-        private const int HTCLIENT = 1;
-
-        private ToolTip toolTip = new ToolTip();
+        private readonly ToolTip toolTip = new ToolTip();
         private Link lastHoveredLink = null;
-
-        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        private static extern IntPtr LoadCursor(IntPtr hInstance, int lpCursorName);
-
-        [DllImport("user32.dll", CharSet = CharSet.Auto)]
-        private static extern IntPtr SetCursor(IntPtr hCursor);
 
         public LinkLabelEx()
         {
@@ -58,17 +47,17 @@ namespace UiTools.WinForms.Designer.Core
             // and set its standard ("ugly") Cursors.Hand cursor:
             base.WndProc(ref m);
 
-            if (m.Msg == WM_SETCURSOR)
+            if (m.Msg == Win32.WM_SETCURSOR)
             {
                 // Check that the mouse is in the control's client area (HTCLIENT):
                 int hitTest = (int)((long)m.LParam & 0xFFFF);
-                if (hitTest == HTCLIENT)
+                if (hitTest == Win32.HTCLIENT)
                 {
                     // If the base control decided to show the "hand" (Cursors.Hand), then Cursor.Current will
                     // be equal to Cursors.Hand. In this (and only this!) case, we replace it with the system IDC_HAND:
                     if (Cursor.Current == Cursors.Hand)
                     {
-                        SetCursor(LoadCursor(IntPtr.Zero, IDC_HAND));
+                        Win32.SetCursor(Win32.LoadCursor(IntPtr.Zero, Win32.IDC_HAND));
                         // Indicate that we have handled the cursor setting ourselves:
                         m.Result = (IntPtr)1;
                     }

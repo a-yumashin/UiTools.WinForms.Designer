@@ -30,25 +30,14 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ToolboxTreeView));
-            this.cboSearch = new System.Windows.Forms.ComboBox();
             this.imageList16px = new System.Windows.Forms.ImageList(this.components);
             this.picSearch = new System.Windows.Forms.PictureBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.imageList20px = new System.Windows.Forms.ImageList(this.components);
-            this.labNoResults = new System.Windows.Forms.Label();
+            this.labNoResults = new UiTools.WinForms.Designer.Core.ThemedLabel();
             this.treeView1 = new UiTools.WinForms.Designer.Core.DoubleBufferedTreeView();
+            this.cboSearch = new UiTools.WinForms.Designer.Core.ThemedComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.picSearch)).BeginInit();
             this.SuspendLayout();
-            // 
-            // cboSearch
-            // 
-            this.cboSearch.Dock = System.Windows.Forms.DockStyle.Top;
-            this.cboSearch.FormattingEnabled = true;
-            this.cboSearch.Location = new System.Drawing.Point(0, 0);
-            this.cboSearch.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.cboSearch.Name = "cboSearch";
-            this.cboSearch.Size = new System.Drawing.Size(220, 28);
-            this.cboSearch.TabIndex = 0;
             // 
             // imageList16px
             // 
@@ -58,25 +47,15 @@
             this.imageList16px.Images.SetKeyName(1, "ExpandedTreeNode");
             this.imageList16px.Images.SetKeyName(2, "SelectedAndCollapsedTreeNode");
             this.imageList16px.Images.SetKeyName(3, "SelectedAndExpandedTreeNode");
-            this.imageList16px.Images.SetKeyName(4, "Pointer");
             // 
             // picSearch
             // 
-            this.picSearch.BackColor = System.Drawing.SystemColors.Window;
+            this.picSearch.BackColor = System.Drawing.Color.Transparent;
             this.picSearch.Location = new System.Drawing.Point(170, 3);
             this.picSearch.Name = "picSearch";
             this.picSearch.Size = new System.Drawing.Size(20, 20);
             this.picSearch.TabIndex = 2;
             this.picSearch.TabStop = false;
-            // 
-            // imageList20px
-            // 
-            this.imageList20px.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList20px.ImageStream")));
-            this.imageList20px.TransparentColor = System.Drawing.Color.Transparent;
-            this.imageList20px.Images.SetKeyName(0, "ClearSearch");
-            this.imageList20px.Images.SetKeyName(1, "HoveredClearSearch");
-            this.imageList20px.Images.SetKeyName(2, "HoveredSearch");
-            this.imageList20px.Images.SetKeyName(3, "Search");
             // 
             // labNoResults
             // 
@@ -98,10 +77,22 @@
             this.treeView1.Size = new System.Drawing.Size(220, 394);
             this.treeView1.TabIndex = 1;
             // 
+            // cboSearch
+            // 
+            this.cboSearch.CueBannerText = null;
+            this.cboSearch.Dock = System.Windows.Forms.DockStyle.Top;
+            this.cboSearch.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.cboSearch.FormattingEnabled = true;
+            this.cboSearch.Location = new System.Drawing.Point(0, 0);
+            this.cboSearch.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.cboSearch.Name = "cboSearch";
+            this.cboSearch.Size = new System.Drawing.Size(220, 28);
+            this.cboSearch.TabIndex = 0;
+            // 
             // ToolboxTreeView
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.Controls.Add(this.labNoResults);
             this.Controls.Add(this.picSearch);
             this.Controls.Add(this.treeView1);
@@ -118,12 +109,11 @@
 
         #endregion
 
-        private System.Windows.Forms.ComboBox cboSearch;
+        private ThemedComboBox cboSearch;
         private DoubleBufferedTreeView treeView1;
         private System.Windows.Forms.ImageList imageList16px;
         private System.Windows.Forms.PictureBox picSearch;
         private System.Windows.Forms.ToolTip toolTip1;
-        private System.Windows.Forms.ImageList imageList20px;
-        private System.Windows.Forms.Label labNoResults;
+        private ThemedLabel labNoResults;
     }
 }

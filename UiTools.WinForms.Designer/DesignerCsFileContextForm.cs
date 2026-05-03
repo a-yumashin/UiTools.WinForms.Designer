@@ -1,14 +1,18 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Drawing;
 using System.IO;
 using System.Text;
 using System.Windows.Forms;
 using UiTools.WinForms.Designer.Core;
+using UiTools.WinForms.Designer.Properties;
 
 namespace UiTools.WinForms.Designer
 {
-    public partial class DesignerCsFileContextForm : Form
+    public partial class DesignerCsFileContextForm : ThemedForm
     {
+        private static readonly Color DefaultNotesTextColor = SystemColors.ControlDarkDark;
+        
         public enum InitiatorEnum
         {
             VSCode,       // always "open existing" (not "create new") --> fpeDesignerFile is visible but disabled (and is filled); txtNamespace is not visible (namespace will be extracted from code)
@@ -17,7 +21,6 @@ namespace UiTools.WinForms.Designer
         }
         private InitiatorEnum initiator;
         private bool isProgrammaticUpdate;
-
         private const string VALUE_WAS_RESTORED_HINT = "restored value which was last used with the selected designer file";
         private const string SUGGESTED_CSPROJ_FILE_HINT = "suggested project file (found while scanning file system)";
 
@@ -65,12 +68,31 @@ namespace UiTools.WinForms.Designer
         public void SetDesignerCsFileFullPath(string designerCsFileFullPath)
         {
             fpeDesignerFile.Text = designerCsFileFullPath;
+            CheckForCompanionFile();
+        }
+
+        private void CheckForCompanionFile()
+        {
+            var mainFilePath = CommonStuff.MainCsFilePathFromDesignerCsFilePath(fpeDesignerFile.Text);
+            bool mainFileExists = File.Exists(mainFilePath);
+            picDesignerFileHint.Visible = !mainFileExists;
+            if (!mainFileExists)
+                ShowHint(picDesignerFileHint, $"Companion file '{Path.GetFileName(mainFilePath)}' not found in the same folder.\nAutomatic event handler creation is disabled.");
+            else
+                HideHint(picDesignerFileHint);
         }
 
         public DesignerCsFileContextForm()
         {
             InitializeComponent();
 
+            label1.ForeColor = DefaultNotesTextColor;
+            labNewFormNotice.ForeColor = DefaultNotesTextColor;
+            label1.Tag = "NoTheme";
+            labNewFormNotice.Tag = "NoTheme";
+
+            CenterToParent(); // center early to prevent visual flickering during the population of controls
+            
             fpeDesignerFile.Title = $"Select designer file of your Form/UserControl";
             fpeDesignerFile.DialogType = FilePathEdit.FileDialogType.Open;
             fpeDesignerFile.Filter = "C# Designer Files|*.Designer.cs;*.designer.cs|All files|*.*";
@@ -99,6 +121,13 @@ namespace UiTools.WinForms.Designer
             cboPlatform.TextChanged += (s, e) => { if (!isProgrammaticUpdate) HideHint(picPlatformHint); };
 
             cmdOK.Click += cmdOK_Click;
+        }
+
+        protected override void OnShown(EventArgs e)
+        {
+            base.OnShown(e);
+            if (txtNamespace.Visible)
+                txtNamespace.Focus();
         }
 
         private void fpeProjectFile_TextChanged(object sender, EventArgs e)
@@ -150,12 +179,7 @@ namespace UiTools.WinForms.Designer
                     HideHint(picPlatformHint);
                     HideHint(picExtraAssembliesHint);
                 }
-                var mainFilePath = CommonStuff.MainCsFilePathFromDesignerCsFilePath(fpeDesignerFile.Text);
-                picDesignerFileHint.Visible = !File.Exists(mainFilePath);
-                if (picDesignerFileHint.Visible)
-                    ShowHint(picDesignerFileHint, $"Companion file '{Path.GetFileName(mainFilePath)}' not found in the same folder.\nAutomatic event handler creation is disabled.");
-                else
-                    HideHint(picDesignerFileHint);
+                CheckForCompanionFile();
             }
             isProgrammaticUpdate = false;
             SetInitialDirectoryForProjectFile();
@@ -253,5 +277,28 @@ namespace UiTools.WinForms.Designer
             dfContext.ExtraAssembliesFileFullPath = fpeExtraAssemblies.Text;
             AppSettings.Instance.Save();
         }
+
+        [Category("Appearance")]
+        public Color NotesTextColor { get; set; }
+
+        protected override void OnUiThemeApplied()
+        {
+            label1.ForeColor = NotesTextColor;
+            labNewFormNotice.ForeColor = NotesTextColor;
+            label1.Font = new Font("Segoe UI", 9);
+            labNewFormNotice.Font = label1.Font;
+            picExtraAssembliesHelp.Image = IsDarkTheme ? Resources.Help_DarkTheme : Resources.Help;
+        }
+
+        [Category("Appearance")]
+        [DefaultValue(false)]
+        public bool IsDarkTheme { get; set; } = false;
+
+        #region Support for default values of Color properties
+
+        private bool ShouldSerializeNotesTextColor() => NotesTextColor != DefaultNotesTextColor;
+        private void ResetNotesTextColor() => NotesTextColor = DefaultNotesTextColor;
+
+        #endregion Support for default values of Color properties
     }
 }

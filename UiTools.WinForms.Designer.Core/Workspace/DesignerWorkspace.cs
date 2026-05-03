@@ -52,6 +52,7 @@ namespace UiTools.WinForms.Designer.Core
 
             Designer.CustomMenuCommandExecuted += OnCustomMenuCommandExecuted;
             this.designerControl.RequestSourceCode += OnRequestSourceCode;
+            this.designerControl.SetComponentTypeIconResolver(Toolbox.GetComponentTypeImage);
 
             var selectionService = designer.GetSelectionService();
             if (selectionService != null)
@@ -77,6 +78,11 @@ namespace UiTools.WinForms.Designer.Core
             {
                 undoEngine.UndoStackChanged += OnUndoStackChanged;
                 undoEngine.RedoStackChanged += OnRedoStackChanged;
+            }
+            var menuCommandService = designer.GetMenuCommandService();
+            if (menuCommandService != null && menuCommandService is MyMenuCommandService mcs)
+            {
+                mcs.SetComponentTypeIconResolver(Toolbox.GetComponentTypeImage);
             }
 
             Toolbox.ToolboxItemDoubleClick += OnToolboxItemDoubleClick;
@@ -225,12 +231,11 @@ namespace UiTools.WinForms.Designer.Core
                         MessageLogger.Log(this, "No explicit Font property assignment was found for the root component. Setting the Design Surface View font " +
                             $"to \"{rootComponentFontFallback.Name}; {rootComponentFontFallback.Size}pt\" to match the expected default and ensure correct inheritance.");
                     }
-                    EmbedDesignerViewInUI(Designer, trs,
+                    EmbedDesignerViewInUI(Designer,
                         rootComponentFont: rootComponentFontFromCode ?? rootComponentFontFallback,
                         sourceCodeViewerFont: sourceCodeViewerFont);
                     Designer.EnableDragAndDrop();
                     SelectRootComponentInDesigner();
-                    CustomizeComponentTray();
                     isDeserializationRunning = false;
 
                     lastComponentAdded2 = null;
@@ -271,12 +276,11 @@ namespace UiTools.WinForms.Designer.Core
                     ObjectsToPreserve = new CodeObjectsToPreserveWhenEditing();
                     ObjectsToPreserve.Namespace = dfContext.Namespace;
 
-                    EmbedDesignerViewInUI(Designer, trs,
+                    EmbedDesignerViewInUI(Designer,
                         rootComponentFont: defaultRootComponentFont,
                         sourceCodeViewerFont: sourceCodeViewerFont);
                     Designer.EnableDragAndDrop();
                     SelectRootComponentInDesigner();
-                    CustomizeComponentTray();
 
                     lastComponentAdded2 = null;
                 }
@@ -342,7 +346,7 @@ namespace UiTools.WinForms.Designer.Core
             selectionService.SetSelectedComponents(new[] { Designer.GetDesignerHost().RootComponent });
         }
 
-        private void EmbedDesignerViewInUI(DesignSurfaceEx designer, ITypeResolutionService trs, Font rootComponentFont, Font sourceCodeViewerFont)
+        private void EmbedDesignerViewInUI(DesignSurfaceEx designer, Font rootComponentFont, Font sourceCodeViewerFont)
         {
             var view = designer.View as Control;
             if (view == null)
@@ -497,11 +501,14 @@ namespace UiTools.WinForms.Designer.Core
 
             if (!isDeserializationRunning)
                 designerControl.IsDirty = true;
+
+            if (!(e.Component is Control))
+                Toolbox.BeginInvoke(() => designerControl.SyncComponentTrayIcons(onlyForGivenComponent: e.Component));
         }
 
         private void OnComponentChanged(object sender, ComponentChangedEventArgs e)
         {
-            if (!isDeserializationRunning)
+            if (!isDeserializationRunning && e.Member != null)
                 designerControl.IsDirty = true;
         }
 
@@ -585,40 +592,6 @@ namespace UiTools.WinForms.Designer.Core
                 (ctl as LinkLabel).AutoSize = true;
             else if (ctl.GetType() == typeof(CheckBox))
                 (ctl as CheckBox).AutoSize = true;
-        }
-
-        private void CustomizeComponentTray()
-        {
-            var view = Designer.View as Control;
-            if (view == null)
-                return;
-            var tray = view.FindControlByType("System.Windows.Forms.Design.ComponentTray");
-            if (tray == null)
-            {
-                view.ControlAdded -= OnViewControlAdded;
-                view.ControlAdded += OnViewControlAdded;
-            }
-            else
-                ApplyTrayStyles(tray);
-        }
-
-        private void OnViewControlAdded(object sender, ControlEventArgs e)
-        {
-            if (e.Control.GetType().FullName == "System.Windows.Forms.Design.ComponentTray")
-                ApplyTrayStyles(e.Control);
-        }
-
-        private void ApplyTrayStyles(Control tray)
-        {
-            // it was always annoying that the ComponentTray blends with the main DesignSurface area
-            // (where the Form or UserControl is displayed), so we highlight the ComponentTray with a different color:
-            if (tray.BackColor != SystemColors.ControlLight)
-            {
-                tray.BackColor = SystemColors.ControlLight;
-                tray.Height = 50;
-                //tray.MaximumSize = new Size(0, 50);
-                (tray as System.Windows.Forms.Design.ComponentTray).AutoArrange = true; // but it can always be turned off via the context menu
-            }
         }
 
         /// <summary>

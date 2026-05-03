@@ -3,7 +3,7 @@ using System.Windows.Forms;
 
 namespace UiTools.WinForms.Designer
 {
-    public partial class MainForm : System.Windows.Forms.Form
+    public partial class MainForm : UiTools.WinForms.Designer.Core.ThemedForm
 	{
 		//Form overrides dispose to clean up the component list.
 		[DebuggerNonUserCode()]
@@ -31,7 +31,6 @@ namespace UiTools.WinForms.Designer
 		[System.Diagnostics.DebuggerStepThrough()]
 		private void InitializeComponent()
 		{
-            this.components = new System.ComponentModel.Container();
             this.tsiToolsRoot = new System.Windows.Forms.ToolStripMenuItem();
             this.tsiOptions = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
@@ -44,7 +43,7 @@ namespace UiTools.WinForms.Designer
             this.tsiPaste = new System.Windows.Forms.ToolStripMenuItem();
             this.tsiDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.tsiSelectAll = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.menuStrip1 = new UiTools.WinForms.Designer.Core.ThemedMenuStrip();
             this.tsiFileRoot = new System.Windows.Forms.ToolStripMenuItem();
             this.tsiNewRoot = new System.Windows.Forms.ToolStripMenuItem();
             this.tsiNewForm = new System.Windows.Forms.ToolStripMenuItem();
@@ -100,7 +99,7 @@ namespace UiTools.WinForms.Designer
             this.toolboxPanelContainer = new UiTools.WinForms.Designer.WorkspacePanelContainer();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
-            this.tcDesigners = new UiTools.WinForms.Designer.TabControlEx();
+            this.tcDesigners = new UiTools.WinForms.Designer.Core.TabControlEx();
             this.outputPanelContainer = new UiTools.WinForms.Designer.WorkspacePanelContainer();
             this.propertiesPanelContainer = new UiTools.WinForms.Designer.WorkspacePanelContainer();
             this.menuStrip1.SuspendLayout();
@@ -128,9 +127,8 @@ namespace UiTools.WinForms.Designer
             // 
             // tsiOptions
             // 
-            this.tsiOptions.Image = global::UiTools.WinForms.Designer.Properties.Resources.Options;
             this.tsiOptions.Name = "tsiOptions";
-            this.tsiOptions.Size = new System.Drawing.Size(153, 26);
+            this.tsiOptions.Size = new System.Drawing.Size(224, 26);
             this.tsiOptions.Text = "Options...";
             this.tsiOptions.Click += new System.EventHandler(this.tsiOptions_Click);
             // 
@@ -163,7 +161,7 @@ namespace UiTools.WinForms.Designer
             // 
             // tsiUnDo
             // 
-            this.tsiUnDo.Image = global::UiTools.WinForms.Designer.Properties.Resources.Undo;
+            this.tsiUnDo.Image = global::UiTools.WinForms.Designer.Properties.LightThemeMenuItems.Undo;
             this.tsiUnDo.Name = "tsiUnDo";
             this.tsiUnDo.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Z)));
             this.tsiUnDo.Size = new System.Drawing.Size(206, 26);
@@ -173,7 +171,7 @@ namespace UiTools.WinForms.Designer
             // 
             // tsiReDo
             // 
-            this.tsiReDo.Image = global::UiTools.WinForms.Designer.Properties.Resources.Redo;
+            this.tsiReDo.Image = global::UiTools.WinForms.Designer.Properties.LightThemeMenuItems.Redo;
             this.tsiReDo.Name = "tsiReDo";
             this.tsiReDo.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Y)));
             this.tsiReDo.Size = new System.Drawing.Size(206, 26);
@@ -183,7 +181,7 @@ namespace UiTools.WinForms.Designer
             // 
             // tsiCut
             // 
-            this.tsiCut.Image = global::UiTools.WinForms.Designer.Properties.Resources.Cut;
+            this.tsiCut.Image = global::UiTools.WinForms.Designer.Properties.LightThemeMenuItems.Cut;
             this.tsiCut.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsiCut.Name = "tsiCut";
             this.tsiCut.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X)));
@@ -194,7 +192,7 @@ namespace UiTools.WinForms.Designer
             // 
             // tsiCopy
             // 
-            this.tsiCopy.Image = global::UiTools.WinForms.Designer.Properties.Resources.Copy;
+            this.tsiCopy.Image = global::UiTools.WinForms.Designer.Properties.LightThemeMenuItems.Copy;
             this.tsiCopy.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsiCopy.Name = "tsiCopy";
             this.tsiCopy.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
@@ -205,7 +203,7 @@ namespace UiTools.WinForms.Designer
             // 
             // tsiPaste
             // 
-            this.tsiPaste.Image = global::UiTools.WinForms.Designer.Properties.Resources.Paste;
+            this.tsiPaste.Image = global::UiTools.WinForms.Designer.Properties.LightThemeMenuItems.Paste;
             this.tsiPaste.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsiPaste.Name = "tsiPaste";
             this.tsiPaste.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.V)));
@@ -216,7 +214,7 @@ namespace UiTools.WinForms.Designer
             // 
             // tsiDelete
             // 
-            this.tsiDelete.Image = global::UiTools.WinForms.Designer.Properties.Resources.Delete;
+            this.tsiDelete.Image = global::UiTools.WinForms.Designer.Properties.LightThemeMenuItems.Delete;
             this.tsiDelete.Name = "tsiDelete";
             this.tsiDelete.ShortcutKeys = System.Windows.Forms.Keys.Delete;
             this.tsiDelete.Size = new System.Drawing.Size(206, 26);
@@ -226,7 +224,7 @@ namespace UiTools.WinForms.Designer
             // 
             // tsiSelectAll
             // 
-            this.tsiSelectAll.Image = global::UiTools.WinForms.Designer.Properties.Resources.SelectAll;
+            this.tsiSelectAll.Image = global::UiTools.WinForms.Designer.Properties.LightThemeMenuItems.SelectAll;
             this.tsiSelectAll.Name = "tsiSelectAll";
             this.tsiSelectAll.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.A)));
             this.tsiSelectAll.Size = new System.Drawing.Size(206, 26);
@@ -276,7 +274,7 @@ namespace UiTools.WinForms.Designer
             // 
             // tsiNewForm
             // 
-            this.tsiNewForm.Image = global::UiTools.WinForms.Designer.Properties.Resources.AddForm;
+            this.tsiNewForm.Image = global::UiTools.WinForms.Designer.Properties.LightThemeMenuItems.AddForm;
             this.tsiNewForm.Name = "tsiNewForm";
             this.tsiNewForm.Size = new System.Drawing.Size(170, 26);
             this.tsiNewForm.Text = "Form";
@@ -284,7 +282,7 @@ namespace UiTools.WinForms.Designer
             // 
             // tsiNewUserControl
             // 
-            this.tsiNewUserControl.Image = global::UiTools.WinForms.Designer.Properties.Resources.AddControl;
+            this.tsiNewUserControl.Image = global::UiTools.WinForms.Designer.Properties.LightThemeMenuItems.AddControl;
             this.tsiNewUserControl.Name = "tsiNewUserControl";
             this.tsiNewUserControl.Size = new System.Drawing.Size(170, 26);
             this.tsiNewUserControl.Text = "UserControl";
@@ -292,7 +290,7 @@ namespace UiTools.WinForms.Designer
             // 
             // tsiOpen
             // 
-            this.tsiOpen.Image = global::UiTools.WinForms.Designer.Properties.Resources.OpenFile;
+            this.tsiOpen.Image = global::UiTools.WinForms.Designer.Properties.LightThemeMenuItems.OpenFile;
             this.tsiOpen.Name = "tsiOpen";
             this.tsiOpen.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
             this.tsiOpen.Size = new System.Drawing.Size(190, 26);
@@ -307,7 +305,7 @@ namespace UiTools.WinForms.Designer
             // 
             // tsiSave
             // 
-            this.tsiSave.Image = global::UiTools.WinForms.Designer.Properties.Resources.Save;
+            this.tsiSave.Image = global::UiTools.WinForms.Designer.Properties.LightThemeMenuItems.Save;
             this.tsiSave.Name = "tsiSave";
             this.tsiSave.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
             this.tsiSave.Size = new System.Drawing.Size(190, 26);
@@ -356,7 +354,7 @@ namespace UiTools.WinForms.Designer
             // tsiViewToolbox
             // 
             this.tsiViewToolbox.CheckOnClick = true;
-            this.tsiViewToolbox.Image = global::UiTools.WinForms.Designer.Properties.Resources.Toolbox;
+            this.tsiViewToolbox.Image = global::UiTools.WinForms.Designer.Properties.LightThemeMenuItems.Toolbox;
             this.tsiViewToolbox.Name = "tsiViewToolbox";
             this.tsiViewToolbox.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Alt) 
             | System.Windows.Forms.Keys.X)));
@@ -367,7 +365,7 @@ namespace UiTools.WinForms.Designer
             // tsiViewProperties
             // 
             this.tsiViewProperties.CheckOnClick = true;
-            this.tsiViewProperties.Image = global::UiTools.WinForms.Designer.Properties.Resources.Property;
+            this.tsiViewProperties.Image = global::UiTools.WinForms.Designer.Properties.LightThemeMenuItems.Property;
             this.tsiViewProperties.Name = "tsiViewProperties";
             this.tsiViewProperties.ShortcutKeys = System.Windows.Forms.Keys.F4;
             this.tsiViewProperties.Size = new System.Drawing.Size(261, 26);
@@ -377,7 +375,7 @@ namespace UiTools.WinForms.Designer
             // tsiViewOutput
             // 
             this.tsiViewOutput.CheckOnClick = true;
-            this.tsiViewOutput.Image = global::UiTools.WinForms.Designer.Properties.Resources.Output;
+            this.tsiViewOutput.Image = global::UiTools.WinForms.Designer.Properties.LightThemeMenuItems.Output;
             this.tsiViewOutput.Name = "tsiViewOutput";
             this.tsiViewOutput.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Alt) 
             | System.Windows.Forms.Keys.O)));
@@ -393,7 +391,7 @@ namespace UiTools.WinForms.Designer
             // tsiTabOrder
             // 
             this.tsiTabOrder.CheckOnClick = true;
-            this.tsiTabOrder.Image = global::UiTools.WinForms.Designer.Properties.Resources.TabOrder;
+            this.tsiTabOrder.Image = global::UiTools.WinForms.Designer.Properties.LightThemeMenuItems.TabOrder;
             this.tsiTabOrder.Name = "tsiTabOrder";
             this.tsiTabOrder.Size = new System.Drawing.Size(261, 26);
             this.tsiTabOrder.Tag = "TabOrder";
@@ -433,7 +431,7 @@ namespace UiTools.WinForms.Designer
             // 
             // tsiAlignLefts
             // 
-            this.tsiAlignLefts.Image = global::UiTools.WinForms.Designer.Properties.Resources.AlignLeft;
+            this.tsiAlignLefts.Image = global::UiTools.WinForms.Designer.Properties.LightThemeMenuItems.AlignLeft;
             this.tsiAlignLefts.Name = "tsiAlignLefts";
             this.tsiAlignLefts.Size = new System.Drawing.Size(148, 26);
             this.tsiAlignLefts.Tag = "AlignLeft";
@@ -442,7 +440,7 @@ namespace UiTools.WinForms.Designer
             // 
             // tsiAlignCenters
             // 
-            this.tsiAlignCenters.Image = global::UiTools.WinForms.Designer.Properties.Resources.AlignCenter;
+            this.tsiAlignCenters.Image = global::UiTools.WinForms.Designer.Properties.LightThemeMenuItems.AlignCenter;
             this.tsiAlignCenters.Name = "tsiAlignCenters";
             this.tsiAlignCenters.Size = new System.Drawing.Size(148, 26);
             this.tsiAlignCenters.Tag = "AlignVerticalCenters";
@@ -451,7 +449,7 @@ namespace UiTools.WinForms.Designer
             // 
             // tsiAlignRights
             // 
-            this.tsiAlignRights.Image = global::UiTools.WinForms.Designer.Properties.Resources.AlignRight;
+            this.tsiAlignRights.Image = global::UiTools.WinForms.Designer.Properties.LightThemeMenuItems.AlignRight;
             this.tsiAlignRights.Name = "tsiAlignRights";
             this.tsiAlignRights.Size = new System.Drawing.Size(148, 26);
             this.tsiAlignRights.Tag = "AlignRight";
@@ -465,7 +463,7 @@ namespace UiTools.WinForms.Designer
             // 
             // tsiAlignTops
             // 
-            this.tsiAlignTops.Image = global::UiTools.WinForms.Designer.Properties.Resources.AlignTop;
+            this.tsiAlignTops.Image = global::UiTools.WinForms.Designer.Properties.LightThemeMenuItems.AlignTop;
             this.tsiAlignTops.Name = "tsiAlignTops";
             this.tsiAlignTops.Size = new System.Drawing.Size(148, 26);
             this.tsiAlignTops.Tag = "AlignTop";
@@ -474,7 +472,7 @@ namespace UiTools.WinForms.Designer
             // 
             // tsiAlignMiddles
             // 
-            this.tsiAlignMiddles.Image = global::UiTools.WinForms.Designer.Properties.Resources.AlignMiddle;
+            this.tsiAlignMiddles.Image = global::UiTools.WinForms.Designer.Properties.LightThemeMenuItems.AlignMiddle;
             this.tsiAlignMiddles.Name = "tsiAlignMiddles";
             this.tsiAlignMiddles.Size = new System.Drawing.Size(148, 26);
             this.tsiAlignMiddles.Tag = "AlignHorizontalCenters";
@@ -483,7 +481,7 @@ namespace UiTools.WinForms.Designer
             // 
             // tsiAlignBottoms
             // 
-            this.tsiAlignBottoms.Image = global::UiTools.WinForms.Designer.Properties.Resources.AlignBottom;
+            this.tsiAlignBottoms.Image = global::UiTools.WinForms.Designer.Properties.LightThemeMenuItems.AlignBottom;
             this.tsiAlignBottoms.Name = "tsiAlignBottoms";
             this.tsiAlignBottoms.Size = new System.Drawing.Size(148, 26);
             this.tsiAlignBottoms.Tag = "AlignBottom";
@@ -502,7 +500,7 @@ namespace UiTools.WinForms.Designer
             // 
             // tsiMakeSameWidth
             // 
-            this.tsiMakeSameWidth.Image = global::UiTools.WinForms.Designer.Properties.Resources.MakeSameWidth;
+            this.tsiMakeSameWidth.Image = global::UiTools.WinForms.Designer.Properties.LightThemeMenuItems.MakeSameWidth;
             this.tsiMakeSameWidth.Name = "tsiMakeSameWidth";
             this.tsiMakeSameWidth.Size = new System.Drawing.Size(137, 26);
             this.tsiMakeSameWidth.Tag = "SizeToControlWidth";
@@ -511,7 +509,7 @@ namespace UiTools.WinForms.Designer
             // 
             // tsiMakeSameHeight
             // 
-            this.tsiMakeSameHeight.Image = global::UiTools.WinForms.Designer.Properties.Resources.MakeSameHeight;
+            this.tsiMakeSameHeight.Image = global::UiTools.WinForms.Designer.Properties.LightThemeMenuItems.MakeSameHeight;
             this.tsiMakeSameHeight.Name = "tsiMakeSameHeight";
             this.tsiMakeSameHeight.Size = new System.Drawing.Size(137, 26);
             this.tsiMakeSameHeight.Tag = "SizeToControlHeight";
@@ -520,7 +518,7 @@ namespace UiTools.WinForms.Designer
             // 
             // tsiMakeSameWidthAndHeight
             // 
-            this.tsiMakeSameWidthAndHeight.Image = global::UiTools.WinForms.Designer.Properties.Resources.MakeSameWidthAndHeight;
+            this.tsiMakeSameWidthAndHeight.Image = global::UiTools.WinForms.Designer.Properties.LightThemeMenuItems.MakeSameWidthAndHeight;
             this.tsiMakeSameWidthAndHeight.Name = "tsiMakeSameWidthAndHeight";
             this.tsiMakeSameWidthAndHeight.Size = new System.Drawing.Size(137, 26);
             this.tsiMakeSameWidthAndHeight.Tag = "SizeToControl";
@@ -545,7 +543,7 @@ namespace UiTools.WinForms.Designer
             // 
             // tsiHorizSpacingMakeEqual
             // 
-            this.tsiHorizSpacingMakeEqual.Image = global::UiTools.WinForms.Designer.Properties.Resources.HorizontalSpacingMakeEqual;
+            this.tsiHorizSpacingMakeEqual.Image = global::UiTools.WinForms.Designer.Properties.LightThemeMenuItems.HorizontalSpacingMakeEqual;
             this.tsiHorizSpacingMakeEqual.Name = "tsiHorizSpacingMakeEqual";
             this.tsiHorizSpacingMakeEqual.Size = new System.Drawing.Size(169, 26);
             this.tsiHorizSpacingMakeEqual.Tag = "HorizSpaceMakeEqual";
@@ -554,7 +552,7 @@ namespace UiTools.WinForms.Designer
             // 
             // tsiHorizSpacingIncrease
             // 
-            this.tsiHorizSpacingIncrease.Image = global::UiTools.WinForms.Designer.Properties.Resources.IncreaseHorizontalSpacing;
+            this.tsiHorizSpacingIncrease.Image = global::UiTools.WinForms.Designer.Properties.LightThemeMenuItems.IncreaseHorizontalSpacing;
             this.tsiHorizSpacingIncrease.Name = "tsiHorizSpacingIncrease";
             this.tsiHorizSpacingIncrease.Size = new System.Drawing.Size(169, 26);
             this.tsiHorizSpacingIncrease.Tag = "HorizSpaceIncrease";
@@ -563,7 +561,7 @@ namespace UiTools.WinForms.Designer
             // 
             // tsiHorizSpacingDecrease
             // 
-            this.tsiHorizSpacingDecrease.Image = global::UiTools.WinForms.Designer.Properties.Resources.DecreaseHorizontalSpacing;
+            this.tsiHorizSpacingDecrease.Image = global::UiTools.WinForms.Designer.Properties.LightThemeMenuItems.DecreaseHorizontalSpacing;
             this.tsiHorizSpacingDecrease.Name = "tsiHorizSpacingDecrease";
             this.tsiHorizSpacingDecrease.Size = new System.Drawing.Size(169, 26);
             this.tsiHorizSpacingDecrease.Tag = "HorizSpaceDecrease";
@@ -572,7 +570,7 @@ namespace UiTools.WinForms.Designer
             // 
             // tsiHorizSpacingRemove
             // 
-            this.tsiHorizSpacingRemove.Image = global::UiTools.WinForms.Designer.Properties.Resources.RemoveHorizontalSpacing;
+            this.tsiHorizSpacingRemove.Image = global::UiTools.WinForms.Designer.Properties.LightThemeMenuItems.RemoveHorizontalSpacing;
             this.tsiHorizSpacingRemove.Name = "tsiHorizSpacingRemove";
             this.tsiHorizSpacingRemove.Size = new System.Drawing.Size(169, 26);
             this.tsiHorizSpacingRemove.Tag = "HorizSpaceConcatenate";
@@ -592,7 +590,7 @@ namespace UiTools.WinForms.Designer
             // 
             // tsiVertSpacingMakeEqual
             // 
-            this.tsiVertSpacingMakeEqual.Image = global::UiTools.WinForms.Designer.Properties.Resources.VerticalSpacingMakeEqual;
+            this.tsiVertSpacingMakeEqual.Image = global::UiTools.WinForms.Designer.Properties.LightThemeMenuItems.VerticalSpacingMakeEqual;
             this.tsiVertSpacingMakeEqual.Name = "tsiVertSpacingMakeEqual";
             this.tsiVertSpacingMakeEqual.Size = new System.Drawing.Size(169, 26);
             this.tsiVertSpacingMakeEqual.Tag = "VertSpaceMakeEqual";
@@ -601,7 +599,7 @@ namespace UiTools.WinForms.Designer
             // 
             // tsiVertSpacingIncrease
             // 
-            this.tsiVertSpacingIncrease.Image = global::UiTools.WinForms.Designer.Properties.Resources.IncreaseVerticalSpacing;
+            this.tsiVertSpacingIncrease.Image = global::UiTools.WinForms.Designer.Properties.LightThemeMenuItems.IncreaseVerticalSpacing;
             this.tsiVertSpacingIncrease.Name = "tsiVertSpacingIncrease";
             this.tsiVertSpacingIncrease.Size = new System.Drawing.Size(169, 26);
             this.tsiVertSpacingIncrease.Tag = "VertSpaceIncrease";
@@ -610,7 +608,7 @@ namespace UiTools.WinForms.Designer
             // 
             // tsiVertSpacingDecrease
             // 
-            this.tsiVertSpacingDecrease.Image = global::UiTools.WinForms.Designer.Properties.Resources.DecreaseVerticalSpacing;
+            this.tsiVertSpacingDecrease.Image = global::UiTools.WinForms.Designer.Properties.LightThemeMenuItems.DecreaseVerticalSpacing;
             this.tsiVertSpacingDecrease.Name = "tsiVertSpacingDecrease";
             this.tsiVertSpacingDecrease.Size = new System.Drawing.Size(169, 26);
             this.tsiVertSpacingDecrease.Tag = "VertSpaceDecrease";
@@ -619,7 +617,7 @@ namespace UiTools.WinForms.Designer
             // 
             // tsiVertSpacingRemove
             // 
-            this.tsiVertSpacingRemove.Image = global::UiTools.WinForms.Designer.Properties.Resources.RemoveVerticalSpacing;
+            this.tsiVertSpacingRemove.Image = global::UiTools.WinForms.Designer.Properties.LightThemeMenuItems.RemoveVerticalSpacing;
             this.tsiVertSpacingRemove.Name = "tsiVertSpacingRemove";
             this.tsiVertSpacingRemove.Size = new System.Drawing.Size(169, 26);
             this.tsiVertSpacingRemove.Tag = "VertSpaceConcatenate";
@@ -642,7 +640,7 @@ namespace UiTools.WinForms.Designer
             // 
             // tsiCenterInFormHorizontally
             // 
-            this.tsiCenterInFormHorizontally.Image = global::UiTools.WinForms.Designer.Properties.Resources.CenterHorizontally;
+            this.tsiCenterInFormHorizontally.Image = global::UiTools.WinForms.Designer.Properties.LightThemeMenuItems.CenterHorizontally;
             this.tsiCenterInFormHorizontally.Name = "tsiCenterInFormHorizontally";
             this.tsiCenterInFormHorizontally.Size = new System.Drawing.Size(173, 26);
             this.tsiCenterInFormHorizontally.Tag = "CenterHorizontally";
@@ -651,7 +649,7 @@ namespace UiTools.WinForms.Designer
             // 
             // tsiCenterInFormVertically
             // 
-            this.tsiCenterInFormVertically.Image = global::UiTools.WinForms.Designer.Properties.Resources.CenterVertically;
+            this.tsiCenterInFormVertically.Image = global::UiTools.WinForms.Designer.Properties.LightThemeMenuItems.CenterVertically;
             this.tsiCenterInFormVertically.Name = "tsiCenterInFormVertically";
             this.tsiCenterInFormVertically.Size = new System.Drawing.Size(173, 26);
             this.tsiCenterInFormVertically.Tag = "CenterVertically";
@@ -674,7 +672,7 @@ namespace UiTools.WinForms.Designer
             // 
             // tsiOrderBringToFront
             // 
-            this.tsiOrderBringToFront.Image = global::UiTools.WinForms.Designer.Properties.Resources.BringToFront;
+            this.tsiOrderBringToFront.Image = global::UiTools.WinForms.Designer.Properties.LightThemeMenuItems.BringToFront;
             this.tsiOrderBringToFront.Name = "tsiOrderBringToFront";
             this.tsiOrderBringToFront.Size = new System.Drawing.Size(183, 26);
             this.tsiOrderBringToFront.Tag = "BringToFront";
@@ -683,7 +681,7 @@ namespace UiTools.WinForms.Designer
             // 
             // tsiOrderSendToBack
             // 
-            this.tsiOrderSendToBack.Image = global::UiTools.WinForms.Designer.Properties.Resources.SendtoBack;
+            this.tsiOrderSendToBack.Image = global::UiTools.WinForms.Designer.Properties.LightThemeMenuItems.SendToBack;
             this.tsiOrderSendToBack.Name = "tsiOrderSendToBack";
             this.tsiOrderSendToBack.Size = new System.Drawing.Size(183, 26);
             this.tsiOrderSendToBack.Tag = "SendToBack";
@@ -770,7 +768,7 @@ namespace UiTools.WinForms.Designer
             // 
             this.splitContainer3.Panel2.Controls.Add(this.outputPanelContainer);
             this.splitContainer3.Size = new System.Drawing.Size(560, 525);
-            this.splitContainer3.SplitterDistance = 399;
+            this.splitContainer3.SplitterDistance = 398;
             this.splitContainer3.TabIndex = 0;
             // 
             // tcDesigners
@@ -780,8 +778,7 @@ namespace UiTools.WinForms.Designer
             this.tcDesigners.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tcDesigners.Name = "tcDesigners";
             this.tcDesigners.SelectedIndex = 0;
-            this.tcDesigners.ShowToolTips = true;
-            this.tcDesigners.Size = new System.Drawing.Size(560, 399);
+            this.tcDesigners.Size = new System.Drawing.Size(560, 398);
             this.tcDesigners.TabIndex = 0;
             // 
             // outputPanelContainer
@@ -791,7 +788,7 @@ namespace UiTools.WinForms.Designer
             this.outputPanelContainer.Location = new System.Drawing.Point(0, 0);
             this.outputPanelContainer.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.outputPanelContainer.Name = "outputPanelContainer";
-            this.outputPanelContainer.Size = new System.Drawing.Size(560, 122);
+            this.outputPanelContainer.Size = new System.Drawing.Size(560, 123);
             this.outputPanelContainer.TabIndex = 0;
             this.outputPanelContainer.Title = "Output";
             // 
@@ -808,8 +805,8 @@ namespace UiTools.WinForms.Designer
             // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.ClientSize = new System.Drawing.Size(982, 553);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.menuStrip1);
@@ -846,7 +843,7 @@ namespace UiTools.WinForms.Designer
 		private ToolStripMenuItem tsiReDo;
 		private ToolStripMenuItem tsiUnDo;
 		private ToolStripMenuItem tsiEditRoot;
-		private MenuStrip menuStrip1;
+		private Core.ThemedMenuStrip menuStrip1;
         private ToolStripMenuItem tsiFileRoot;
         private ToolStripMenuItem tsiNewRoot;
         private ToolStripMenuItem tsiOpen;
@@ -866,7 +863,7 @@ namespace UiTools.WinForms.Designer
         private ToolStripMenuItem tsiTabOrder;
         private SplitContainer splitContainer2;
         private SplitContainer splitContainer3;
-        private TabControlEx tcDesigners;
+        private Core.TabControlEx tcDesigners;
         private ToolStripMenuItem tsiOpenRecent;
         private ToolStripMenuItem tsiOptions;
         private ToolStripMenuItem tsiFormatRoot;

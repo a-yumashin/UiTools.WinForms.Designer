@@ -34,8 +34,8 @@
             this.labExtraAssemblies = new System.Windows.Forms.Label();
             this.labConfiguration = new System.Windows.Forms.Label();
             this.labPlatform = new System.Windows.Forms.Label();
-            this.cboConfiguration = new System.Windows.Forms.ComboBox();
-            this.cboPlatform = new System.Windows.Forms.ComboBox();
+            this.cboConfiguration = new UiTools.WinForms.Designer.Core.ThemedComboBox();
+            this.cboPlatform = new UiTools.WinForms.Designer.Core.ThemedComboBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label1 = new System.Windows.Forms.Label();
             this.picPlatformHint = new System.Windows.Forms.PictureBox();
@@ -46,15 +46,15 @@
             this.picExtraAssembliesHelp = new System.Windows.Forms.PictureBox();
             this.picExtraAssembliesHint = new System.Windows.Forms.PictureBox();
             this.fpeExtraAssemblies = new UiTools.WinForms.Designer.FilePathEdit();
-            this.cmdOK = new System.Windows.Forms.Button();
-            this.cmdCancel = new System.Windows.Forms.Button();
+            this.cmdOK = new UiTools.WinForms.Designer.Core.ThemedButton();
+            this.cmdCancel = new UiTools.WinForms.Designer.Core.ThemedButton();
             this.labDesignerFile = new System.Windows.Forms.Label();
             this.labNamespace = new System.Windows.Forms.Label();
-            this.txtNamespace = new System.Windows.Forms.TextBox();
+            this.txtNamespace = new UiTools.WinForms.Designer.Core.ThemedTextBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.labNewFormNotice = new System.Windows.Forms.Label();
-            this.fpeDesignerFile = new UiTools.WinForms.Designer.FilePathEdit();
             this.picDesignerFileHint = new System.Windows.Forms.PictureBox();
+            this.fpeDesignerFile = new UiTools.WinForms.Designer.FilePathEdit();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picPlatformHint)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picConfigurationHint)).BeginInit();
@@ -109,7 +109,7 @@
             // 
             this.cboConfiguration.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.cboConfiguration.FormattingEnabled = true;
-            this.cboConfiguration.Location = new System.Drawing.Point(207, 167);
+            this.cboConfiguration.Location = new System.Drawing.Point(227, 167);
             this.cboConfiguration.Name = "cboConfiguration";
             this.cboConfiguration.Size = new System.Drawing.Size(137, 28);
             this.cboConfiguration.TabIndex = 3;
@@ -118,7 +118,7 @@
             // 
             this.cboPlatform.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.cboPlatform.FormattingEnabled = true;
-            this.cboPlatform.Location = new System.Drawing.Point(207, 206);
+            this.cboPlatform.Location = new System.Drawing.Point(227, 206);
             this.cboPlatform.Name = "cboPlatform";
             this.cboPlatform.Size = new System.Drawing.Size(137, 28);
             this.cboPlatform.TabIndex = 5;
@@ -161,7 +161,7 @@
             // picPlatformHint
             // 
             this.picPlatformHint.Image = global::UiTools.WinForms.Designer.Properties.Resources.Hint;
-            this.picPlatformHint.Location = new System.Drawing.Point(180, 208);
+            this.picPlatformHint.Location = new System.Drawing.Point(200, 208);
             this.picPlatformHint.Name = "picPlatformHint";
             this.picPlatformHint.Size = new System.Drawing.Size(24, 24);
             this.picPlatformHint.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -172,7 +172,7 @@
             // picConfigurationHint
             // 
             this.picConfigurationHint.Image = global::UiTools.WinForms.Designer.Properties.Resources.Hint;
-            this.picConfigurationHint.Location = new System.Drawing.Point(180, 169);
+            this.picConfigurationHint.Location = new System.Drawing.Point(200, 169);
             this.picConfigurationHint.Name = "picConfigurationHint";
             this.picConfigurationHint.Size = new System.Drawing.Size(24, 24);
             this.picConfigurationHint.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -183,7 +183,7 @@
             // picProjectFileHint
             // 
             this.picProjectFileHint.Image = global::UiTools.WinForms.Designer.Properties.Resources.Hint;
-            this.picProjectFileHint.Location = new System.Drawing.Point(180, 131);
+            this.picProjectFileHint.Location = new System.Drawing.Point(200, 131);
             this.picProjectFileHint.Name = "picProjectFileHint";
             this.picProjectFileHint.Size = new System.Drawing.Size(24, 24);
             this.picProjectFileHint.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -197,10 +197,10 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.fpeProjectFile.BackColor = System.Drawing.SystemColors.Control;
             this.fpeProjectFile.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.fpeProjectFile.Location = new System.Drawing.Point(207, 128);
+            this.fpeProjectFile.Location = new System.Drawing.Point(227, 128);
             this.fpeProjectFile.Margin = new System.Windows.Forms.Padding(0);
             this.fpeProjectFile.Name = "fpeProjectFile";
-            this.fpeProjectFile.Size = new System.Drawing.Size(615, 28);
+            this.fpeProjectFile.Size = new System.Drawing.Size(595, 28);
             this.fpeProjectFile.TabIndex = 1;
             // 
             // groupBox2
@@ -223,7 +223,7 @@
             // picExtraAssembliesHelp
             // 
             this.picExtraAssembliesHelp.Image = global::UiTools.WinForms.Designer.Properties.Resources.Help;
-            this.picExtraAssembliesHelp.Location = new System.Drawing.Point(263, 38);
+            this.picExtraAssembliesHelp.Location = new System.Drawing.Point(293, 38);
             this.picExtraAssembliesHelp.Name = "picExtraAssembliesHelp";
             this.picExtraAssembliesHelp.Size = new System.Drawing.Size(24, 24);
             this.picExtraAssembliesHelp.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -234,7 +234,7 @@
             // picExtraAssembliesHint
             // 
             this.picExtraAssembliesHint.Image = global::UiTools.WinForms.Designer.Properties.Resources.Hint;
-            this.picExtraAssembliesHint.Location = new System.Drawing.Point(237, 38);
+            this.picExtraAssembliesHint.Location = new System.Drawing.Point(267, 38);
             this.picExtraAssembliesHint.Name = "picExtraAssembliesHint";
             this.picExtraAssembliesHint.Size = new System.Drawing.Size(24, 24);
             this.picExtraAssembliesHint.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -248,10 +248,10 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.fpeExtraAssemblies.BackColor = System.Drawing.SystemColors.Control;
             this.fpeExtraAssemblies.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.fpeExtraAssemblies.Location = new System.Drawing.Point(290, 35);
+            this.fpeExtraAssemblies.Location = new System.Drawing.Point(320, 35);
             this.fpeExtraAssemblies.Margin = new System.Windows.Forms.Padding(0);
             this.fpeExtraAssemblies.Name = "fpeExtraAssemblies";
-            this.fpeExtraAssemblies.Size = new System.Drawing.Size(532, 28);
+            this.fpeExtraAssemblies.Size = new System.Drawing.Size(502, 28);
             this.fpeExtraAssemblies.TabIndex = 1;
             // 
             // cmdOK
@@ -321,16 +321,16 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.fpeDesignerFile.BackColor = System.Drawing.SystemColors.Control;
             this.fpeDesignerFile.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.fpeDesignerFile.Location = new System.Drawing.Point(221, 12);
+            this.fpeDesignerFile.Location = new System.Drawing.Point(241, 12);
             this.fpeDesignerFile.Margin = new System.Windows.Forms.Padding(0);
             this.fpeDesignerFile.Name = "fpeDesignerFile";
-            this.fpeDesignerFile.Size = new System.Drawing.Size(631, 28);
+            this.fpeDesignerFile.Size = new System.Drawing.Size(611, 28);
             this.fpeDesignerFile.TabIndex = 1;
             // 
             // picDesignerFileHint
             // 
             this.picDesignerFileHint.Image = global::UiTools.WinForms.Designer.Properties.Resources.Warning;
-            this.picDesignerFileHint.Location = new System.Drawing.Point(194, 15);
+            this.picDesignerFileHint.Location = new System.Drawing.Point(214, 15);
             this.picDesignerFileHint.Name = "picDesignerFileHint";
             this.picDesignerFileHint.Size = new System.Drawing.Size(24, 24);
             this.picDesignerFileHint.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -360,7 +360,7 @@
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(888, 542);
             this.Name = "DesignerCsFileContextForm";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Text = "<Title>";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
@@ -385,16 +385,16 @@
         private System.Windows.Forms.Label labExtraAssemblies;
         private System.Windows.Forms.Label labConfiguration;
         private System.Windows.Forms.Label labPlatform;
-        private System.Windows.Forms.ComboBox cboConfiguration;
-        private System.Windows.Forms.ComboBox cboPlatform;
+        private Core.ThemedComboBox cboConfiguration;
+        private Core.ThemedComboBox cboPlatform;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.Button cmdOK;
-        private System.Windows.Forms.Button cmdCancel;
+        private Core.ThemedButton cmdOK;
+        private Core.ThemedButton cmdCancel;
         private FilePathEdit fpeDesignerFile;
         private System.Windows.Forms.Label labDesignerFile;
         private System.Windows.Forms.Label labNamespace;
-        private System.Windows.Forms.TextBox txtNamespace;
+        private Core.ThemedTextBox txtNamespace;
         private System.Windows.Forms.PictureBox picProjectFileHint;
         private System.Windows.Forms.PictureBox picPlatformHint;
         private System.Windows.Forms.PictureBox picConfigurationHint;

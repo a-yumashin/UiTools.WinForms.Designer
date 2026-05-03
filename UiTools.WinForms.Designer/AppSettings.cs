@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
-using System.Text;
 using System.Windows.Forms;
 using UiTools.WinForms.Designer.Core;
 
@@ -121,6 +120,9 @@ namespace UiTools.WinForms.Designer
         [DefaultValue(true)]
         public bool RemoveUnnecessaryUsings { get; set; } = true;
 
+        [DefaultValue(KnownUiThemes.NONE)]
+        public string UiThemeName { get; set; } = KnownUiThemes.NONE;
+
         #endregion IOptions members
     }
 
@@ -149,5 +151,6 @@ namespace UiTools.WinForms.Designer
         int MainFormMRUListMaxSize { get; set; }
         MessageLogger.LogLevel LogLevel { get; set; }
         bool RemoveUnnecessaryUsings { get; set; }
+        string UiThemeName { get; set; }
     }
 }

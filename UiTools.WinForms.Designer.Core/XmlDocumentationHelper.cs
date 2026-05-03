@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Resources;
 using System.Runtime.Versioning;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
 using static UiTools.WinForms.Designer.Core.CommonStuff;
@@ -15,9 +17,10 @@ namespace UiTools.WinForms.Designer.Core
 {
     public static class XmlDocumentationHelper
     {
-        private static readonly ConcurrentDictionary<Assembly, XDocument> assemblyXmlCache = new ConcurrentDictionary<Assembly, XDocument>();
+        private static readonly ConcurrentDictionary<Assembly, WeakReference<XDocument>> assemblyXmlCache = new ConcurrentDictionary<Assembly, WeakReference<XDocument>>();
         private static readonly ConcurrentDictionary<Type, string> typeSummaryCache = new ConcurrentDictionary<Type, string>();
         private static readonly ConcurrentDictionary<Assembly, ResourceManager> resourceManagerCache = new ConcurrentDictionary<Assembly, ResourceManager>();
+        private static readonly XDocument NotFoundSentinel = new XDocument();
 
         /// <summary>
         /// Returns a description for the specified type, first trying to find SRDescriptionAttribute,
@@ -169,9 +172,31 @@ namespace UiTools.WinForms.Designer.Core
                     var summaryNode = memberNode.Element("summary");
                     if (summaryNode != null)
                     {
-                        string summary = summaryNode.Value.Trim();
-                        summary = Regex.Replace(summary, "<[^>]*>", string.Empty);
-                        summary = summary.Replace("\n", "").Replace("\r", "").Replace("  ", " ");
+                        var sb = new StringBuilder();
+                        foreach (var node in summaryNode.Nodes())
+                        {
+                            if (node is XText textNode)
+                                sb.Append(textNode.Value);
+                            else if (node is XElement element)
+                            {
+                                if (element.Name == "see" || element.Name == "seealso")
+                                {
+                                    string cref = element.Attribute("cref")?.Value ?? "";
+                                    int colonIndex = cref.IndexOf(':');
+                                    sb.Append(colonIndex != -1 ? cref.Substring(colonIndex + 1) : cref);
+                                }
+                                else if (element.Name == "paramref" || element.Name == "typeparamref")
+                                {
+                                    sb.Append(element.Attribute("name")?.Value ?? "");
+                                }
+                                else
+                                {
+                                    sb.Append(element.Value);
+                                }
+                            }
+                        }
+                        var summary = sb.ToString();
+                        summary = Regex.Replace(summary, @"\s+", " ").Trim();
                         return summary;
                     }
                 }
@@ -188,14 +213,14 @@ namespace UiTools.WinForms.Designer.Core
             if (assembly == null)
                 return null;
 
-            if (assemblyXmlCache.TryGetValue(assembly, out XDocument cachedDoc))
-                return cachedDoc;
+            if (assemblyXmlCache.TryGetValue(assembly, out WeakReference<XDocument> weakRef) && weakRef.TryGetTarget(out XDocument cachedDoc))
+                return cachedDoc == NotFoundSentinel ? null : cachedDoc;
 
             string xmlDocPath = FindXmlDocumentationPath(assembly);
             if (xmlDocPath != null)
                 return LoadXmlDocumentAndCache(assembly, xmlDocPath);
 
-            assemblyXmlCache.TryAdd(assembly, null);
+            assemblyXmlCache.TryAdd(assembly, new WeakReference<XDocument>(NotFoundSentinel));
             return null;
         }
 
@@ -242,13 +267,13 @@ namespace UiTools.WinForms.Designer.Core
             try
             {
                 XDocument doc = XDocument.Load(path);
-                assemblyXmlCache.TryAdd(assembly, doc);
+                assemblyXmlCache.TryAdd(assembly, new WeakReference<XDocument>(doc));
                 return doc;
             }
             catch (Exception ex)
             {
                 MessageLogger.LogError(typeof(XmlDocumentationHelper), $"Error loading XML documentation from {path}: {ex.Message}", ex);
-                assemblyXmlCache.TryAdd(assembly, null);
+                assemblyXmlCache.TryAdd(assembly, new WeakReference<XDocument>(NotFoundSentinel));
                 return null;
             }
         }

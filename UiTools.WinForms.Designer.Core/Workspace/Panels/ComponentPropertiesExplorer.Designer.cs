@@ -34,6 +34,7 @@
             // 
             // comboBoxEx1
             // 
+            this.comboBoxEx1.CueBannerText = null;
             this.comboBoxEx1.Dock = System.Windows.Forms.DockStyle.Top;
             this.comboBoxEx1.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.comboBoxEx1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -53,8 +54,8 @@
             // 
             // ComponentPropertiesExplorer
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.Controls.Add(this.propertyGrid1);
             this.Controls.Add(this.comboBoxEx1);
             this.Name = "ComponentPropertiesExplorer";

@@ -1,7 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Drawing;
+using System.IO;
 using System.Net;
+using System.Threading.Tasks;
 using System.Windows.Forms;
+using Microsoft.Web.WebView2.Core;
+using Microsoft.Web.WebView2.WinForms;
 using UiTools.WinForms.Designer.Core.Properties;
 using static UiTools.WinForms.Designer.Core.MessageLogger;
 
@@ -9,6 +15,14 @@ namespace UiTools.WinForms.Designer.Core
 {
     public partial class OutputPanel : UserControl, ILogTarget
     {
+        private static readonly Color DefaultLogBackColor = SystemColors.Window;
+        private static readonly Color DefaultLogForeColor = SystemColors.ControlText;
+        private static readonly Color DefaultLogLineBorderColor = ColorTranslator.FromHtml("#F2F2F2");
+        private static readonly Color DefaultLogTraceLineColor = ColorTranslator.FromHtml("#A9A9A9");
+        private static readonly Color DefaultLogWarningLineColor = Color.Chocolate;
+        private static readonly Color DefaultLogErrorLineColor = Color.Red;
+        private static readonly Color DefaultLogLinkColor = Color.Blue;
+
         public event EventHandler WordWrapChanged;
         public event EventHandler ShowTimestampChanged;
 
@@ -16,60 +30,105 @@ namespace UiTools.WinForms.Designer.Core
         private bool wordWrap = false;
         private bool showTimestamp = false;
         private readonly Dictionary<string, Exception> exceptionCache = new Dictionary<string, Exception>();
-        private ContextMenuStrip outputContextMenu;
+        private bool isDarkTheme = false;
+
+        private WebView2 webView2;
+        private TaskCompletionSource<bool> browserReadyTcs = new TaskCompletionSource<bool>();
+        private bool isFirstLoad = true;
 
         public OutputPanel()
         {
             InitializeComponent();
-            ResetContent();
-            InitContextMenu();
+
+            webView2 = new WebView2 { Dock = DockStyle.Fill, Visible = false };
+            Controls.Add(webView2);
+            webView2.BringToFront();
+
+            foreach (ToolStripItem item in toolStrip1.Items)
+            {
+                item.MouseEnter += (s, e) => toolStrip1.Refresh();
+                item.MouseLeave += (s, e) => toolStrip1.Refresh();
+                if (item is ToolStripButton btn)
+                    btn.CheckedChanged += (s, e) => toolStrip1.Refresh();
+            }
+
+            InitializeWebView();
         }
 
-        private void ResetContent()
+        protected override void OnHandleCreated(EventArgs e)
+        {
+            base.OnHandleCreated(e);
+            ScaleToolStripIcons(toolStrip1);
+        }
+
+        private void ScaleToolStripIcons(ToolStrip ts)
+        {
+            float scaleFactor = DeviceDpi / 120f;
+            int size = (int)(20 * scaleFactor);
+            ts.ImageScalingSize = new Size(size, size);
+        }
+
+        private async void InitializeWebView()
+        {
+            var userDataFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "UiTools.WinForms.Designer");
+            var env = await CoreWebView2Environment.CreateAsync(null, userDataFolder);
+            await webView2.EnsureCoreWebView2Async(env);
+
+            webView2.CoreWebView2.Settings.IsStatusBarEnabled = false;
+            webView2.CoreWebView2.Profile.PreferredColorScheme = isDarkTheme
+                ? CoreWebView2PreferredColorScheme.Dark
+                : CoreWebView2PreferredColorScheme.Light;
+
+            webView2.CoreWebView2.SetVirtualHostNameToFolderMapping(
+                "app.assets",
+                AppDomain.CurrentDomain.BaseDirectory,
+                CoreWebView2HostResourceAccessKind.Allow);
+
+            webView2.CoreWebView2.ContextMenuRequested += CoreWebView2_ContextMenuRequested;
+            webView2.CoreWebView2.NavigationStarting += CoreWebView2_NavigationStarting;
+
+            webView2.CoreWebView2.DOMContentLoaded += (s, e) =>
+            {
+                if (isFirstLoad)
+                {
+                    isFirstLoad = false;
+                    webView2.Visible = true;
+                    browserReadyTcs.TrySetResult(true);
+                }
+            };
+
+            ResetContent();
+        }
+
+        private async void CoreWebView2_ContextMenuRequested(object sender, CoreWebView2ContextMenuRequestedEventArgs e)
+        {
+            var deferral = e.GetDeferral();
+            try
+            {
+                await InitContextMenuAsync(e.MenuItems);
+            }
+            finally
+            {
+                deferral.Complete();
+            }
+        }
+
+        private async void ResetContent()
         {
             exceptionCache.Clear();
-            string initialClass = wordWrap ? "wrap" : "no-wrap";
 
-            string html = $@"<html>
-<meta http-equiv='X-UA-Compatible' content='IE=edge'>
-<head>
-    <style>
-        body {{
-            font-family: 'Consolas', monospace;
-            font-size: 9pt;
-            margin: 5px;
-            background-color: white;
-        }}
-        body.wrap {{ white-space: pre-wrap; word-wrap: break-word; overflow-x: hidden; }}
-        body.no-wrap {{ white-space: pre; overflow-x: auto; }}
-        div.trace-line {{ margin-bottom: 2px; border-bottom: 1px solid #f2f2f2; color: #A9A9A9; }}
-        div.info-line {{ margin-bottom: 2px; border-bottom: 1px solid #f2f2f2; }}
-        div.warning-line {{ margin-bottom: 2px; border-bottom: 1px solid #f2f2f2; color: chocolate; }}
-        div.error-line {{ margin-bottom: 2px; border-bottom: 1px solid #f2f2f2; color: red; }}
-        a.error-link {{ text-decoration: none; color: blue; }}
-        a.error-link span {{ text-decoration: underline; cursor: pointer; color: blue; }}
-        span.log-level {{ font-weight: bold; }}
-    </style>
-</head>
-<body class='{initialClass}'></body>
-</html>";
-
-            browserOutput.DocumentText = html;
-            while (browserOutput.ReadyState != WebBrowserReadyState.Complete)
+            if (isFirstLoad)
             {
-                Application.DoEvents();
-                System.Threading.Thread.Sleep(1);
+                string initialClass = wordWrap ? "wrap" : "no-wrap";
+                var css = ComposeDynamicStylesInnerHtml();
+                string html = $@"<html><head><style id='dynamicStyles'>{css}</style></head><body class='{initialClass}'></body></html>";
+                webView2.CoreWebView2?.NavigateToString(html);
             }
-            browserOutput.Document.Body.InnerHtml = ""; // otherwise we get an empty line in the very beginning
-            browserOutput.Document.Focus(); // otherwise selection with double click doesn't work
-
-            browserOutput.Document.ContextMenuShowing += (s, e) =>
+            else
             {
-                e.ReturnValue = false; // turn off the built-in menu
-                if (outputContextMenu == null)
-                    InitContextMenu();
-                outputContextMenu.Show(Cursor.Position);
-            };
+                await browserReadyTcs.Task;
+                _ = webView2.CoreWebView2.ExecuteScriptAsync("document.body.innerHTML = '';");
+            }
         }
 
         public bool WordWrap
@@ -81,12 +140,11 @@ namespace UiTools.WinForms.Designer.Core
                     return;
                 wordWrap = value;
 
-                if (browserOutput.Document != null && browserOutput.Document.Body != null)
-                    browserOutput.Document.Body.SetAttribute("className", value ? "wrap" : "no-wrap");
-
                 ignoreCheckedChangedEvent = true;
                 tsbToggleWrap.Checked = value;
                 ignoreCheckedChangedEvent = false;
+
+                ApplyWordWrapAsync();
 
                 WordWrapChanged?.Invoke(this, EventArgs.Empty);
             }
@@ -109,6 +167,13 @@ namespace UiTools.WinForms.Designer.Core
             }
         }
 
+        private async void ApplyWordWrapAsync()
+        {
+            await browserReadyTcs.Task;
+            string className = wordWrap ? "wrap" : "no-wrap";
+            await webView2.CoreWebView2.ExecuteScriptAsync($"document.body.className = '{className}';");
+        }
+
         private void tsbToggleWrap_CheckedChanged(object sender, EventArgs e)
         {
             if (!ignoreCheckedChangedEvent)
@@ -128,20 +193,28 @@ namespace UiTools.WinForms.Designer.Core
 
         private void tsbSearch_Click(object sender, EventArgs e)
         {
-            browserOutput.Focus();
+            ShowSearchDialog();
+        }
+
+        public async void ShowSearchDialog()
+        {
+            await browserReadyTcs.Task;
+            webView2.Focus();
             SendKeys.Send("^{f}");
         }
 
-        public void WriteLine(LogLevel level, string message, Exception ex)
+        public async void WriteLine(LogLevel level, string message, Exception ex)
         {
-            if (browserOutput.InvokeRequired)
+            if (IsDisposed)
+                return;
+
+            if (InvokeRequired)
             {
-                browserOutput.Invoke(new Action(() => WriteLine(level, message, ex)));
+                Invoke(() => WriteLine(level, message, ex));
                 return;
             }
 
-            if (browserOutput.Document == null || browserOutput.Document.Body == null)
-                return;
+            await browserReadyTcs.Task;
 
             string escapedMessage = WebUtility.HtmlEncode(message);
             string htmlToAdd = "";
@@ -174,19 +247,25 @@ namespace UiTools.WinForms.Designer.Core
                     break;
             }
 
-            var div = browserOutput.Document.CreateElement("div");
-            div.SetAttribute("className", lineClassName);
             string timeStamp = ShowTimestamp ? $"{DateTime.Now:HH:mm:ss:fff}  " : string.Empty;
-            div.InnerHtml = $"{timeStamp}{htmlToAdd}";
-            browserOutput.Document.Body.AppendChild(div);
-            //Debug.WriteLine(browserOutput.Document.GetElementsByTagName("html")[0].InnerHtml);
+            string fullLineHtml = $"{timeStamp}{htmlToAdd}";
 
-            browserOutput.Document.Window.ScrollTo(0, browserOutput.Document.Body.ScrollRectangle.Height);
+            // Constructing the script to append the new div and scroll to bottom:
+            string jsSnippet = $@"
+                (function() {{
+                    var div = document.createElement('div');
+                    div.className = '{lineClassName}';
+                    div.innerHTML = '{CommonStuff.EscapeJavaScriptString(fullLineHtml)}';
+                    document.body.appendChild(div);
+                    window.scrollTo(0, document.body.scrollHeight);
+                }})();";
+
+            await webView2.CoreWebView2.ExecuteScriptAsync(jsSnippet);
         }
 
-        private void browserOutput_Navigating(object sender, WebBrowserNavigatingEventArgs e)
+        private void CoreWebView2_NavigationStarting(object sender, CoreWebView2NavigationStartingEventArgs e)
         {
-            string url = e.Url.ToString();
+            string url = e.Uri.ToString();
             if (url.StartsWith("app://show-ex/"))
             {
                 e.Cancel = true;
@@ -205,27 +284,163 @@ namespace UiTools.WinForms.Designer.Core
             }
         }
 
-        private void InitContextMenu()
+        private async Task InitContextMenuAsync(ICollection<CoreWebView2ContextMenuItem> menuItems)
         {
-            outputContextMenu = new ContextMenuStrip();
+            // Check for selected text:
+            string result = await webView2.CoreWebView2.ExecuteScriptAsync("window.getSelection().toString().length > 0");
+            bool hasSelection = (result == "true");
 
-            var miCopy = new ToolStripMenuItem("Copy", Resources.Copy, (s, e) => browserOutput.Document.ExecCommand("Copy", false, null));
-            var miSelectAll = new ToolStripMenuItem("Select All", null, (s, e) => browserOutput.Document.ExecCommand("SelectAll", false, null));
-            var miClearAll = new ToolStripMenuItem("Clear All", Resources.ClearWindowContent, (s, e) => ResetContent());
+            // Clear all standard items (Copy, Paste, Print etc):
+            menuItems.Clear();
 
-            outputContextMenu.Items.Add(miCopy);
-            outputContextMenu.Items.Add(miSelectAll);
-            outputContextMenu.Items.Add(new ToolStripSeparator());
-            outputContextMenu.Items.Add(miClearAll);
+            var environment = webView2.CoreWebView2.Environment;
 
-            outputContextMenu.Opening += (s, e) => miCopy.Enabled = !string.IsNullOrEmpty(
-                browserOutput.Document?.InvokeScript("eval", new object[] { "window.getSelection().toString()" })?.ToString());
+            // Create "Copy" item:
+            var copyItem = environment.CreateContextMenuItem("Copy", null, CoreWebView2ContextMenuItemKind.Command);
+            copyItem.IsEnabled = hasSelection;
+            copyItem.CustomItemSelected += async (s, args) => await webView2.CoreWebView2.ExecuteScriptAsync("document.execCommand('copy');");
+
+            // Create "Select All" item:
+            var selectAllItem = environment.CreateContextMenuItem("Select All", null, CoreWebView2ContextMenuItemKind.Command);
+            selectAllItem.CustomItemSelected += async (s, args) => await webView2.CoreWebView2.ExecuteScriptAsync("document.execCommand('selectAll');");
+
+            // Create "Clear All" item:
+            var clearAllItem = environment.CreateContextMenuItem("Clear All", null, CoreWebView2ContextMenuItemKind.Command);
+            clearAllItem.CustomItemSelected += (s, args) => ResetContent();
+
+            // Add items to the menu:
+            menuItems.Add(copyItem);
+            menuItems.Add(selectAllItem);
+            menuItems.Add(environment.CreateContextMenuItem("", null, CoreWebView2ContextMenuItemKind.Separator));
+            menuItems.Add(clearAllItem);
         }
 
         public override void Refresh()
         {
             base.Refresh();
-            browserOutput.Invalidate();
+            webView2.Invalidate();
         }
+
+        [Category("Appearance")]
+        [DefaultValue(false)]
+        public bool IsDarkTheme
+        {
+            get => isDarkTheme;
+            set
+            {
+                if (isDarkTheme != value)
+                {
+                    isDarkTheme = value;
+                    ApplyUiThemeToToolbarImages();
+
+                    // Prevent white flash by setting the default background color of the engine:
+                    webView2.DefaultBackgroundColor = isDarkTheme ? Color.FromArgb(31, 31, 31) : Color.White;
+
+                    _ = ApplyUiThemeToBrowser();
+                }
+            }
+        }
+
+        private void ApplyUiThemeToToolbarImages()
+        {
+            tsbClear.Image = IsDarkTheme ? Resources.ClearWindowContent_DarkTheme : Resources.ClearWindowContent;
+            tsbToggleWrap.Image = IsDarkTheme ? Resources.WordWrap_DarkTheme : Resources.WordWrap;
+            tsbTimestamp.Image = IsDarkTheme ? Resources.TimeStamp_DarkTheme : Resources.TimeStamp;
+            tsbSearch.Image = IsDarkTheme ? Resources.SearchText_DarkTheme : Resources.SearchText;
+        }
+
+        private async Task ApplyUiThemeToBrowser()
+        {
+            await browserReadyTcs.Task;
+
+            webView2.CoreWebView2.Profile.PreferredColorScheme = isDarkTheme
+                ? CoreWebView2PreferredColorScheme.Dark
+                : CoreWebView2PreferredColorScheme.Light;
+
+            string css = CommonStuff.EscapeJavaScriptString(ComposeDynamicStylesInnerHtml());
+            string script = $@"
+                (function() {{
+                    var styleTag = document.getElementById('dynamicStyles');
+                    if (styleTag) styleTag.innerHTML = '{css}';
+                }})();";
+
+            await webView2.ExecuteScriptAsync(script);
+        }
+
+        private string ComposeDynamicStylesInnerHtml()
+        {
+            var logBackColor = ColorTranslator.ToHtml(LogBackColor);
+            var logForeColor = ColorTranslator.ToHtml(LogForeColor);
+            var logLineBorderColor = ColorTranslator.ToHtml(LogLineBorderColor);
+            var logTraceLineColor = ColorTranslator.ToHtml(LogTraceLineColor);
+            var logWarningLineColor = ColorTranslator.ToHtml(LogWarningLineColor);
+            var logErrorLineColor = ColorTranslator.ToHtml(LogErrorLineColor);
+            var logLinkColor = ColorTranslator.ToHtml(LogLinkColor);
+
+            var scrollFace = isDarkTheme ? ThemeApplier.SCROLL_FACE_COLOR_DARK : ThemeApplier.SCROLL_FACE_COLOR_LIGHT;
+            var scrollTrack = logBackColor;
+
+            return $@"
+        body {{
+            font-family: 'Consolas', monospace;
+            font-size: 9pt;
+            margin: 0;
+            padding: 2px;
+            background-color: {logBackColor};
+            color: {logForeColor};
+        }}
+        html {{
+            scrollbar-color: {scrollFace} {scrollTrack};
+        }}
+        body.wrap {{ white-space: pre-wrap; word-wrap: break-word; overflow-x: hidden; }}
+        body.no-wrap {{ white-space: pre; overflow-x: auto; }}
+        div.trace-line {{ margin-bottom: 2px; border-bottom: 1px solid {logLineBorderColor}; color: {logTraceLineColor}; }}
+        div.info-line {{ margin-bottom: 2px; border-bottom: 1px solid {logLineBorderColor}; }}
+        div.warning-line {{ margin-bottom: 2px; border-bottom: 1px solid {logLineBorderColor}; color: {logWarningLineColor}; }}
+        div.error-line {{ margin-bottom: 2px; border-bottom: 1px solid {logLineBorderColor}; color: {logErrorLineColor}; }}
+        a.error-link {{ text-decoration: none; color: {logLinkColor}; }}
+        a.error-link span {{ text-decoration: underline; cursor: pointer; color: {logLinkColor}; }}
+        span.log-level {{ font-weight: bold; }}";
+        }
+
+        [Category("Appearance")]
+        public Color LogBackColor { get; set; } = DefaultLogBackColor;
+        [Category("Appearance")]
+        public Color LogForeColor { get; set; } = DefaultLogForeColor;
+        [Category("Appearance")]
+        public Color LogLineBorderColor { get; set; } = DefaultLogLineBorderColor;
+        [Category("Appearance")]
+        public Color LogTraceLineColor { get; set; } = DefaultLogTraceLineColor;
+        [Category("Appearance")]
+        public Color LogWarningLineColor { get; set; } = DefaultLogWarningLineColor;
+        [Category("Appearance")]
+        public Color LogErrorLineColor { get; set; } = DefaultLogErrorLineColor;
+        [Category("Appearance")]
+        public Color LogLinkColor { get; set; } = DefaultLogLinkColor;
+
+        #region Support for default values of Color properties
+
+        private bool ShouldSerializeLogBackColor() => LogBackColor != DefaultLogBackColor;
+        private void ResetLogBackColor() => LogBackColor = DefaultLogBackColor;
+
+        private bool ShouldSerializeLogForeColor() => LogForeColor != DefaultLogForeColor;
+        private void ResetLogForeColor() => LogForeColor = DefaultLogForeColor;
+
+        private bool ShouldSerializeLogLineBorderColor() => LogLineBorderColor != DefaultLogLineBorderColor;
+        private void ResetLogLineBorderColor() => LogLineBorderColor = DefaultLogLineBorderColor;
+
+        private bool ShouldSerializeLogTraceLineColor() => LogTraceLineColor != DefaultLogTraceLineColor;
+        private void ResetLogTraceLineColor() => LogTraceLineColor = DefaultLogTraceLineColor;
+
+        private bool ShouldSerializeLogWarningLineColor() => LogWarningLineColor != DefaultLogWarningLineColor;
+        private void ResetLogWarningLineColor() => LogWarningLineColor = DefaultLogWarningLineColor;
+
+        private bool ShouldSerializeLogErrorLineColor() => LogErrorLineColor != DefaultLogErrorLineColor;
+        private void ResetLogErrorLineColor() => LogErrorLineColor = DefaultLogErrorLineColor;
+
+        private bool ShouldSerializeLogLinkColor() => LogLinkColor != DefaultLogLinkColor;
+        private void ResetLogLinkColor() => LogLinkColor = DefaultLogLinkColor;
+
+        #endregion Support for default values of Color properties
     }
 }

@@ -26,6 +26,10 @@
     <Optimize>True</Optimize>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="UiThemes\UiTools.WinForms.Designer.UiThemes.xsd" />
+    <None Remove="UiTools.WinForms.Designer.UiThemes.xml" />
+  </ItemGroup>
+  <ItemGroup>
     <InternalsVisibleTo Include="UiTools.WinForms.Designer.Tests" />
   </ItemGroup>
   <ItemGroup>
@@ -35,15 +39,25 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\SyntaxHighlighting\SourceCodePageTemplate.html" />
+    <EmbeddedResource Include="UiThemes\UiTools.WinForms.Designer.UiThemes.xml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UiThemes\UiTools.WinForms.Designer.UiThemes.xsd">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <ContentWithTargetPath Include="Resources\SyntaxHighlighting\highlight.min.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <TargetPath>highlight.min.js</TargetPath>
     </ContentWithTargetPath>
-    <ContentWithTargetPath Include="Resources\SyntaxHighlighting\default.min.css">
+    <ContentWithTargetPath Include="Resources\SyntaxHighlighting\Light.css">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <TargetPath>default.min.css</TargetPath>
+      <TargetPath>Light.css</TargetPath>
+    </ContentWithTargetPath>
+    <ContentWithTargetPath Include="Resources\SyntaxHighlighting\Dark.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <TargetPath>Dark.css</TargetPath>
     </ContentWithTargetPath>
   </ItemGroup>
   <ItemGroup>
@@ -58,9 +72,17 @@
       <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="Workspace\ComboBoxEx.cs">
-      <SubType>Component</SubType>
+    <Compile Update="Properties\DarkThemeToolboxItems.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DarkThemeToolboxItems.resx</DependentUpon>
     </Compile>
+    <Compile Update="Properties\LightThemeToolboxItems.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>LightThemeToolboxItems.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Workspace\ComboBoxEx.cs" />
     <Compile Update="Workspace\Panels\ComponentPropertiesExplorer.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -72,11 +94,25 @@
     <Compile Update="Workspace\Panels\ToolboxTreeView.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Update="Workspace\TabControlEx.cs">
+      <SubType>Component</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Update="Properties\DarkThemeToolboxItems.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>DarkThemeToolboxItems.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Properties\LightThemeToolboxItems.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>LightThemeToolboxItems.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Update="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\Toolbox\ToolboxItems\" />
   </ItemGroup>
 </Project>

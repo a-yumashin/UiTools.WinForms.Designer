@@ -30,8 +30,10 @@ namespace UiTools.WinForms.Designer.Core
             if (string.IsNullOrEmpty(dfContext.CsProjectFileFullPath) || !File.Exists(dfContext.CsProjectFileFullPath) ||
                 string.IsNullOrEmpty(dfContext.Configuration) || string.IsNullOrEmpty(dfContext.Platform))
             {
-                MessageLogger.Log(this, "Cannot determine bin directory because the supplied project file does not exist " +
-                    $"('{dfContext.CsProjectFileFullPath}') and/or the supplied Configuration and/or Platform is empty");
+                string csProjFileStatus = string.IsNullOrEmpty(dfContext.CsProjectFileFullPath)
+                    ? "is not specified"
+                    : $"does not exist at '{dfContext.CsProjectFileFullPath}'";
+                MessageLogger.Log(this, $"Cannot determine bin directory: project file {csProjFileStatus}, and/or Configuration/Platform parameters are empty.");
                 if (additionalAssemblyNames != null)
                     result.AddRange(additionalAssemblyNames.Where(x => x != null));
                 if (!string.IsNullOrEmpty(dfContext.ExtraAssembliesFileFullPath) && File.Exists(dfContext.ExtraAssembliesFileFullPath))

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -10,13 +11,12 @@ namespace UiTools.WinForms.Designer.Core
     /// ComboBox which can paint two parts of item text (separated with a space) with different font styles - bold and regular.
     /// Also, if item text is too long and so gets truncated, it is displayed in a tooltip.
     /// </summary>
-    internal class ComboBoxEx : ComboBox
+    internal class ComboBoxEx : ThemedComboBox
     {
         private readonly NativeDropDownList dropDown;
         private readonly ToolTip tooltip = new ToolTip();
         private Font boldFont;
         private TextMeasurer textMeasurer;
-        private const int LEFT_PADDING = 4;
 
         public ComboBoxEx() : base()
         {
@@ -25,9 +25,10 @@ namespace UiTools.WinForms.Designer.Core
             dropDown = new NativeDropDownList(this, tooltip);
         }
 
-        public void SetTextMeasurer(TextMeasurer textMeasurer)
+        protected override void Dispose(bool disposing)
         {
-            this.textMeasurer = textMeasurer;
+            base.Dispose(disposing);
+            boldFont?.Dispose();
         }
 
         public void Clear()
@@ -41,6 +42,7 @@ namespace UiTools.WinForms.Designer.Core
             base.OnHandleCreated(e);
             dropDown.AssignHandle(GetListPortionHandle());
             boldFont = new Font(Font, FontStyle.Bold);
+            textMeasurer = new TextMeasurer(this);
         }
         protected override void OnHandleDestroyed(EventArgs e)
         {
@@ -48,9 +50,18 @@ namespace UiTools.WinForms.Designer.Core
             base.OnHandleDestroyed(e);
         }
 
+        protected override void OnFontChanged(EventArgs e)
+        {
+            base.OnFontChanged(e);
+            boldFont = new Font(Font, FontStyle.Bold);
+            textMeasurer = new TextMeasurer(this);
+        }
+
         protected override void OnSelectedIndexChanged(EventArgs e)
         {
             base.OnSelectedIndexChanged(e);
+            if (!IsHandleCreated)
+                return;
             tooltip.RemoveAll(); // important!
             if (!DroppedDown && SelectedIndex >= 0 && IsItemTextTruncated(SelectedIndex, considerArrowButtonWidth: true))
                 tooltip.SetToolTip(this, Items[SelectedIndex].ToString());
@@ -58,13 +69,31 @@ namespace UiTools.WinForms.Designer.Core
                 tooltip.SetToolTip(this, string.Empty);
         }
 
+        /// <summary>
+        /// Draws text of the selected item in the TEXT AREA.
+        /// </summary>
+        protected override void DrawText(Graphics graphics)
+        {
+            Color textColor = DrawFocusBackground(graphics);
+            int btnWidth = SystemInformation.VerticalScrollBarWidth;
+            var itemBounds = new Rectangle(3, 3, ClientRectangle.Width - btnWidth - 6, ClientRectangle.Height - 6);
+            DrawItemInternal(graphics, SelectedIndex, itemBounds, textColor);
+        }
+
+        /// <summary>
+        /// Draws item in the DROPDOWN LIST.
+        /// </summary>
         protected override void OnDrawItem(DrawItemEventArgs e)
         {
             e.DrawBackground();
-            // NOTE: TextRenderer.DrawText() renders text better than g.DrawString() does.
-            if (e.Index >= 0)
+            DrawItemInternal(e.Graphics, e.Index, e.Bounds, Enabled ? e.ForeColor : DisabledForeColor);
+        }
+
+        private void DrawItemInternal(Graphics graphics, int itemIndex, Rectangle itemBounds, Color foreColor)
+        {
+            if (itemIndex >= 0 && IsHandleCreated)
             {
-                var text = Items[e.Index].ToString();
+                var text = Items[itemIndex].ToString();
                 var flags = TextFormatFlags.NoPadding | TextFormatFlags.Left;
                 if (text.Contains(' '))
                 {
@@ -73,23 +102,21 @@ namespace UiTools.WinForms.Designer.Core
                             $"{nameof(ComboBoxEx)}.{nameof(OnDrawItem)}(): {nameof(textMeasurer)} field not initialized!"); // developer's error
                     var parts = text.Split(" ".ToCharArray(), 2);
                     var firstPartSize = textMeasurer.MeasureBoldText(parts[0]);
-                    var firstPartBounds = new Rectangle(new Point(e.Bounds.X + LEFT_PADDING, e.Bounds.Y), firstPartSize);
+                    var firstPartBounds = new Rectangle(new Point(itemBounds.X + LEFT_PADDING, itemBounds.Y), firstPartSize);
                     var spaceSize = textMeasurer.MeasureRegularText(" ");
-                    TextRenderer.DrawText(e.Graphics, parts[0], boldFont, firstPartBounds, e.ForeColor, flags);
+                    TextRenderer.DrawText(graphics, parts[0], boldFont, firstPartBounds, foreColor, flags);
                     var secondPartLeft = firstPartBounds.Right + 2 * spaceSize.Width;
                     var secondPartSize = textMeasurer.MeasureRegularText(parts[1]);
-                    var secondPartBounds = new Rectangle(new Point(secondPartLeft, e.Bounds.Y), secondPartSize);
-                    TextRenderer.DrawText(e.Graphics, parts[1], e.Font, secondPartBounds, e.ForeColor, flags);
+                    var secondPartBounds = new Rectangle(new Point(secondPartLeft, itemBounds.Y), secondPartSize);
+                    TextRenderer.DrawText(graphics, parts[1], Font, secondPartBounds, foreColor, flags);
                 }
                 else
                 {
-                    var bounds = e.Bounds;
+                    var bounds = itemBounds;
                     bounds.Offset(LEFT_PADDING, 0);
-                    TextRenderer.DrawText(e.Graphics, text, e.Font, bounds, e.ForeColor, flags);
+                    TextRenderer.DrawText(graphics, text, Font, bounds, foreColor, flags);
                 }
             }
-            if (Focused)
-                e.DrawFocusRectangle();
         }
 
         protected override void OnDropDownClosed(EventArgs e)
@@ -122,17 +149,17 @@ namespace UiTools.WinForms.Designer.Core
         private IntPtr GetListPortionHandle()
         {
             var info = new Win32.COMBOBOXINFO();
-            info.size = Marshal.SizeOf(info);
-            Win32.GetComboBoxInfo(Handle, out info);
-            return info.listHwnd;
+            info.cbSize = Marshal.SizeOf(info);
+            Win32.GetComboBoxInfo(Handle, ref info);
+            return info.hwndList;
         }
 
         private int GetItemWidth()
         {
             var info = new Win32.COMBOBOXINFO();
-            info.size = Marshal.SizeOf(info);
-            Win32.GetComboBoxInfo(Handle, out info);
-            return info.item.right - info.item.left;
+            info.cbSize = Marshal.SizeOf(info);
+            Win32.GetComboBoxInfo(Handle, ref info);
+            return info.rcItem.Right - info.rcItem.Left;
         }
 
         private class NativeDropDownList : NativeWindow
@@ -155,12 +182,11 @@ namespace UiTools.WinForms.Designer.Core
 
             protected override void WndProc(ref Message m)
             {
-                Win32.POINT cursorPos;
-                Win32.GetCursorPos(out cursorPos);
+                Win32.GetCursorPos(out Win32.POINT cursorPos);
                 if (m.Msg == Win32.WM_MOUSEMOVE && Handle == Win32.WindowFromPoint(cursorPos))
                 {
                     // Mouse cursor is moving over the dropdown portion
-                    int itemIndex = Win32.SendMessage(Handle, Win32.LB_GETCURSEL, 0, 0);
+                    int itemIndex = (int)Win32.SendMessage(Handle, Win32.LB_GETCURSEL, IntPtr.Zero, IntPtr.Zero);
                     if (itemIndex >= 0 && lastIndex != itemIndex)
                     {
                         lastIndex = itemIndex;
@@ -177,45 +203,6 @@ namespace UiTools.WinForms.Designer.Core
                 }
                 base.WndProc(ref m);
             }
-        }
-
-        private static class Win32
-        {
-            internal const int WM_MOUSEMOVE = 0x0200;
-            internal const int LB_GETCURSEL = 0x188;
-
-            internal struct RECT
-            {
-                public int left, top, right, bottom;
-            }
-
-            internal struct COMBOBOXINFO
-            {
-                public int size;
-                public RECT item;
-                public RECT button;
-                public int state;
-                public IntPtr comboHwnd;
-                public IntPtr itemHwnd;
-                public IntPtr listHwnd;
-            }
-
-            internal struct POINT
-            {
-                public int X, Y;
-            }
-
-            [DllImport("user32")]
-            internal static extern bool GetComboBoxInfo(IntPtr hwnd, out COMBOBOXINFO info);
-
-            [DllImport("user32.dll")]
-            internal static extern IntPtr WindowFromPoint(POINT Point);
-
-            [DllImport("user32.dll")]
-            internal static extern int SendMessage(IntPtr hWnd, int msg, int wParam, int lParam);
-
-            [DllImport("user32.dll")]
-            internal static extern bool GetCursorPos(out POINT lpPoint);
         }
     }
 }

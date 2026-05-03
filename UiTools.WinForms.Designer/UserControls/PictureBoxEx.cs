@@ -1,40 +1,39 @@
 ﻿using System;
 using System.Drawing;
-using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using UiTools.WinForms.Designer.Core;
 
 namespace UiTools.WinForms.Designer
 {
     public class PictureBoxEx : PictureBox
     {
-        private const int WM_SETCURSOR = 0x0020;
-        private const int IDC_HAND = 32649;
-
-        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        private static extern IntPtr LoadCursor(IntPtr hInstance, int lpCursorName);
-
-        [DllImport("user32.dll", CharSet = CharSet.Auto)]
-        private static extern IntPtr SetCursor(IntPtr hCursor);
-
         protected override void WndProc(ref Message m)
         {
-            if (Cursor == Cursors.Hand && m.Msg == WM_SETCURSOR)
+            if (Cursor == Cursors.Hand && m.Msg == Win32.WM_SETCURSOR)
             {
                 // Fix ugly cursor
-                SetCursor(LoadCursor(IntPtr.Zero, IDC_HAND));
+                Win32.SetCursor(Win32.LoadCursor(IntPtr.Zero, Win32.IDC_HAND));
                 m.Result = IntPtr.Zero;
                 return;
             }
             base.WndProc(ref m);
         }
 
+        public Color HoverBackColor { get; set; } = Color.Empty;
+
+        private Color memBackColor;
         protected override void OnMouseEnter(EventArgs e)
         {
-            BackColor = Color.SkyBlue;
+            if (!HoverBackColor.IsEmpty)
+            {
+                memBackColor = BackColor;
+                BackColor = HoverBackColor;
+            }
         }
         protected override void OnMouseLeave(EventArgs e)
         {
-            BackColor = Color.LightBlue;
+            if (!HoverBackColor.IsEmpty)
+                BackColor = memBackColor;
         }
     }
 }

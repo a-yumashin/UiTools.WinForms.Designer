@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.textbox1 = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.textbox1 = new UiTools.WinForms.Designer.Core.ThemedTextBox();
+            this.button1 = new UiTools.WinForms.Designer.Core.ThemedButton();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.SuspendLayout();
             // 
@@ -45,7 +45,6 @@
             // 
             // button1
             // 
-            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.button1.Location = new System.Drawing.Point(220, 0);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(28, 28);
@@ -70,8 +69,8 @@
 
         #endregion
 
-        private System.Windows.Forms.TextBox textbox1;
-        private System.Windows.Forms.Button button1;
+        private Core.ThemedTextBox textbox1;
+        private Core.ThemedButton button1;
         private System.Windows.Forms.ToolTip toolTip1;
 
 

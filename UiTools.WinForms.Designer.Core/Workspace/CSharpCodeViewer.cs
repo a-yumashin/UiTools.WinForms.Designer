@@ -22,6 +22,7 @@ namespace UiTools.WinForms.Designer.Core
         private string fontFamily;
         private float fontSizeInPoints;
         private List<string> typeNames = new List<string>();
+        private bool isDarkTheme = false;
 
         public CSharpCodeViewer()
         {
@@ -35,6 +36,12 @@ namespace UiTools.WinForms.Designer.Core
             var userDataFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "UiTools.WinForms.Designer");
             var env = await CoreWebView2Environment.CreateAsync(null, userDataFolder);
             await webView2.EnsureCoreWebView2Async(env);
+
+            webView2.CoreWebView2.Settings.IsStatusBarEnabled = false;
+            webView2.CoreWebView2.Profile.PreferredColorScheme = isDarkTheme
+                ? CoreWebView2PreferredColorScheme.Dark
+                : CoreWebView2PreferredColorScheme.Light;
+
             //webView2.CoreWebView2.OpenDevToolsWindow();
             webView2.CoreWebView2.SetVirtualHostNameToFolderMapping(
                 "app.assets",
@@ -65,7 +72,6 @@ namespace UiTools.WinForms.Designer.Core
                 var menuItems = e.MenuItems;
                 menuItems.Clear();
 
-                // Get the Environment object to create new items:
                 var environment = webView2.CoreWebView2.Environment;
 
                 // Create "Copy" item:
@@ -144,8 +150,14 @@ namespace UiTools.WinForms.Designer.Core
             typeNames = new List<string>(tempList.Distinct().OrderBy(n => n));
 
             var htmlTemplate = GetEmbeddedResource("SyntaxHighlighting.SourceCodePageTemplate.html");
+            var themeName = CommonStuff.CurrentUiTheme == null ? "Light" : CommonStuff.CurrentUiTheme.Name;
+            var scrollFace = isDarkTheme ? ThemeApplier.SCROLL_FACE_COLOR_DARK : ThemeApplier.SCROLL_FACE_COLOR_LIGHT;
+            var scrollTrack = ColorTranslator.ToHtml(BackColor);
             htmlTemplate = htmlTemplate
                 .Replace("{{CSS_PATH}}", "https://app.assets/")
+                .Replace("{{THEME_NAME}}", themeName)
+                .Replace("{{SCROLL_FACE}}", scrollFace)
+                .Replace("{{SCROLL_TRACK}}", scrollTrack)
                 .Replace("{{JS_PATH}}", "https://app.assets/")
                 .Replace("{{SOURCE_CODE}}", WebUtility.HtmlEncode(sourceCode));
             webView2.CoreWebView2.NavigateToString(htmlTemplate);
@@ -201,6 +213,53 @@ namespace UiTools.WinForms.Designer.Core
                 "Thread", "Task", "CancellationToken", "CancellationTokenSource", "Monitor", "Mutex", "ReaderWriterLockSlim", "SemaphoreSlim", "Timer"
             }.ToList();
         }
+
+        [Category("Appearance")]
+        [DefaultValue(false)]
+        public bool IsDarkTheme
+        {
+            get => isDarkTheme;
+            set
+            {
+                if (isDarkTheme != value)
+                {
+                    isDarkTheme = value;
+                    _ = ApplyUiThemeToWebView2();
+                }
+            }
+        }
+
+        private async Task ApplyUiThemeToWebView2()
+        {
+            if (webView2.CoreWebView2 == null)
+                return;
+
+            webView2.CoreWebView2.Profile.PreferredColorScheme = isDarkTheme
+                ? CoreWebView2PreferredColorScheme.Dark
+                : CoreWebView2PreferredColorScheme.Light;
+
+            var css = CommonStuff.EscapeJavaScriptString(ComposeDynamicStylesInnerHtml());
+
+            var themeName = CommonStuff.CurrentUiTheme == null ? "Light" : CommonStuff.CurrentUiTheme.Name;
+            var cssPath = CommonStuff.EscapeJavaScriptString($"https://app.assets/{themeName}.css");
+
+            var script = $@"
+    (function() {{
+        var styleTag = document.getElementById('dynamicStyles');
+        if (styleTag) styleTag.innerHTML = '{css}';
+
+        var link = document.getElementById('dynamicThemeLink');
+        if (link) link.href = '{cssPath}';
+    }})();";
+            await webView2.ExecuteScriptAsync(script);
+        }
+
+        private string ComposeDynamicStylesInnerHtml()
+        {
+            var scrollFace = isDarkTheme ? ThemeApplier.SCROLL_FACE_COLOR_DARK : ThemeApplier.SCROLL_FACE_COLOR_LIGHT;
+            var scrollTrack = ColorTranslator.ToHtml(BackColor);
+            return $"html {{ scrollbar-color: {scrollFace} {scrollTrack}; }}";
+        }
     }
 
     public interface ICSharpCodeViewer
@@ -211,5 +270,6 @@ namespace UiTools.WinForms.Designer.Core
         void SetCodeFont(string fontFamily, float fontSizeInPoints);
         void View(string sourceCode, IEnumerable<string> dynamicClassNames);
         void ShowSearchDialog();
+        void BringToFront();
     }
 }

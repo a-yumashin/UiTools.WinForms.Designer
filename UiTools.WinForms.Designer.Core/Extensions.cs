@@ -221,6 +221,11 @@ namespace UiTools.WinForms.Designer.Core
             return grid.Controls.Cast<Control>().FirstOrDefault(c => c.GetType().Name == "PropertyGridView");
         }
 
+        public static Control GetVScrollBar(this PropertyGrid grid)
+        {
+            return grid.GetGridView().Controls.Cast<Control>().FirstOrDefault(c => c.GetType().Name == "VScrollBar");
+        }
+
         public static GridItem GetGridItemFromLabel(this PropertyGrid propertyGrid, string labelText)
         {
             GridItem GetRootItem(PropertyGrid propertyGrid)

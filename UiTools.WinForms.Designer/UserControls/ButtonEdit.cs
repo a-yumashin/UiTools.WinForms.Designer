@@ -18,7 +18,9 @@ namespace UiTools.WinForms.Designer
         }
 
         public event EventHandler ButtonClick;
-        
+
+        private bool isDarkTheme = false;
+
         [Browsable(true)]
         public new string Text
         {
@@ -77,9 +79,26 @@ namespace UiTools.WinForms.Designer
         public ButtonEdit()
         {
             InitializeComponent();
-            Height = textbox1.Height;
+            button1.Top = textbox1.Top;
             textbox1.TextChanged += textbox1_TextChanged;
+            textbox1.GotFocus += textbox1_GotFocus;
             button1.Click += button1_Click;
+        }
+
+        [Category("Appearance")]
+        [DefaultValue(false)]
+        public bool IsDarkTheme
+        {
+            get => isDarkTheme;
+            set
+            {
+                if (isDarkTheme != value)
+                {
+                    isDarkTheme = value;
+                    button1.Font = new Font("Segoe UI", 9f); // using a fixed font to avoid recalculating button width if the theme font changes
+                    textbox1.Width = Width - 2 - button1.Width;
+                }
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -92,9 +111,21 @@ namespace UiTools.WinForms.Designer
             OnTextChanged(EventArgs.Empty);
         }
 
+        private void textbox1_GotFocus(object sender, EventArgs e)
+        {
+            textbox1.SelectAll();
+        }
+
+        protected override void OnResize(EventArgs e)
+        {
+            base.OnResize(e);
+            button1.Left = textbox1.Right + 2;
+            button1.Height = textbox1.Height;
+        }
+
         protected override void SetBoundsCore(int x, int y, int width, int height, BoundsSpecified specified)
         {
-            base.SetBoundsCore(x, y, width, textbox1.Height + 1, specified);
+            base.SetBoundsCore(x, y, width + 1, textbox1.Height + 3, specified);
         }
     }
 }

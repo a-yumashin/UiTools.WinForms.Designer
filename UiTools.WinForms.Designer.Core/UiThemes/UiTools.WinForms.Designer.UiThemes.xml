@@ -1,0 +1,242 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<UiThemes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:noNamespaceSchemaLocation="./UiTools.WinForms.Designer.UiThemes.xsd">
+    <!--
+        Supported color formats:
+        1. "Known color":      "Yellow", "WindowText", ...
+        2. HTML code:          "#FFAA55" (or "#ffaa55")
+        3. RGB or ARGB value:  "128, 255, 128" or "255, 128, 255, 128"
+        4. 32-bit ARGB value:  "11200750"
+    -->
+    <UiTheme name="Light" font="Segoe UI, 9pt">
+        <AllControls>
+            <ColorProperty name="BackColor" value="Control" />
+            <ColorProperty name="ForeColor" value="ControlText" />
+        </AllControls>
+        <Control type="UiTools.WinForms.Designer.Core.ThemedForm" includeInheritedTypes="true">
+            <ColorProperty name="TitleBarBackColor" value="Window" />
+            <ColorProperty name="TitleBarForeColor" value="WindowText" />
+        </Control>
+        <Control type="System.Windows.Forms.SplitContainer">
+            <ColorProperty name="BackColor" value="#CCCCCC" />
+        </Control>
+        <Control type="Microsoft.Web.WebView2.WinForms.WebView2">
+            <ColorProperty name="DefaultBackgroundColor" value="Window" />
+        </Control>
+        <Control type="UiTools.WinForms.Designer.Core.ThemedTextBox">
+            <ColorProperty name="BackColor" value="Window" />
+        </Control>
+        <Control type="UiTools.WinForms.Designer.Core.IThemedMenuStrip" includeInheritedTypes="true">
+            <ColorProperty name="BackColor" value="#FDFDFD" />
+            <ColorProperty name="TextColor" value="ControlText" />
+            <ColorProperty name="HoverColor" value="#B5D7F3" />
+            <ColorProperty name="HoverTextColor" value="ControlText" />
+            <ColorProperty name="SelectedColor" value="#FDFDFD" />
+            <ColorProperty name="ItemAccentColor" value="#0178D7" />
+            <ColorProperty name="DropDownBackColor" value="#FDFDFD" />
+            <ColorProperty name="DropDownBorderColor" value="#808080" />
+            <ColorProperty name="ImageMarginColor" value="#F1F1F1" />
+            <ColorProperty name="SeparatorColor" value="#BDBDBD" />
+            <ColorProperty name="CheckedColor" value="#B5D7F3" />
+            <ColorProperty name="CheckedAndSelectedColor" value="#80BCEB" />
+        </Control>
+        <Control type="UiTools.WinForms.Designer.Core.ThemedLabel">
+            <ColorProperty name="DisabledForeColor" value="GrayText" />
+        </Control>
+        <Control type="System.Windows.Forms.LinkLabel" includeInheritedTypes="true">
+            <ColorProperty name="LinkColor" value="Blue" />
+            <ColorProperty name="DisabledLinkColor" value="GrayText" />
+        </Control>
+        <Control type="UiTools.WinForms.Designer.Core.ThemedButton">
+            <ColorProperty name="BackColor" value="Control" />
+        </Control>
+        <Control type="UiTools.WinForms.Designer.Core.TabControlEx" includeInheritedTypes="true">
+            <ColorProperty name="TabHeaderBackColor" value="Control" />
+            <ColorProperty name="TabHeaderSelectedBackColor" value="#006CBE" />
+            <ColorProperty name="TabHeaderForeColor" value="ControlText" />
+            <ColorProperty name="TabHeaderSelectedForeColor" value="#FAFAFA" />
+        </Control>
+        <Control type="UiTools.WinForms.Designer.Core.MyDesignerControl">
+            <ColorProperty name="ComponentTrayBackColor" value="ControlLight" />
+            <ColorProperty name="ComponentTrayForeColor" value="ControlText" />
+            <ColorProperty name="SourceCodePanelHeaderBackColor" value="ControlLight" />
+        </Control>
+        <Control type="UiTools.WinForms.Designer.WorkspacePanelContainer">
+            <ColorProperty name="CaptionBackColor" value="LightBlue" />
+            <ColorProperty name="CaptionForeColor" value="ControlText" />
+            <ColorProperty name="CloseButtonHoverBackColor" value="SkyBlue" />
+        </Control>
+        <Control type="UiTools.WinForms.Designer.Core.ToolboxTreeView">
+            <ColorProperty name="BackColor" value="Window" />
+            <ColorProperty name="DisabledBackColor" value="#FBFBFB" />
+            <ColorProperty name="DisabledForeColor" value="GrayText" />
+            <ColorProperty name="HoverBackColor" value="201, 222, 245" />
+            <ColorProperty name="HoverForeColor" value="Black" />
+            <ColorProperty name="SelectedBackColor" value="Highlight" />
+            <ColorProperty name="SelectedForeColor" value="HighlightText" />
+            <ColorProperty name="SearchButtonHoverBackColor" value="#C9DEF5" />
+        </Control>
+        <Control type="UiTools.WinForms.Designer.Core.ThemedComboBox" includeInheritedTypes="true">
+            <ColorProperty name="BackColor" value="Window" />
+            <ColorProperty name="DisabledBackColor" value="Control" />
+            <ColorProperty name="DisabledForeColor" value="GrayText" />
+            <ColorProperty name="BorderColor" value="WindowFrame" />
+            <ColorProperty name="FocusedBackColor" value="Highlight" />
+            <ColorProperty name="FocusedForeColor" value="HighlightText" />
+            <ColorProperty name="ArrowButtonBackColor" value="Control" />
+            <ColorProperty name="ArrowButtonHoverBackColor" value="#C9DEF5" />
+            <ColorProperty name="ArrowButtonDisabledBackColor" value="Control" />
+            <ColorProperty name="ArrowButtonBorderColor" value="0, 120, 212" />
+            <ColorProperty name="ArrowColor" value="Black" />
+            <ColorProperty name="ArrowDisabledColor" value="#B8B8B8" />
+            <ColorProperty name="CueBannerForeColor" value="Gray" />
+        </Control>
+        <Control type="UiTools.WinForms.Designer.Core.ThemedToolStrip">
+            <ColorProperty name="TextColor" value="ControlText" />
+            <ColorProperty name="HoverColor" value="229, 243, 255" />
+            <ColorProperty name="CheckedColor" value="204, 232, 255" />
+            <ColorProperty name="AccentBorderColor" value="0, 120, 215" />
+        </Control>
+        <Control type="UiTools.WinForms.Designer.Core.OutputPanel">
+            <ColorProperty name="LogBackColor" value="Window" />
+            <ColorProperty name="LogForeColor" value="ControlText" />
+            <ColorProperty name="LogLineBorderColor" value="#F2F2F2" />
+            <ColorProperty name="LogTraceLineColor" value="#A9A9A9" />
+            <ColorProperty name="LogWarningLineColor" value="Chocolate" />
+            <ColorProperty name="LogErrorLineColor" value="Red" />
+            <ColorProperty name="LogLinkColor" value="Blue" />
+        </Control>
+        <Control type="UiTools.WinForms.Designer.Core.ComponentPropertiesExplorer">
+            <ColorProperty name="ToolbarButtonHoverColor" value="229, 243, 255" />
+            <ColorProperty name="ToolbarButtonCheckedColor" value="204, 232, 255" />
+            <ColorProperty name="ToolbarButtonBorderColor" value="153, 209, 255" />
+        </Control>
+        <Control type="UiTools.WinForms.Designer.DesignerCsFileContextForm">
+            <ColorProperty name="NotesTextColor" value="ControlDarkDark" />
+        </Control>
+        <Control type="UiTools.WinForms.Designer.AboutForm">
+            <ColorProperty name="AppNameColor" value="Indigo" />
+        </Control>
+        <Control type="System.Windows.Forms.PropertyGrid">
+            <ColorProperty name="LineColor" value="InactiveBorder" />
+            <ColorProperty name="DisabledItemForeColor" value="GrayText" />
+        </Control>
+        <Control type="System.Windows.Forms.PropertyGridInternal.PropertyGridView">
+            <ColorProperty name="BackColor" value="Window" />
+        </Control>
+    </UiTheme>
+    <UiTheme name="Dark" font="Microsoft Sans Serif, 10pt">
+        <AllControls>
+            <ColorProperty name="BackColor" value="#1F1F1F" />
+            <ColorProperty name="ForeColor" value="#FAFAFA" />
+        </AllControls>
+        <Control type="UiTools.WinForms.Designer.Core.ThemedForm" includeInheritedTypes="true">
+            <ColorProperty name="TitleBarBackColor" value="Navy" />
+            <ColorProperty name="TitleBarForeColor" value="#FAFAFA" />
+        </Control>
+        <Control type="System.Windows.Forms.SplitContainer">
+            <ColorProperty name="BackColor" value="Gray" />
+        </Control>
+        <Control type="Microsoft.Web.WebView2.WinForms.WebView2">
+            <ColorProperty name="DefaultBackgroundColor" value="#1F1F1F" />
+        </Control>
+        <Control type="UiTools.WinForms.Designer.Core.IThemedMenuStrip" includeInheritedTypes="true">
+            <ColorProperty name="BackColor" value="#2E2E2E" />
+            <ColorProperty name="TextColor" value="#D6D6D6" />
+            <ColorProperty name="HoverColor" value="#3D3D3D" />
+            <ColorProperty name="HoverTextColor" value="#FAFAFA" />
+            <ColorProperty name="SelectedColor" value="#2E2E2E" />
+            <ColorProperty name="ItemAccentColor" value="#707070" />
+            <ColorProperty name="DropDownBackColor" value="#2E2E2E" />
+            <ColorProperty name="DropDownBorderColor" value="#424242" />
+            <ColorProperty name="ImageMarginColor" value="#2E2E2E" />
+            <ColorProperty name="SeparatorColor" value="#3D3D3D" />
+            <ColorProperty name="CheckedColor" value="#1F1F1F" />
+            <ColorProperty name="CheckedAndSelectedColor" value="#333333" />
+        </Control>
+        <Control type="UiTools.WinForms.Designer.Core.ThemedLabel">
+            <ColorProperty name="DisabledForeColor" value="#5C5C5C" />
+        </Control>
+        <Control type="System.Windows.Forms.LinkLabel" includeInheritedTypes="true">
+            <ColorProperty name="LinkColor" value="DodgerBlue" />
+            <ColorProperty name="DisabledLinkColor" value="#777777" />
+        </Control>
+        <Control type="UiTools.WinForms.Designer.Core.ThemedButton">
+            <ColorProperty name="BackColor" value="#3D3D3D" />
+            <ColorProperty name="DisabledBackColor" value="#333333" />
+            <ColorProperty name="DisabledForeColor" value="#5C5C5C" />
+            <ColorProperty name="FlatAppearance.MouseOverBackColor" value="#4D4D4D" />
+            <ColorProperty name="FlatAppearance.MouseDownBackColor" value="#333333" />
+            <ColorProperty name="FlatAppearance.BorderColor" value="#777777" />
+        </Control>
+        <Control type="UiTools.WinForms.Designer.Core.TabControlEx" includeInheritedTypes="true">
+            <ColorProperty name="TabHeaderBackColor" value="#1F1F1F" />
+            <ColorProperty name="TabHeaderSelectedBackColor" value="#006CBE" />
+            <ColorProperty name="TabHeaderForeColor" value="#FAFAFA" />
+            <ColorProperty name="TabHeaderSelectedForeColor" value="#FAFAFA" />
+        </Control>
+        <Control type="UiTools.WinForms.Designer.Core.MyDesignerControl">
+            <ColorProperty name="ComponentTrayBackColor" value="#383838" />
+            <ColorProperty name="ComponentTrayForeColor" value="#FAFAFA" />
+            <ColorProperty name="SourceCodePanelHeaderBackColor" value="#2C2C2C" />
+        </Control>
+        <Control type="UiTools.WinForms.Designer.WorkspacePanelContainer">
+            <ColorProperty name="CaptionBackColor" value="Navy" />
+            <ColorProperty name="CaptionForeColor" value="#FAFAFA" />
+            <ColorProperty name="CloseButtonHoverBackColor" value="#3E6969" />
+        </Control>
+        <Control type="UiTools.WinForms.Designer.Core.ToolboxTreeView">
+            <ColorProperty name="DisabledBackColor" value="Black" />
+            <ColorProperty name="DisabledForeColor" value="LightGray" />
+            <ColorProperty name="HoverBackColor" value="#777777" />
+            <ColorProperty name="HoverForeColor" value="#FAFAFA" />
+            <ColorProperty name="SelectedBackColor" value="Highlight" />
+            <ColorProperty name="SelectedForeColor" value="HighlightText" />
+        </Control>
+        <Control type="UiTools.WinForms.Designer.Core.ThemedComboBox" includeInheritedTypes="true">
+            <ColorProperty name="BackColor" value="#383838" />
+            <ColorProperty name="BorderColor" value="#646464" />
+            <ColorProperty name="FocusedBackColor" value="Highlight" />
+            <ColorProperty name="FocusedForeColor" value="HighlightText" />
+            <ColorProperty name="DisabledForeColor" value="LightGray" />
+            <ColorProperty name="DisabledBackColor" value="#1F1F1F" />
+            <ColorProperty name="ArrowButtonBackColor" value="#383838" />
+            <ColorProperty name="ArrowButtonHoverBackColor" value="#383838" />
+            <ColorProperty name="ArrowButtonDisabledBackColor" value="#1F1F1F" />
+            <ColorProperty name="ArrowButtonBorderColor" value="0, 120, 212" />
+            <ColorProperty name="ArrowColor" value="#FAFAFA" />
+            <ColorProperty name="ArrowDisabledColor" value="#B8B8B8" />
+            <ColorProperty name="CueBannerForeColor" value="#D6D6D6" />
+        </Control>
+        <Control type="UiTools.WinForms.Designer.Core.ThemedToolStrip">
+            <ColorProperty name="TextColor" value="Gainsboro" />
+            <ColorProperty name="HoverColor" value="63, 63, 65" />
+            <ColorProperty name="CheckedColor" value="45, 45, 48" />
+            <ColorProperty name="AccentBorderColor" value="0, 120, 215" />
+        </Control>
+        <Control type="UiTools.WinForms.Designer.Core.OutputPanel">
+            <ColorProperty name="LogBackColor" value="#1F1F1F" />
+            <ColorProperty name="LogForeColor" value="#FAFAFA" />
+            <ColorProperty name="LogLineBorderColor" value="#2C2C2C" />
+            <ColorProperty name="LogTraceLineColor" value="#A0A0A0" />
+            <ColorProperty name="LogWarningLineColor" value="#E2B93D" />
+            <ColorProperty name="LogErrorLineColor" value="#F44747" />
+            <ColorProperty name="LogLinkColor" value="DodgerBlue" />
+        </Control>
+        <Control type="UiTools.WinForms.Designer.Core.ComponentPropertiesExplorer">
+            <ColorProperty name="ToolbarButtonHoverColor" value="60, 60, 60" />
+            <ColorProperty name="ToolbarButtonCheckedColor" value="80, 80, 80" />
+            <ColorProperty name="ToolbarButtonBorderColor" value="100, 100, 100" />
+        </Control>
+        <Control type="UiTools.WinForms.Designer.DesignerCsFileContextForm">
+            <ColorProperty name="NotesTextColor" value="#BBBBBB" />
+        </Control>
+        <Control type="UiTools.WinForms.Designer.AboutForm">
+            <ColorProperty name="AppNameColor" value="MediumPurple" />
+        </Control>
+        <Control type="System.Windows.Forms.PropertyGrid">
+            <ColorProperty name="LineColor" value="#2E2E2E" />
+            <ColorProperty name="DisabledItemForeColor" value="LightGray" />
+        </Control>
+    </UiTheme>
+</UiThemes>

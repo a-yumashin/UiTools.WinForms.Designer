@@ -14,9 +14,10 @@ using UiTools.WinForms.Designer.Properties;
 
 namespace UiTools.WinForms.Designer
 {
-    public partial class MainForm
-	{
+    public partial class MainForm : ThemedForm
+    {
         private const string NOT_SAVED_YET = "(not saved yet)";
+        private KnownUiThemes knownUiThemes;
 
         private MyDesignSurfaceManager myDesignSurfaceManager;
         private readonly List<DesignerWorkspace> workspaces = new List<DesignerWorkspace>();
@@ -35,10 +36,12 @@ namespace UiTools.WinForms.Designer
 			InitializeComponent();
 
             Icon = Resources.AppLogo;
+            tsiOptions.Image = Resources.OptionsDialog.ToBitmap();
             this.vsixVersion = vsixVersion;
             if (!string.IsNullOrEmpty(vsixVersion))
                 Text += " (running as VS Code extension)";
             LoadSettings();
+            tcDesigners.ShowToolTips = false;
             tcDesigners.TabPageCloseRequested += OnTabPageCloseRequested;
             UpdateEnabledForSaveAndCloseMenuItems();
 
@@ -46,9 +49,7 @@ namespace UiTools.WinForms.Designer
             recentFilesManager = new RecentFilesManager(tsiOpenRecent,
                 AppSettings.Instance.MainFormMRUList,
                 AppSettings.Instance.MainFormMRUListMaxSize,
-                AppSettings.Instance.Save,
-                Resources.Delete2.ToBitmap(),
-                Resources.OpenContainingFolder);
+                AppSettings.Instance.Save);
             recentFilesManager.RecentFileClicked += OnRecentFileClicked;
 
             splitContainer1.Panel1Collapsed = true;
@@ -58,6 +59,29 @@ namespace UiTools.WinForms.Designer
             toolboxPanelContainer.Closed += (s, e) => tsiViewToolbox.Checked = false;
             propertiesPanelContainer.Closed += (s, e) => tsiViewProperties.Checked = false;
             outputPanelContainer.Closed += (s, e) => tsiViewOutput.Checked = false;
+        }
+
+        protected override void OnHandleCreated(EventArgs e)
+        {
+            base.OnHandleCreated(e);
+            // NOTE: 'base.OnHandleCreated(e);' should go BEFORE 'ThemeApplier.Apply()' - otherwise ThemeApplier.Apply() will be called twice
+            //       (from ThemedForm.OnHandleCreated() as well).
+            knownUiThemes = KnownUiThemes.Load();
+            if (knownUiThemes != null)
+            {
+                CommonStuff.CurrentUiTheme = knownUiThemes.GetUiTheme(AppSettings.Instance.UiThemeName);
+                if (CommonStuff.CurrentUiTheme != null)
+                {
+                    ThemeApplier.Apply(this, CommonStuff.CurrentUiTheme, applyProcessWideSettings: true);
+                    ApplyUiThemeToMenuItemImages();
+                    ApplyUiThemeToRecentFilesManager();
+                }
+                else
+                {
+                    recentFilesManager.DeleteIcon = Resources.Remove;
+                    recentFilesManager.OpenFolderIcon = Resources.OpenContainingFolder;
+                }
+            }
         }
 
         private void SaveSettings()
@@ -176,29 +200,35 @@ namespace UiTools.WinForms.Designer
 
         private ToolboxTreeView CreateToolbox()
         {
-            return new ToolboxTreeView() { Dock = DockStyle.Fill };
+            var toolbox = new ToolboxTreeView() { Dock = DockStyle.Fill };
+            toolbox.HandleCreated += (s, e) =>
+            {
+                if (CommonStuff.CurrentUiTheme != null)
+                    ThemeApplier.Apply(toolbox, CommonStuff.CurrentUiTheme);
+            };
+            return toolbox;
         }
 
         private ComponentPropertiesExplorer CreatePropertiesExplorer()
         {
             var pe = new ComponentPropertiesExplorer { Dock = DockStyle.Fill };
-            pe.SetTextMeasurer(new TextMeasurer(CreateGraphics(), Font)); // ComboBoxEx needs it to properly calculate widths of both text parts (bold and regular font)
-            /*
-             * NOTE: Why do we create TextMeasurer HERE and then pass it to ComponentPropertiesExplorer so that it can pass it further to ComboBoxEx?! -
-             * 1. Should we decide to create TextMeasurer right in ComboBoxEx code - we would do it in the OnHandleCreated() method and not in the constructor (otherwise
-             *    TextMeasurer would provide invalid values)
-             * 2. However, when ComboBoxEx parent (ComponentPropertiesExplorer) is currently hidden (and this IS possible!) - OnHandleCreated() is NOT called, and so our code
-             *    creating TextMeasurer instance will NOT execute, so any usages of this instance would result in NRE (e.g in the ComboBoxEx.IsItemTextTruncated() method).
-             * 3. So, if we do not want to depend upon whether ComponentPropertiesExplorer is hidden or not, we must create TextMeasurer instance somewhere outside the
-             *    ComponentPropertiesExplorer - in a window which has its handle 100% present (and so the Graphics object can be created properly); for example - HERE,
-             *    in the main form of the application.
-             */
+            pe.HandleCreated += (s, e) =>
+            {
+                if (CommonStuff.CurrentUiTheme != null)
+                    ThemeApplier.Apply(pe, CommonStuff.CurrentUiTheme);
+            };
             return pe;
         }
 
         private OutputPanel CreateOutputPanel()
         {
-            return new OutputPanel { Dock = DockStyle.Fill };
+            var op = new OutputPanel { Dock = DockStyle.Fill };
+            op.HandleCreated += (s, e) =>
+            {
+                if (CommonStuff.CurrentUiTheme != null)
+                    ThemeApplier.Apply(op, CommonStuff.CurrentUiTheme);
+            };
+            return op;
         }
 
         private DesignSurfaceEx CreateDesignSurface()
@@ -238,9 +268,14 @@ namespace UiTools.WinForms.Designer
 
         private void PrepareWorkspace(string tabPageCaption, string tabPageToolTipText)
         {
-            TabPage tp = new TabPage(tabPageCaption) { ToolTipText = tabPageToolTipText };
+            TabPage tp = new TabPage(tabPageCaption) { ToolTipText = tabPageToolTipText, Padding = Padding.Empty };
             var dc = new MyDesignerControl { Dock = DockStyle.Fill };
             tp.Controls.Add(dc);
+            tp.HandleCreated += (s, e) =>
+            {
+                if (CommonStuff.CurrentUiTheme != null)
+                    ThemeApplier.Apply(tp, CommonStuff.CurrentUiTheme);
+            };
             var workspace = CreateWorkspace(dc);
             workspaces.Add(workspace);
             workspace.PropertiesWindowNeeded += Workspace_PropertiesWindowNeeded;
@@ -295,7 +330,7 @@ namespace UiTools.WinForms.Designer
             {
                 frm.Text = $"Create new designer file ({rootComponentType.Name})";
                 frm.RootComponentTypeName = rootComponentType.Name;
-                frm.Icon = Icon.FromHandle(rootComponentType == typeof(Form) ? Resources.AddForm.GetHicon() : Resources.AddControl.GetHicon());
+                frm.Icon = Icon.FromHandle(PickMenuItemImage(rootComponentType == typeof(Form) ? "AddForm" : "AddControl").GetHicon());
                 frm.Initiator = DesignerCsFileContextForm.InitiatorEnum.FileNewMenu;
                 if (frm.ShowDialog(this) == DialogResult.OK)
                 {
@@ -316,7 +351,7 @@ namespace UiTools.WinForms.Designer
             using (var frm = new DesignerCsFileContextForm())
             {
                 frm.Text = "Open existing designer file";
-                frm.Icon = Icon.FromHandle(Resources.OpenFile.GetHicon());
+                frm.Icon = Icon.FromHandle(PickMenuItemImage("OpenFile").GetHicon());
                 frm.Initiator = DesignerCsFileContextForm.InitiatorEnum.FileOpenMenu;
                 if (frm.ShowDialog(this) == DialogResult.OK)
                     OpenExistingDesignerFileInner(frm.DesignerCsFileContext);
@@ -328,7 +363,7 @@ namespace UiTools.WinForms.Designer
             using (var frm = new DesignerCsFileContextForm())
             {
                 frm.Text = "Opening existing designer file from VS Code";
-                frm.Icon = Icon.FromHandle(Resources.OpenFile.GetHicon());
+                frm.Icon = Icon.FromHandle(PickMenuItemImage("OpenFile").GetHicon());
                 frm.Initiator = DesignerCsFileContextForm.InitiatorEnum.VSCode;
                 frm.SetDesignerCsFileFullPath(designerCsFileFullPath);
                 if (frm.ShowDialog(this) == DialogResult.OK)
@@ -357,7 +392,7 @@ namespace UiTools.WinForms.Designer
                     using (var frm = new DesignerCsFileContextForm())
                     {
                         frm.Text = "Opening recent designer file";
-                        frm.Icon = Icon.FromHandle(Resources.OpenFile.GetHicon());
+                        frm.Icon = Icon.FromHandle(PickMenuItemImage("OpenFile").GetHicon());
                         frm.Initiator = DesignerCsFileContextForm.InitiatorEnum.FileOpenMenu;
                         frm.SetDesignerCsFileFullPath(recentFilePath);
                         if (frm.ShowDialog(this) == DialogResult.OK)
@@ -682,9 +717,9 @@ namespace {ns}
 
         private void HideAllPanels()
         {
-            splitContainer1.Panel1Collapsed = true;
-            splitContainer2.Panel2Collapsed = true;
-            splitContainer3.Panel2Collapsed = true;
+            tsiViewToolbox.Checked = false;
+            tsiViewProperties.Checked = false;
+            tsiViewOutput.Checked = false;
         }
 
         #endregion Closing stuff
@@ -697,6 +732,7 @@ namespace {ns}
         private void tsiViewProperties_CheckedChanged(object sender, EventArgs e)
         {
             splitContainer2.Panel2Collapsed = !tsiViewProperties.Checked;
+            Refresh();
         }
 
         private void tsiViewOutput_CheckedChanged(object sender, EventArgs e)
@@ -706,7 +742,7 @@ namespace {ns}
 
         private void tsiOptions_Click(object sender, EventArgs e)
         {
-            using (var frm = new OptionsForm())
+            using (var frm = new OptionsForm(knownUiThemes?.UiThemes?.Select(t => t.Name).ToList()))
             {
                 var opts = frm as IOptions;
                 opts.AlignControlsMode = AppSettings.Instance.AlignControlsMode;
@@ -718,6 +754,7 @@ namespace {ns}
                 opts.MainFormMRUListMaxSize = AppSettings.Instance.MainFormMRUListMaxSize;
                 opts.LogLevel = AppSettings.Instance.LogLevel;
                 opts.RemoveUnnecessaryUsings = AppSettings.Instance.RemoveUnnecessaryUsings;
+                opts.UiThemeName = AppSettings.Instance.UiThemeName;
                 var result = frm.ShowDialog(this);
                 if (result == DialogResult.OK)
                 {
@@ -730,8 +767,37 @@ namespace {ns}
                     AppSettings.Instance.MainFormMRUListMaxSize = opts.MainFormMRUListMaxSize;
                     AppSettings.Instance.LogLevel = opts.LogLevel;
                     AppSettings.Instance.RemoveUnnecessaryUsings = opts.RemoveUnnecessaryUsings;
+                    if (AppSettings.Instance.UiThemeName != opts.UiThemeName && !string.IsNullOrEmpty(opts.UiThemeName))
+                    {
+                        // UI Theme has changed
+                        AppSettings.Instance.UiThemeName = opts.UiThemeName;
+                        ApplyNewTheme(opts.UiThemeName);
+                        if (opts.UiThemeName == KnownUiThemes.NONE)
+                            MessageBox.Show(this, "Please note that the UI theme will be reset after you restart the application.",
+                                "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
                     AppSettings.Instance.Save();
                     workspaces.ForEach(ws => ws.RemoveUnnecessaryUsingsOnSave = opts.RemoveUnnecessaryUsings);
+                }
+            }
+        }
+
+        private void ApplyNewTheme(string uiThemeName)
+        {
+            if (knownUiThemes != null)
+            {
+                CommonStuff.CurrentUiTheme = knownUiThemes.GetUiTheme(uiThemeName);
+                if (CommonStuff.CurrentUiTheme != null)
+                {
+                    ThemeApplier.Apply(this, CommonStuff.CurrentUiTheme, applyProcessWideSettings: true);
+                    ApplyUiThemeToMenuItemImages();
+                    ApplyUiThemeToRecentFilesManager();
+                    BeginInvoke(Refresh);
+                }
+                else
+                {
+                    recentFilesManager.DeleteIcon = Resources.Remove;
+                    recentFilesManager.OpenFolderIcon = Resources.OpenContainingFolder;
                 }
             }
         }
@@ -841,6 +907,68 @@ namespace {ns}
             {
                 frm.ShowDialog(this);
             }
+        }
+
+        [Category("Appearance")]
+        [DefaultValue(false)]
+        public bool IsDarkTheme { get; set; } = false;
+
+        private void ApplyUiThemeToRecentFilesManager()
+        {
+            recentFilesManager.DeleteIcon = IsDarkTheme ? Resources.Remove_DarkTheme : Resources.Remove;
+            recentFilesManager.OpenFolderIcon = IsDarkTheme ? Resources.OpenContainingFolder_DarkTheme : Resources.OpenContainingFolder;
+            recentFilesManager.Font = Font;
+        }
+
+        private void ApplyUiThemeToMenuItemImages()
+        {
+            // "File" menu:
+            tsiNewForm.Image = PickMenuItemImage("AddForm");
+            tsiNewUserControl.Image = PickMenuItemImage("AddControl");
+            tsiOpen.Image = PickMenuItemImage("OpenFile");
+            tsiSave.Image = PickMenuItemImage("Save");
+            // "Edit" menu:
+            tsiUnDo.Image = PickMenuItemImage("Undo");
+            tsiReDo.Image = PickMenuItemImage("Redo");
+            tsiCut.Image = PickMenuItemImage("Cut");
+            tsiCopy.Image = PickMenuItemImage("Copy");
+            tsiPaste.Image = PickMenuItemImage("Paste");
+            tsiDelete.Image = PickMenuItemImage("Delete");
+            tsiSelectAll.Image = PickMenuItemImage("SelectAll");
+            // "View" menu:
+            tsiViewToolbox.Image = PickMenuItemImage("Toolbox");
+            tsiViewProperties.Image = PickMenuItemImage("Property");
+            tsiViewOutput.Image = PickMenuItemImage("Output");
+            tsiTabOrder.Image = PickMenuItemImage("TabOrder");
+            // "Format" menu:
+            tsiAlignLefts.Image = PickMenuItemImage("AlignLeft");
+            tsiAlignCenters.Image = PickMenuItemImage("AlignCenter");
+            tsiAlignRights.Image = PickMenuItemImage("AlignRight");
+            tsiAlignTops.Image = PickMenuItemImage("AlignTop");
+            tsiAlignMiddles.Image = PickMenuItemImage("AlignMiddle");
+            tsiAlignBottoms.Image = PickMenuItemImage("AlignBottom");
+            tsiMakeSameWidth.Image = PickMenuItemImage("MakeSameWidth");
+            tsiMakeSameHeight.Image = PickMenuItemImage("MakeSameHeight");
+            tsiMakeSameWidthAndHeight.Image = PickMenuItemImage("MakeSameWidthAndHeight");
+            tsiHorizSpacingMakeEqual.Image = PickMenuItemImage("HorizontalSpacingMakeEqual");
+            tsiHorizSpacingIncrease.Image = PickMenuItemImage("IncreaseHorizontalSpacing");
+            tsiHorizSpacingDecrease.Image = PickMenuItemImage("DecreaseHorizontalSpacing");
+            tsiHorizSpacingRemove.Image = PickMenuItemImage("RemoveHorizontalSpacing");
+            tsiVertSpacingMakeEqual.Image = PickMenuItemImage("VerticalSpacingMakeEqual");
+            tsiVertSpacingIncrease.Image = PickMenuItemImage("IncreaseVerticalSpacing");
+            tsiVertSpacingDecrease.Image = PickMenuItemImage("DecreaseVerticalSpacing");
+            tsiVertSpacingRemove.Image = PickMenuItemImage("RemoveVerticalSpacing");
+            tsiCenterInFormHorizontally.Image = PickMenuItemImage("CenterHorizontally");
+            tsiCenterInFormVertically.Image = PickMenuItemImage("CenterVertically");
+            tsiOrderBringToFront.Image = PickMenuItemImage("BringToFront");
+            tsiOrderSendToBack.Image = PickMenuItemImage("SendToBack");
+        }
+
+        private Bitmap PickMenuItemImage(string resourceName)
+        {
+            return (IsDarkTheme
+                ? DarkThemeMenuItems.ResourceManager.GetObject(resourceName)
+                : LightThemeMenuItems.ResourceManager.GetObject(resourceName)) as Bitmap;
         }
     }
 

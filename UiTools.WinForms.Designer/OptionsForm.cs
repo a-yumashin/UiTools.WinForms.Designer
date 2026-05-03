@@ -1,6 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Drawing;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Diagnostics;
 using System.Drawing.Text;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
@@ -9,14 +12,19 @@ using UiTools.WinForms.Designer.Properties;
 
 namespace UiTools.WinForms.Designer
 {
-    public partial class OptionsForm : Form, IOptions
+    public partial class OptionsForm : ThemedForm, IOptions
     {
-        private KeyCodeValidator IntegerInputValidator = KeyCodeValidator.IntegerInputValidator;
+        private readonly List<string> knownUiThemesNames;
+        private readonly KeyCodeValidator integerInputValidator = KeyCodeValidator.IntegerInputValidator;
 
-        public OptionsForm()
+        public OptionsForm(List<string> knownUiThemesNames)
         {
+            this.knownUiThemesNames = knownUiThemesNames;
+
             InitializeComponent();
-            Icon = Icon.FromHandle(Resources.Options.GetHicon());
+
+            CenterToParent(); // center early to prevent visual flickering during the population of controls
+            Icon = Resources.OptionsDialog;
 
             PopulateAlignControlsModeCombo();
             PopulateFontNameCombo(cboDefaultRootComponentFontName);
@@ -24,15 +32,37 @@ namespace UiTools.WinForms.Designer
             PopulateFontNameSize(cboDefaultRootComponentFontSize);
             PopulateFontNameSize(cboCodeViewerFontSize);
             PopulateMinLogLevel();
+            PopulateUiThemeCombo();
 
             cboAlignControlsMode.SelectedIndexChanged += cboAlignControlsMode_SelectedIndexChanged;
             txtGridSize.KeyDown += txtGridSize_KeyDown;
             txtMRUListMaxSize.KeyDown += txtMRUListMaxSize_KeyDown;
         }
 
+        protected override void OnUiThemeApplied()
+        {
+            picUiTheme.Image = ThemeApplier.IsDark(BackColor) ? Resources.UiThemeConfigFolder_DarkTheme : Resources.UiThemeConfigFolder;
+            AdjustLayout();
+            Refresh();
+        }
+
+        protected override void OnFontChanged(EventArgs e)
+        {
+            base.OnFontChanged(e);
+            if (IsHandleCreated)
+                BeginInvoke(AdjustLayout);
+        }
+
+        private void AdjustLayout()
+        {
+            picUiTheme.Left = cboUiTheme.Right + 6;
+            picRemoveUnnecessaryUsingsHelp.Left = chkRemoveUnnecessaryUsings.Right + 1;
+            labGridSize.Left = txtGridSize.Left - labGridSize.Width - 1;
+        }
+
         private void txtMRUListMaxSize_KeyDown(object sender, KeyEventArgs e)
         {
-            if (!IntegerInputValidator.Validate(e.KeyCode))
+            if (!integerInputValidator.Validate(e.KeyCode))
             {
                 e.SuppressKeyPress = true;
                 e.Handled = true;
@@ -41,14 +71,14 @@ namespace UiTools.WinForms.Designer
 
         private void txtGridSize_KeyDown(object sender, KeyEventArgs e)
         {
-            if (!IntegerInputValidator.Validate(e.KeyCode))
+            if (!integerInputValidator.Validate(e.KeyCode))
             {
                 e.SuppressKeyPress = true;
                 e.Handled = true;
             }
         }
 
-        private void cboAlignControlsMode_SelectedIndexChanged(object sender, System.EventArgs e)
+        private void cboAlignControlsMode_SelectedIndexChanged(object sender, EventArgs e)
         {
             var selectedMode = (AlignControlsModeEnum)cboAlignControlsMode.SelectedIndex;
             txtGridSize.Enabled = labGridSize.Enabled = selectedMode == AlignControlsModeEnum.UseGrid || selectedMode == AlignControlsModeEnum.SnapToGrid;
@@ -112,6 +142,12 @@ namespace UiTools.WinForms.Designer
             set => chkRemoveUnnecessaryUsings.Checked = value;
         }
 
+        string IOptions.UiThemeName
+        {
+            get => cboUiTheme.Text;
+            set => cboUiTheme.Text = value;
+        }
+
         #endregion IOptions members
 
         private void PopulateAlignControlsModeCombo()
@@ -146,6 +182,30 @@ namespace UiTools.WinForms.Designer
             cboLogLevel.Items.Add("Info");
             cboLogLevel.Items.Add("Warning");
             cboLogLevel.Items.Add("Error");
+        }
+
+        private void PopulateUiThemeCombo()
+        {
+            cboUiTheme.Items.Add(KnownUiThemes.NONE);
+            knownUiThemesNames.ForEach(t => cboUiTheme.Items.Add(t));
+        }
+
+        private void picUiTheme_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var uiThemesFilePath = KnownUiThemes.GetUiThemesFilePath();
+                if (!File.Exists(uiThemesFilePath))
+                {
+                    MessageBox.Show(this, $"File not found:\n{uiThemesFilePath}", "", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                Process.Start("explorer.exe", $"/select,\"{uiThemesFilePath}\"");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Could not open folder: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

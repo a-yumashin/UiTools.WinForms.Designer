@@ -8,17 +8,23 @@ using UiTools.WinForms.Designer.Core.Properties;
 
 namespace UiTools.WinForms.Designer.Core
 {
-    internal class MyMenuCommandService : IMenuCommandService
+    public class MyMenuCommandService : IMenuCommandService
     {
         public event EventHandler<string> CustomMenuCommandExecuted;
 
         private readonly DesignSurfaceEx designSurface;
         private readonly MenuCommandService menuCommandService;
+        private Func<Type, Bitmap> componentTypeIconResolver;
 
         public MyMenuCommandService(DesignSurfaceEx designSurface)
         {
             this.designSurface = designSurface;
             menuCommandService = new MenuCommandService(designSurface);
+        }
+
+        public void SetComponentTypeIconResolver(Func<Type, Bitmap> componentTypeIconResolver)
+        {
+            this.componentTypeIconResolver = componentTypeIconResolver;
         }
 
         public void ShowContextMenu(CommandID menuID, int x, int y)
@@ -46,10 +52,13 @@ namespace UiTools.WinForms.Designer.Core
                 isTrayClick = trayRect.Contains(screenPoint);
             }
 
-            var menu = new ContextMenuStrip();
+            var menu = new ThemedContextMenuStrip();
+            ThemeApplier.Apply(menu, CommonStuff.CurrentUiTheme);
+            var isDarkTheme = ThemeApplier.IsDark(menu.BackColor);
+
             if (isTrayClick)
             {
-                PopulateTrayMenuItems(menu, tray);
+                PopulateTrayMenuItems(menu, tray, isDarkTheme);
             }
             else
             {
@@ -57,8 +66,8 @@ namespace UiTools.WinForms.Designer.Core
 
                 if (primarySelection is Control currentControl && currentControl != designerHost.RootComponent)
                 {
-                    AddStandardCommand(menu, StandardCommands.BringToFront, "Bring to Front", Resources.BringToFront);
-                    AddStandardCommand(menu, StandardCommands.SendToBack, "Send to Back", Resources.SendtoBack);
+                    AddStandardCommand(menu, StandardCommands.BringToFront, "Bring to Front", isDarkTheme ? Resources.BringToFront_DarkTheme : Resources.BringToFront);
+                    AddStandardCommand(menu, StandardCommands.SendToBack, "Send to Back", isDarkTheme ? Resources.SendToBack_DarkTheme : Resources.SendtoBack);
                     menu.Items.Add(new ToolStripSeparator());
                     // Add "Select 'Parent'" menu items
                     var current = currentControl;
@@ -71,11 +80,10 @@ namespace UiTools.WinForms.Designer.Core
                         {
                             current = parentControl;
                             var parentName = parentControl.GetQualifiedControlName(designerHost);
-                            var imageAttr = (ToolboxBitmapAttribute)TypeDescriptor.GetAttributes(parentControl.GetType())[typeof(ToolboxBitmapAttribute)];
                             var selectParentMenuItem = new ToolStripMenuItem($"Select '{parentName}'")
                             {
                                 Tag = parentControl,
-                                Image = imageAttr?.GetImage(parentControl.GetType())
+                                Image = TryToFindControlTypeImage(parentControl.GetType(), isDarkTheme)
                             };
                             selectParentMenuItem.Click += (s, args) =>
                             {
@@ -90,24 +98,30 @@ namespace UiTools.WinForms.Designer.Core
                 }
 
                 if (primarySelection == designerHost.RootComponent)
-                    AddStandardCommand(menu, StandardCommands.Paste, "Paste", Resources.Paste, Keys.Control | Keys.V, DesignSurfaceEx.HasDesignerComponentInClipboard());
+                    AddStandardCommand(menu, StandardCommands.Paste, "Paste", isDarkTheme ? Resources.Paste_DarkTheme : Resources.Paste,
+                        Keys.Control | Keys.V, DesignSurfaceEx.HasDesignerComponentInClipboard());
                 else
                 {
-                    AddStandardCommand(menu, StandardCommands.Cut, "Cut", Resources.Cut, Keys.Control | Keys.X);
-                    AddStandardCommand(menu, StandardCommands.Copy, "Copy", Resources.Copy, Keys.Control | Keys.C);
-                    AddStandardCommand(menu, StandardCommands.Paste, "Paste", Resources.Paste, Keys.Control | Keys.V, DesignSurfaceEx.HasDesignerComponentInClipboard());
-                    AddStandardCommand(menu, StandardCommands.Delete, "Delete", Resources.Delete, Keys.Delete);
+                    AddStandardCommand(menu, StandardCommands.Cut, "Cut", isDarkTheme ? Resources.Cut_DarkTheme : Resources.Cut,
+                        Keys.Control | Keys.X);
+                    AddStandardCommand(menu, StandardCommands.Copy, "Copy", isDarkTheme ? Resources.Copy_DarkTheme : Resources.Copy,
+                        Keys.Control | Keys.C);
+                    AddStandardCommand(menu, StandardCommands.Paste, "Paste", isDarkTheme ? Resources.Paste_DarkTheme : Resources.Paste,
+                        Keys.Control | Keys.V, DesignSurfaceEx.HasDesignerComponentInClipboard());
+                    AddStandardCommand(menu, StandardCommands.Delete, "Delete", isDarkTheme ? Resources.Delete_DarkTheme : Resources.Delete,
+                        Keys.Delete);
                 }
             }
             menu.Items.Add(new ToolStripSeparator());
-            AddCustomCommand(menu, "Properties", Resources.Property);
+            AddCustomCommand(menu, "Properties", isDarkTheme ? Resources.Property_DarkTheme : Resources.Property);
 
             menu.Show(view, view.PointToClient(screenPoint));
         }
 
-        private void PopulateTrayMenuItems(ContextMenuStrip menu, Control tray)
+        private void PopulateTrayMenuItems(ContextMenuStrip menu, Control tray, bool isDarkTheme)
         {
-            AddStandardCommand(menu, StandardCommands.Paste, "Paste", Resources.Paste, Keys.Control | Keys.V, DesignSurfaceEx.HasDesignerComponentInClipboard());
+            AddStandardCommand(menu, StandardCommands.Paste, "Paste", isDarkTheme ? Resources.Paste_DarkTheme : Resources.Paste,
+                Keys.Control | Keys.V, DesignSurfaceEx.HasDesignerComponentInClipboard());
             menu.Items.Add(new ToolStripSeparator());
 
             // Item "Line Up Icons":
@@ -120,12 +134,6 @@ namespace UiTools.WinForms.Designer.Core
 
             var componentTray = tray as System.Windows.Forms.Design.ComponentTray;
 
-            // Item "Show Large Icons":
-            var largeIconsItem = new ToolStripMenuItem("Show Large Icons");
-            largeIconsItem.CheckOnClick = true;
-            largeIconsItem.Checked = componentTray.ShowLargeIcons;
-            largeIconsItem.CheckedChanged += (s, e) => componentTray.ShowLargeIcons = largeIconsItem.Checked;
-
             // Item "Auto Arrange Icons":
             var autoArrangeItem = new ToolStripMenuItem("Auto Arrange Icons");
             autoArrangeItem.CheckOnClick = true;
@@ -134,7 +142,6 @@ namespace UiTools.WinForms.Designer.Core
 
             menu.Items.Add(lineUpItem);
             menu.Items.Add(autoArrangeItem);
-            menu.Items.Add(largeIconsItem);
         }
 
         private void AddStandardCommand(ContextMenuStrip menu, CommandID commandID, string menuItemText, Image image, Keys shortcutKeys = Keys.None, bool enabled = true)
@@ -163,6 +170,37 @@ namespace UiTools.WinForms.Designer.Core
             };
             menuItem.Click += OnMenuClicked;
             menu.Items.Add(menuItem);
+        }
+
+        private Image TryToFindControlTypeImage(Type controlType, bool isDarkTheme)
+        {
+            // Tries to find appropriate image for "Select 'Parent'" menu items.
+            // The problem is that some controls are not shown in the Toolbox - e.g. Form, TabPage and the non-toplevel ones (such as SplitterPanel).
+            Image img = null;
+            if (componentTypeIconResolver != null)
+            {
+                // try to pick image from the Toolbox:
+                img = componentTypeIconResolver(controlType);
+            }
+            if (img == null)
+            {
+                // try to pick image for "special cases":
+                if (controlType == typeof(Form))
+                    img = isDarkTheme ? Resources.Form_DarkTheme : Resources.Form;
+                else if (controlType == typeof(UserControl))
+                    img = isDarkTheme ? DarkThemeToolboxItems.UserControl : LightThemeToolboxItems.UserControl;
+                else if (controlType == typeof(TabPage))
+                    img = isDarkTheme ? Resources.TabPage_DarkTheme : Resources.TabPage;
+                else if (controlType == typeof(SplitterPanel))
+                    img = isDarkTheme ? Resources.SplitterPanel_DarkTheme : Resources.SplitterPanel;
+                else
+                {
+                    // fallback to the "built-in" image (better than nothing):
+                    var imageAttr = (ToolboxBitmapAttribute)TypeDescriptor.GetAttributes(controlType)[typeof(ToolboxBitmapAttribute)];
+                    img = imageAttr?.GetImage(controlType);
+                }
+            }
+            return img;
         }
 
         private void OnMenuClicked(object sender, EventArgs e)

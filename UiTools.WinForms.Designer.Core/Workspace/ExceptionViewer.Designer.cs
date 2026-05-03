@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.pgrDetails = new System.Windows.Forms.PropertyGrid();
-            this.cmdClose = new System.Windows.Forms.Button();
+            this.cmdClose = new UiTools.WinForms.Designer.Core.ThemedButton();
             this.SuspendLayout();
             // 
             // pgrDetails
@@ -68,7 +68,7 @@
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(450, 300);
             this.Name = "ExceptionViewer";
-            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Exception details:";
             this.ResumeLayout(false);
@@ -77,6 +77,6 @@
 
         #endregion
         private System.Windows.Forms.PropertyGrid pgrDetails;
-        private System.Windows.Forms.Button cmdClose;
+        private UiTools.WinForms.Designer.Core.ThemedButton cmdClose;
     }
 }

@@ -4,10 +4,11 @@ using System.Drawing.Design;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Linq;
+using System.Reflection;
 
 namespace UiTools.WinForms.Designer.Core
 {
-    public partial class ExceptionViewer : Form
+    public partial class ExceptionViewer : ThemedForm
     {
         public ExceptionViewer()
         {
@@ -15,6 +16,14 @@ namespace UiTools.WinForms.Designer.Core
             pgrDetails.PropertySort = PropertySort.NoSort;
             pgrDetails.HelpVisible = false;
             pgrDetails.ToolbarVisible = false;
+            var vScrollBar = pgrDetails.GetVScrollBar();
+            if (vScrollBar != null)
+                vScrollBar.HandleCreated += (s, e) => ThemeApplier.ApplyScrollBarTheme(s as Control, ThemeApplier.IsDark(BackColor));
+        }
+
+        protected override void OnUiThemeApplied()
+        {
+            BeginInvoke(() => ThemeApplier.ApplyScrollBarTheme(pgrDetails.GetVScrollBar(), ThemeApplier.IsDark(BackColor)));
         }
 
         protected override void OnShown(EventArgs e)
@@ -88,16 +97,16 @@ namespace UiTools.WinForms.Designer.Core
             var stackTrace = value?.ToString();
             if (!string.IsNullOrEmpty(stackTrace))
             {
-                using (var frm = new Form())
+                using (var frm = new ThemedForm())
                 {
+                    frm.AutoScaleMode = AutoScaleMode.Dpi;
+                    float scaleFactor = frm.DeviceDpi / 120f;
                     frm.Text = "Stack Trace";
-                    frm.Size = new Size(600, 400);
-                    frm.StartPosition = FormStartPosition.CenterParent;
+                    frm.Size = new Size((int)(600 * scaleFactor), (int)(400 * scaleFactor));
                     frm.FormBorderStyle = FormBorderStyle.SizableToolWindow;
                     frm.KeyPreview = true;
                     frm.KeyDown += (s, e) => { if (e.KeyCode == Keys.Escape) frm.Close(); };
-
-                    frm.Controls.Add(new TextBox
+                    var textBox = new ThemedTextBox
                     {
                         Multiline = true,
                         ReadOnly = true,
@@ -106,8 +115,17 @@ namespace UiTools.WinForms.Designer.Core
                         Text = stackTrace,
                         Font = new Font(new FontFamily("Consolas"), 9f),
                         SelectionStart = 0
-                    });
+                    };
+                    frm.Controls.Add(textBox);
+                    frm.UiThemeApplied += (s, e) =>
+                    {
+                        textBox.Font = new Font("Consolas", 9); // restore monospace font because it could be changed by ThemeApplier
+                        frm.BeginInvoke(() => ThemeApplier.ApplyScrollBarTheme(textBox, ThemeApplier.IsDark(frm.BackColor)));
+                    };
 
+                    var mi = frm.GetType().GetMethod("CenterToParent", BindingFlags.Instance | BindingFlags.NonPublic);
+                    if (mi != null)
+                        mi.Invoke(frm, null); // center early to prevent visual flickering during the population of controls
                     frm.ShowDialog();
                 }
             }

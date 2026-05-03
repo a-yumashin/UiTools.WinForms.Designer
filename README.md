@@ -63,6 +63,44 @@ Add File in VS Code:
 _**A Note on Architecture:**
 This designer uses a sophisticated **heuristic approach** powered by Roslyn to parse and convert code into a CodeDOM structure. By utilizing the same underlying technology as the original IDE, it ensures that the generated code is clean, standard, and production-ready._
 
+---
+
+## UI Themes & Customization
+
+The designer now supports full UI theming, allowing you to match your environment's aesthetic. A UI theme encompasses element colors for all application controls, font settings (family and size), and C# syntax highlighting styles for the "Source code" tab.
+
+![Sample form open in Designer - dark theme](ScreenShots/FormOpenInDesigner.DarkTheme.png)
+
+![Source Code Viewer - dark theme](ScreenShots/SourceCodeViewer.DarkTheme.png)
+
+#### Key Features:
+* **Predefined Themes:** "Light" and "Dark" themes are available out of the box. 
+* **Selection:** Themes can be switched in the "Options" dialog under the "UI theme" parameter.
+* **Native Mode:** The "None" option (default) reverts all controls to standard WinForms colors. Switching to "None" requires an application restart. 
+  _**Note: The "Light" theme is visually almost identical to the "None" option.**_
+* Customization:
+  * Upon the first launch, the designer extracts `UiTools.WinForms.Designer.UiThemes.xml` and its schema `UiTools.WinForms.Designer.UiThemes.xsd` to the application directory. 
+  * You can edit existing themes or define your own by modifying this XML file. The XSD schema is provided to prevent errors during manual editing.
+* **Syntax Highlighting:** The "Source code" tab uses [`Highlight.js`](https://highlightjs.org). Highlighting is controlled by CSS files (e.g., `Light.css`, `Dark.css`) located in the application folder. 
+  * The CSS filename must match the theme name. If "None" is selected, `Light.css` is used.
+  * You can modify these predefined CSS files or create new ones for your custom themes.
+
+#### Technical Implementation & Legacy Challenges:
+Supporting dark themes in WinForms is a notoriously difficult task. Many WinForms controls are thin wrappers around "ancient" Win32 or ActiveX components dating back to Windows 95. Since many of these controls do not natively support modern skinning, the designer employs several low-level techniques:
+* **Owner Draw & WndProc:** For many elements, the only way to "repaint" them is to use "owner draw" mode or, where that is unavailable, to override the control's window procedure (WndProc) to intercept and manually handle painting messages. 
+* **Modern Windows APIs:** While the core UI is handled via low-level hooks, the designer utilizes specific Windows APIs to style the "system" parts of the interface (title bars, scrollbars, etc.):
+  * **`DWMWA_USE_IMMERSIVE_DARK_MODE`:** Supported on **Windows 10 v1809+**. This tells the Desktop Window Manager to apply the dark system style to the window's frame (making the title bar black and the caption text white).
+  * **Title Bar Customization:** Setting a specific background color (**`DWMWA_CAPTION_COLOR`**) or text color (**`DWMWA_TEXT_COLOR`**) for the title bar requires **Windows 11+**. On Windows 10 v1809+, these custom colors are ignored, and the title bar simply defaults to solid black when the immersive dark mode is active.
+  * **Scrollbars:** Dark scrollbars are enabled by calling the `SetWindowTheme` function from `uxtheme.dll` with the **"DarkMode_Explorer"** theme parameter (requires **Windows 10 v1809+**).
+  * **System Context Menus:** The dark style for the title bar's right-click menu (or Alt+Space menu) is handled via `SetPreferredAppMode` and `FlushMenuThemes` (requires **Windows 10 v1809+**).
+
+#### A Note on Stability:
+While great care has been taken to avoid flickering during runtime theme switching and to prevent layout breakage due to font changes, some minor visual glitches may occur. 
+* **Font Size:** Increase the theme's font size with caution; excessively large fonts may disrupt the layout in certain areas despite auto-scaling efforts.
+* **Fallback:** Given the complexity of skinning legacy Win32 components, if you encounter any critical errors or visual bugs, please set the UI theme to "None". This will completely deactivate all skinning logic. If you find a bug, please report it on GitHub.
+
+---
+
 ## Limitations:
 Typical `.designer.cs` file created by Visual Studio is supported (VB.NET is not supported, but it's not very difficult to fork and modify this project to support it):
 * Name pattern: `<FILE_NAME>.designer.cs` (e.g. `Form1.designer.cs`, `UserControl1.designer.cs`)

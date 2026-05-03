@@ -1,60 +1,10 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" href="{{CSS_PATH}}default.min.css">
-    <style>
-        body {
-            margin: 2px;
-            background-color: #f7f7f7;
-        }
-
-        pre {
-            margin-top: 2px;
-        }
-
-        .type-name {
-            font-weight: 700;
-            color: #2B91AF
-        }
-        /* Override hljs theme styles: */
-        code {
-            width: fit-content;
-            padding: 0 !important;
-        }
-
-        .hljs {
-            background: none;
-            background-color: #f7f7f7;
-            color: black
-        }
-
-        .hljs-keyword {
-            color: blue !important;
-        }
-
-        .hljs-comment {
-            color: green;
-        }
-        /*.hljs-comment:has(.hljs-doctag) {
-            color: gray;
-        }*/
-        .hljs-section, .hljs-title {
-            color: black;
-            font-weight: inherit;
-        }
-
-        .hljs-doctag {
-            font-weight: inherit;
-        }
-
-        .hljs-literal, .hljs-built_in {
-            font-weight: 700;
-            color: blue
-        }
-
-        .hljs-meta {
-            font-weight: 700;
-            color: #2B91AF
+    <link id='dynamicThemeLink' rel="stylesheet" href="{{CSS_PATH}}{{THEME_NAME}}.css">
+    <style id='dynamicStyles'>
+        html {
+            scrollbar-color: {{SCROLL_FACE}} {{SCROLL_TRACK}};
         }
     </style>
     <script src="{{JS_PATH}}highlight.min.js"></script>

@@ -2,30 +2,39 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.Design;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Design;
-using System.Reflection;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Windows.Forms;
 using System.Linq;
+using System.Reflection;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using UiTools.WinForms.Designer.Core.Properties;
 
 namespace UiTools.WinForms.Designer.Core
 {
     public partial class ToolboxTreeView : UserControl, IMyToolbox
     {
+        private static readonly Color DefaultDisabledBackColor = ColorTranslator.FromHtml("#FBFBFB");
+        private static readonly Color DefaultDisabledForeColor = SystemColors.GrayText;
+        
+        private static readonly Color DefaultHoverBackColor = Color.FromArgb(201, 222, 245);
+        private static readonly Color DefaultHoverForeColor = Color.Black;
+        private static readonly Color DefaultSelectedBackColor = SystemColors.Highlight;
+        private static readonly Color DefaultSelectedForeColor = SystemColors.HighlightText;
+
+        private static readonly Color DefaultSearchButtonHoverBackColor = ColorTranslator.FromHtml("#C9DEF5");
+
         // NOTE: moving ToolboxTreeView control to "Workspace" project folder resulted in MissingManifestResourceException when assigning ImageList.ImageStream property.
         //       The solution was to introduce the "EmbeddedResourceUseDependentUponConvention" setting (set to true) in the .csproj file.
         public event EventHandler<ToolboxItem> ToolboxItemDoubleClick;
 
-        [DllImport("user32.dll", EntryPoint = "SendMessage")]
-        public static extern int SendMessageStr(IntPtr hWnd, int msg, IntPtr wParam, [MarshalAs(UnmanagedType.LPWStr)] string lParam);
-
-        private const int CB_SETCUEBANNER = 0x1703;
-
         private bool isSearchButtonHovered = false;
         private TreeNode hoveredNode = null;
         private Dictionary<string, List<ToolboxItem>> itemsByCategories;
+        private bool isDarkTheme = false;
 
         public ToolboxTreeView()
         {
@@ -37,8 +46,10 @@ namespace UiTools.WinForms.Designer.Core
             treeView1.ShowNodeToolTips = true;
 
             treeView1.ImageList = imageList16px;
-            treeView1.Indent = 22;
-            treeView1.ItemHeight = 26;
+            float scaleFactor = DeviceDpi / 120f;
+            treeView1.Indent = (int)(22 * scaleFactor);
+            treeView1.ItemHeight = (int)(26 * scaleFactor);
+            treeView1.Tag = "NoTheme";
 
             treeView1.DrawMode = TreeViewDrawMode.OwnerDrawAll;
             treeView1.DrawNode += treeView1_DrawNode;
@@ -50,18 +61,68 @@ namespace UiTools.WinForms.Designer.Core
             treeView1.NodeMouseDoubleClick += treeView1_NodeMouseDoubleClick;
 
             cboSearch.TabStop = false;
+            cboSearch.CueBannerText = "Search Toolbox";
             cboSearch.TextChanged += cboSearch_TextChanged;
             cboSearch.LostFocus += cboSearch_LostFocus;
             cboSearch.KeyDown += ProcessKeyDownEvent;
-            SendMessageStr(cboSearch.Handle, CB_SETCUEBANNER, IntPtr.Zero, "Search Toolbox");
+            cboSearch.BackColorChanged += (s, e) => UpdateSearchButtonBackColor();
+            cboSearch.EnabledChanged += (s, e) => UpdateSearchButtonBackColor();
 
-            picSearch.Height = cboSearch.Height - 2;
-            picSearch.Width = 20;
             picSearch.SizeMode = PictureBoxSizeMode.CenterImage;
+            //picSearch.Height = cboSearch.Height - 2; // has no effect here; moved to OnHandleCreated()
+            picSearch.Width = (int)(22 * scaleFactor);
+            picSearch.Tag = "NoTheme";
             picSearch.MouseEnter += picSearch_MouseEnter;
             picSearch.MouseLeave += picSearch_MouseLeave;
             picSearch.Click += picSearch_Click;
-            UpdateSearchButton();
+            UpdateSearchButtonToolTipAndImage();
+            picSearch.Visible = false; // to prevent "jumping" of its centered image on nearest picSearch.Height change (in OnHandleCreated)
+        }
+
+        protected override void OnHandleCreated(EventArgs e)
+        {
+            base.OnHandleCreated(e);
+            BeginInvoke(() =>
+            {
+                picSearch.Height = cboSearch.Height - 2;
+                picSearch.Visible = true;
+                ThemeApplier.ApplyScrollBarTheme(treeView1, IsDarkTheme);
+                // Fix issue with cboSearch cue banner:
+                _ = Task.Run(async () =>
+                {
+                    await Task.Delay(100);
+                    BeginInvoke(cboSearch.Refresh);
+                });
+            });
+            UpdateTreeViewBackColor();
+        }
+
+        protected override void OnFontChanged(EventArgs e)
+        {
+            base.OnFontChanged(e);
+            if (IsHandleCreated)
+                BeginInvoke(() => picSearch.Height = cboSearch.Height - 2);
+        }
+
+        protected override void OnBackColorChanged(EventArgs e)
+        {
+            base.OnBackColorChanged(e);
+            if (IsHandleCreated)
+                BeginInvoke(UpdateTreeViewBackColor);
+        }
+
+        protected override void OnForeColorChanged(EventArgs e)
+        {
+            base.OnForeColorChanged(e);
+            if (IsHandleCreated)
+                BeginInvoke(UpdateTreeViewForeColor);
+        }
+
+        protected override void OnEnabledChanged(EventArgs e)
+        {
+            base.OnEnabledChanged(e);
+            if (IsHandleCreated)
+                BeginInvoke(() => { UpdateTreeViewBackColor(); UpdateTreeViewForeColor(); });
         }
 
         private void treeView1_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
@@ -83,16 +144,71 @@ namespace UiTools.WinForms.Designer.Core
                     {
                         var itemNode = categoryNode.Nodes.Add(item.DisplayName);
                         itemNode.Tag = item;
-                        var toolType = item.GetType(DesignerHost);
+                        var toolType = item.GetType(/*DesignerHost*/null);
                         itemNode.ToolTipText = toolType == null // will be null for "Pointer" items
                             ? item.DisplayName
                             : ComposeComponentToolTipText(toolType);
+                        if (toolType != null)
+                        {
+                            bool isFromReferencedAssembly =
+                                item?.Properties[ToolboxHelper.TOOLBOXITEM_ORIGIN_PROP_NAME]?.ToString() == ToolboxHelper.TOOLBOXITEM_ORIGIN_FROM_REF_ASM;
+                            item.Bitmap = item.OriginalBitmap = PickToolboxItemImage(toolType, isFromReferencedAssembly);
+                        }
                     }
                 }
                 if (categoryNode.Nodes.Count == 0)
                     categoryNode.Remove();
                 else if (filter != null)
                     categoryNode.Expand();
+            }
+        }
+
+        private Bitmap PickToolboxItemImage(Type toolType, bool isFromReferencedAssembly)
+        {
+            // Try to pick image from resources:
+            object image = isDarkTheme
+                ? (isFromReferencedAssembly ? DarkThemeToolboxItems.UserControl : DarkThemeToolboxItems.ResourceManager.GetObject(toolType.Name))
+                : (isFromReferencedAssembly ? LightThemeToolboxItems.UserControl : LightThemeToolboxItems.ResourceManager.GetObject(toolType.Name));
+            if (image != null)
+                return (Bitmap)image;
+            
+            // Try to fallback to "built-in" default image:
+            var imageAttr = (ToolboxBitmapAttribute)TypeDescriptor.GetAttributes(toolType)[typeof(ToolboxBitmapAttribute)];
+            if (imageAttr != null)
+                return (Bitmap)imageAttr.GetImage(toolType);
+
+            // Use stub image as last chance:
+            return isDarkTheme ? DarkThemeToolboxItems.UserControl : LightThemeToolboxItems.UserControl;
+        }
+
+        public Bitmap GetComponentTypeImage(Type componentType)
+        {
+            return itemsByCategories == null
+                ? null
+                : (itemsByCategories
+                    .SelectMany(kvp => kvp.Value)
+                    .FirstOrDefault(t => t.GetType(/*DesignerHost*/null) == componentType)?
+                    .Bitmap);
+        }
+
+        private void ApplyUiThemeToToolboxItemImages()
+        {
+            if (itemsByCategories == null)
+                return;
+            foreach (var kvp in itemsByCategories)
+            {
+                foreach (var item in kvp.Value)
+                {
+                    var toolType = item.GetType(/*DesignerHost*/null);
+                    if (toolType != null)
+                    {
+                        bool isFromReferencedAssembly =
+                            item?.Properties[ToolboxHelper.TOOLBOXITEM_ORIGIN_PROP_NAME]?.ToString() == ToolboxHelper.TOOLBOXITEM_ORIGIN_FROM_REF_ASM;
+                        item.Bitmap = item.OriginalBitmap = PickToolboxItemImage(toolType, isFromReferencedAssembly);
+                    }
+                    else // that's a "Pointer"
+                        item.Bitmap = isDarkTheme ? DarkThemeToolboxItems.Pointer : LightThemeToolboxItems.Pointer;
+                }
             }
         }
 
@@ -107,7 +223,7 @@ namespace UiTools.WinForms.Designer.Core
                 .OrderBy(p => p);
         }
 
-        private string ComposeComponentToolTipText(Type componentType)
+        private static string ComposeComponentToolTipText(Type componentType)
         {
             var sb = new StringBuilder();
             sb.AppendLine(componentType.Name);
@@ -125,8 +241,52 @@ namespace UiTools.WinForms.Designer.Core
             if (desc != null)
             {
                 sb.AppendLine();
-                sb.AppendLine(desc);
+                sb.AppendLine(WrapText(desc, 60));
             }
+            return sb.ToString();
+        }
+
+        private static string WrapText(string text, int maxCharsPerLine)
+        {
+            if (string.IsNullOrWhiteSpace(text))
+                return string.Empty;
+
+            text = Regex.Replace(text, @"\s+", " ").Trim();
+
+            if (text.Length <= maxCharsPerLine)
+                return text;
+
+            var sb = new StringBuilder();
+            int position = 0;
+
+            while (position < text.Length)
+            {
+                if (text.Length - position <= maxCharsPerLine)
+                {
+                    sb.Append(text.Substring(position).Trim());
+                    break;
+                }
+
+                int lookLength = maxCharsPerLine;
+                int breakPos = text.LastIndexOf(' ', position + lookLength, lookLength);
+
+                if (breakPos <= position)
+                {
+                    breakPos = text.IndexOf(' ', position + lookLength);
+                    if (breakPos == -1)
+                    {
+                        sb.Append(text.Substring(position).Trim());
+                        break;
+                    }
+                }
+
+                string line = text.Substring(position, breakPos - position).Trim();
+                if (!string.IsNullOrEmpty(line))
+                    sb.AppendLine(line);
+
+                position = breakPos + 1;
+            }
+
             return sb.ToString();
         }
 
@@ -161,20 +321,29 @@ namespace UiTools.WinForms.Designer.Core
             bool isHovered = (e.Node == hoveredNode && e.Node.Level > 0);
             bool isSelected = (e.State & TreeNodeStates.Selected) == TreeNodeStates.Selected;
             bool isExpanded = e.Node.IsExpanded;
+            float scaleFactor = e.Graphics.DpiY / 120f;
+            float textPadding = 6 * scaleFactor;
 
-            Color backColor = Color.White;
-            Color textColor = Color.Black;
-            Color hoverBackColor = Color.FromArgb(201, 222, 245);
+            Color backColor = BackColor;
+            Color textColor = ForeColor;
 
-            if (isSelected)
+            if (Enabled)
             {
-                backColor = SystemColors.Highlight;
-                textColor = SystemColors.HighlightText;
+                if (isSelected)
+                {
+                    backColor = SelectedBackColor;
+                    textColor = SelectedForeColor;
+                }
+                else if (isHovered)
+                {
+                    backColor = HoverBackColor;
+                    textColor = HoverForeColor;
+                }
             }
-            else if (isHovered)
+            else
             {
-                backColor = hoverBackColor;
-                textColor = Color.Black;
+                backColor = DisabledBackColor;
+                textColor = DisabledForeColor;
             }
 
             using (Brush backBrush = new SolidBrush(backColor))
@@ -187,18 +356,17 @@ namespace UiTools.WinForms.Designer.Core
                 if (e.Node.Level == 0)
                 {
                     // This is a root node - draw a custom icon (instead of "plus" and "minus"):
-                    var img = isSelected
-                        ? imageList16px.Images[isExpanded ? "SelectedAndExpandedTreeNode" : "SelectedAndCollapsedTreeNode"]
-                        : imageList16px.Images[isExpanded ? "ExpandedTreeNode" : "CollapsedTreeNode"];
-                    if (img == null)
-                    {
-                        // this happens during the closing of the parent form
-                        return;
-                    }
-                    e.Graphics.DrawImage(img, e.Bounds.X + 3, e.Bounds.Y + (e.Bounds.Height - img.Height) / 2);
+                    var resourceName = isExpanded ? "ExpandedTreeNode" : "CollapsedTreeNode";
+                    if (isSelected)
+                        resourceName = "SelectedAnd" + resourceName;
+                    if (IsDarkTheme)
+                        resourceName += "_DarkTheme";
+                    var img = (Image)Resources.ResourceManager.GetObject(resourceName);
+                    float iconPadding = 3 * scaleFactor;
+                    e.Graphics.DrawImage(img, e.Bounds.X + iconPadding, e.Bounds.Y + (e.Bounds.Height - img.Height) / 2, img.Width * scaleFactor, img.Height * scaleFactor);
                     // Draw text:
                     var textBounds = e.Bounds;
-                    textBounds.X += img.Width + 2; // indent text after the icon
+                    textBounds.X += img.Width + (int)textPadding; // indent text after the icon
                     TextRenderer.DrawText(e.Graphics, e.Node.Text, e.Node.TreeView.Font, textBounds, textColor, TextFormatFlags.VerticalCenter | TextFormatFlags.Left);
                 }
                 else
@@ -209,11 +377,12 @@ namespace UiTools.WinForms.Designer.Core
                     Image nodeImage = (e.Node.Tag as ToolboxItem).Bitmap;
                     if (nodeImage != null && e.Bounds.Height > 0) // (it's unclear why e.Bounds.Height is *sometimes* 0 here)
                     {
-                        e.Graphics.DrawImage(nodeImage, currentX, e.Bounds.Y + (e.Bounds.Height - nodeImage.Height) / 2);
+                        float iconOffsetY = -5 * scaleFactor + 5; // tested with scaleFactor 125% and 200% (the latter - on 4K display)
+                        e.Graphics.DrawImage(nodeImage, currentX, e.Bounds.Y + (e.Bounds.Height - nodeImage.Height) / 2 + iconOffsetY, nodeImage.Width * scaleFactor, nodeImage.Height * scaleFactor);
                         currentX += nodeImage.Width + 2; // indent before the text
                     }
                     // Draw text:
-                    Rectangle nodeTextBounds = new Rectangle(currentX, e.Bounds.Y, e.Bounds.Width - (currentX - e.Bounds.X), e.Bounds.Height);
+                    Rectangle nodeTextBounds = new Rectangle(currentX + (int)textPadding, e.Bounds.Y, e.Bounds.Width - (currentX - e.Bounds.X), e.Bounds.Height);
                     TextRenderer.DrawText(e.Graphics, e.Node.Text, e.Node.TreeView.Font, nodeTextBounds, textColor, TextFormatFlags.VerticalCenter | TextFormatFlags.Left);
                 }
             }
@@ -244,7 +413,7 @@ namespace UiTools.WinForms.Designer.Core
             OnMouseMove(e); // needed for drag'n'drop
         }
 
-        private void treeView1_MouseLeave(object sender, System.EventArgs e)
+        private void treeView1_MouseLeave(object sender, EventArgs e)
         {
             if (hoveredNode != null)
             {
@@ -278,18 +447,22 @@ namespace UiTools.WinForms.Designer.Core
                 e.Node.Expand();
         }
 
+        Color picSearchBackColor;
         private void picSearch_MouseEnter(object sender, EventArgs e)
         {
-            picSearch.BackColor = Color.FromArgb(229, 241, 251);
+            picSearchBackColor = picSearch.BackColor; // store color
+            if (!isDarkTheme)
+                picSearch.BackColor = SearchButtonHoverBackColor;
             isSearchButtonHovered = true;
-            UpdateSearchButton();
+            UpdateSearchButtonToolTipAndImage();
         }
 
         private void picSearch_MouseLeave(object sender, EventArgs e)
         {
-            picSearch.BackColor = SystemColors.Window;
+            if (!isDarkTheme)
+                picSearch.BackColor = picSearchBackColor; // restore color
             isSearchButtonHovered = false;
-            UpdateSearchButton();
+            UpdateSearchButtonToolTipAndImage();
         }
 
         private void picSearch_Click(object sender, EventArgs e)
@@ -302,8 +475,9 @@ namespace UiTools.WinForms.Designer.Core
         protected override void OnSizeChanged(EventArgs e)
         {
             base.OnSizeChanged(e);
-            picSearch.Left = cboSearch.Right - picSearch.Width - 22;
-            picSearch.Top = cboSearch.Top + (cboSearch.Height - picSearch.Height) / 2;
+            float scaleFactor = DeviceDpi / 120f;
+            picSearch.Left = cboSearch.Right - picSearch.Width - (int)(21 * scaleFactor);
+            picSearch.Top = 1;
             labNoResults.Top = cboSearch.Bottom + 20;
             labNoResults.Left = (ClientSize.Width - labNoResults.Width) / 2;
         }
@@ -314,16 +488,39 @@ namespace UiTools.WinForms.Designer.Core
                 RemoveFilter();
             else
                 SetFilter(cboSearch.Text);
-            UpdateSearchButton();
+            UpdateSearchButtonToolTipAndImage();
         }
 
-        private void UpdateSearchButton()
+        private void UpdateSearchButtonBackColor()
+        {
+            picSearch.BackColor = cboSearch.Enabled
+                ? cboSearch.BackColor
+                : cboSearch.DisabledBackColor;
+        }
+
+        private void UpdateTreeViewBackColor()
+        {
+            treeView1.BackColor = labNoResults.BackColor = Enabled ? BackColor : DisabledBackColor;
+            // NOTE: We explicitly set 'labNoResults.BackColor' to match the TreeView's background. 
+            //       Relying on 'Color.Transparent' for 'labNoResults' does not yield the expected visual result
+            //       when the underlying TreeView is in a disabled state due to WinForms' transparency limitations.
+        }
+
+        private void UpdateTreeViewForeColor()
+        {
+            treeView1.ForeColor = labNoResults.ForeColor = Enabled ? ForeColor : DisabledForeColor;
+        }
+
+        private void UpdateSearchButtonToolTipAndImage()
         {
             bool filterPresent = !string.IsNullOrEmpty(cboSearch.Text);
             toolTip1.SetToolTip(picSearch, filterPresent ? "Clear search" : "Search");
-            picSearch.Image = isSearchButtonHovered
-                ? imageList20px.Images[filterPresent ? "HoveredClearSearch" : "HoveredSearch"]
-                : imageList20px.Images[filterPresent ? "ClearSearch" : "Search"];
+            var resourceName = filterPresent ? "ClearSearch" : "Search";
+            if (isSearchButtonHovered)
+                resourceName = "Hovered" + resourceName;
+            if (IsDarkTheme)
+                resourceName += "_DarkTheme";
+            picSearch.Image = (Image)Resources.ResourceManager.GetObject(resourceName);
         }
 
         private void cboSearch_LostFocus(object sender, EventArgs e)
@@ -340,7 +537,7 @@ namespace UiTools.WinForms.Designer.Core
 
         public ToolboxItem CreatePointer()
         {
-            var bmp = new Bitmap(imageList16px.Images["Pointer"]);
+            var bmp = isDarkTheme ? DarkThemeToolboxItems.Pointer : LightThemeToolboxItems.Pointer;
             return new ToolboxItem
             {
                 DisplayName = "Pointer",
@@ -372,6 +569,69 @@ namespace UiTools.WinForms.Designer.Core
         {
             treeView1.Nodes.Clear();
         }
+
+        [Category("Appearance")]
+        [DefaultValue(false)]
+        public bool IsDarkTheme
+        {
+            get => isDarkTheme;
+            set
+            {
+                if (isDarkTheme != value)
+                {
+                    isDarkTheme = value;
+                    UpdateSearchButtonToolTipAndImage();
+                    UpdateSearchButtonBackColor();
+                    ApplyUiThemeToToolboxItemImages();
+                    ThemeApplier.ApplyScrollBarTheme(treeView1, isDarkTheme);
+                }
+            }
+        }
+
+        public override Color BackColor { get; set; } = SystemColors.Window;
+        public override Color ForeColor { get; set; } = SystemColors.ControlText;
+
+        [Category("Appearance")]
+        public Color DisabledBackColor { get; set; } = DefaultDisabledBackColor;
+        [Category("Appearance")]
+        public Color DisabledForeColor { get; set; } = DefaultDisabledForeColor;
+
+        [Category("Appearance")]
+        public Color HoverBackColor { get; set; } = DefaultHoverBackColor;
+        [Category("Appearance")]
+        public Color HoverForeColor { get; set; } = DefaultHoverForeColor;
+        [Category("Appearance")]
+        public Color SelectedBackColor { get; set; } = DefaultSelectedBackColor;
+        [Category("Appearance")]
+        public Color SelectedForeColor { get; set; } = DefaultSelectedForeColor;
+
+        [Category("Appearance")]
+        public Color SearchButtonHoverBackColor { get; set; } = DefaultSearchButtonHoverBackColor;
+
+        #region Support for default values of Color properties
+
+        private bool ShouldSerializeDisabledBackColor() => DisabledBackColor != DefaultDisabledBackColor;
+        private void ResetDisabledBackColor() => DisabledBackColor = DefaultDisabledBackColor;
+
+        private bool ShouldSerializeDisabledForeColor() => DisabledForeColor != DefaultDisabledForeColor;
+        private void ResetDisabledForeColor() => DisabledForeColor = DefaultDisabledForeColor;
+
+        private bool ShouldSerializeHoverBackColor() => HoverBackColor != DefaultHoverBackColor;
+        private void ResetHoverBackColor() => HoverBackColor = DefaultHoverBackColor;
+
+        private bool ShouldSerializeHoverForeColor() => HoverForeColor != DefaultHoverForeColor;
+        private void ResetHoverForeColor() => HoverForeColor = DefaultHoverForeColor;
+
+        private bool ShouldSerializeSelectedBackColor() => SelectedBackColor != DefaultSelectedBackColor;
+        private void ResetSelectedBackColor() => SelectedBackColor = DefaultSelectedBackColor;
+
+        private bool ShouldSerializeSelectedForeColor() => SelectedForeColor != DefaultSelectedForeColor;
+        private void ResetSelectedForeColor() => SelectedForeColor = DefaultSelectedForeColor;
+
+        private bool ShouldSerializeSearchButtonHoverBackColor() => SearchButtonHoverBackColor != DefaultSearchButtonHoverBackColor;
+        private void ResetSearchButtonHoverBackColor() => SearchButtonHoverBackColor = DefaultSearchButtonHoverBackColor;
+
+        #endregion Support for default values of Color properties
 
         #region IMyToolbox interface members
 
@@ -417,16 +677,10 @@ namespace UiTools.WinForms.Designer.Core
 
     public class DoubleBufferedTreeView : TreeView
     {
-        [DllImport("user32.dll")]
-        private static extern IntPtr SendMessage(IntPtr hWnd, int msg, IntPtr wp, IntPtr lp);
-
-        private const int TVM_SETEXTENDEDSTYLE = 0x1100 + 44;
-        private const int TVS_EX_DOUBLEBUFFER = 0x0004;
-
         protected override void OnHandleCreated(EventArgs e)
         {
-            SendMessage(this.Handle, TVM_SETEXTENDEDSTYLE, (IntPtr)TVS_EX_DOUBLEBUFFER, (IntPtr)TVS_EX_DOUBLEBUFFER);
             base.OnHandleCreated(e);
+            Win32.SendMessage(Handle, Win32.TVM_SETEXTENDEDSTYLE, (IntPtr)Win32.TVS_EX_DOUBLEBUFFER, (IntPtr)Win32.TVS_EX_DOUBLEBUFFER);
         }
     }
 }

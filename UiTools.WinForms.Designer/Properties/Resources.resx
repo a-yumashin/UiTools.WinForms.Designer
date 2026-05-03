@@ -118,140 +118,44 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="AddControl" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\AddControl.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="AddForm" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\AddForm.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="AlignBottom" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\FormatMenu\AlignBottom.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="AlignCenter" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\FormatMenu\AlignCenter.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="AlignLeft" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\FormatMenu\AlignLeft.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="AlignMiddle" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\FormatMenu\AlignMiddle.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="AlignRight" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\FormatMenu\AlignRight.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="AlignTop" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\FormatMenu\AlignTop.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="AppLogo" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\AppLogo.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="BringToFront" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\FormatMenu\BringToFront.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="CenterHorizontally" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\FormatMenu\CenterHorizontally.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="CenterVertically" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\FormatMenu\CenterVertically.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Close" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Close.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="CloseSelectedTab" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\CloseSelectedTab.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="CloseTab" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\CloseTab.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Copy" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\EditMenu\Copy.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Cut" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\EditMenu\Cut.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="DecreaseHorizontalSpacing" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\FormatMenu\DecreaseHorizontalSpacing.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="DecreaseVerticalSpacing" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\FormatMenu\DecreaseVerticalSpacing.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Delete" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\EditMenu\Delete.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Delete2" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Delete2.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Close_DarkTheme" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Close.DarkTheme.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Help" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Help.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Help_DarkTheme" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Help.DarkTheme.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Hint" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Hint.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="HorizontalSpacingMakeEqual" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\FormatMenu\HorizontalSpacingMakeEqual.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="IncreaseHorizontalSpacing" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\FormatMenu\IncreaseHorizontalSpacing.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="IncreaseVerticalSpacing" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\FormatMenu\IncreaseVerticalSpacing.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="MakeSameHeight" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\FormatMenu\MakeSameHeight.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="MakeSameWidth" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\FormatMenu\MakeSameWidth.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="MakeSameWidthAndHeight" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\FormatMenu\MakeSameWidthAndHeight.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="OpenContainingFolder" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\OpenContainingFolder.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="OpenFile" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\OpenFile.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="OpenContainingFolder_DarkTheme" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\OpenContainingFolder.DarkTheme.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Options" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Options.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="OptionsDialog" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\OptionsDialog.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Output" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ViewMenu\Output.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Remove" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Remove.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Paste" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\EditMenu\Paste.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Remove_DarkTheme" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Remove.DarkTheme.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Property" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ViewMenu\Property.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="UiThemeConfigFolder" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\UiThemeConfigFolder.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Redo" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\EditMenu\Redo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="RemoveHorizontalSpacing" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\FormatMenu\RemoveHorizontalSpacing.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="RemoveVerticalSpacing" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\FormatMenu\RemoveVerticalSpacing.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Save" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Save.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="SelectAll" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\EditMenu\SelectAll.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="SendtoBack" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\FormatMenu\SendtoBack.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="TabOrder" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ViewMenu\TabOrder.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Toolbox" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ViewMenu\Toolbox.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Undo" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\EditMenu\Undo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="VerticalSpacingMakeEqual" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\FormatMenu\VerticalSpacingMakeEqual.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="UiThemeConfigFolder_DarkTheme" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\UiThemeConfigFolder.DarkTheme.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Warning" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Warning.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>

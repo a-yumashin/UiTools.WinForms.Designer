@@ -64,6 +64,7 @@
             // 
             this.picClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.picClose.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picClose.HoverBackColor = System.Drawing.Color.Empty;
             this.picClose.Image = global::UiTools.WinForms.Designer.Properties.Resources.Close;
             this.picClose.Location = new System.Drawing.Point(182, 4);
             this.picClose.Name = "picClose";
@@ -76,6 +77,7 @@
             // labHeader
             // 
             this.labHeader.AutoSize = true;
+            this.labHeader.BackColor = System.Drawing.Color.Transparent;
             this.labHeader.Location = new System.Drawing.Point(3, 4);
             this.labHeader.Name = "labHeader";
             this.labHeader.Size = new System.Drawing.Size(55, 20);
@@ -84,8 +86,8 @@
             // 
             // WorkspacePanelContainer
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.Controls.Add(this.pnlContainer);
             this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);

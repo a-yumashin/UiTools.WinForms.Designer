@@ -121,37 +121,163 @@
   <data name="BringToFront" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\DesignerContextMenu\BringToFront.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="BringToFront_DarkTheme" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\DesignerContextMenu\BringToFront.DarkTheme.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CategorizedView" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ComponentPropertiesExplorer\CategorizedView.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CategorizedView_DarkTheme" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ComponentPropertiesExplorer\CategorizedView.DarkTheme.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ClearSearch" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Toolbox\ClearSearch.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ClearSearch_DarkTheme" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Toolbox\DarkTheme\ClearSearch.DarkTheme.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="ClearWindowContent" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\OutputPanel\ClearWindowContent.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ClearWindowContent_DarkTheme" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\OutputPanel\ClearWindowContent.DarkTheme.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CloseSelectedTab" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CloseSelectedTab.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CloseTab" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CloseTab.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CollapsedTreeNode" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Toolbox\CollapsedTreeNode.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CollapsedTreeNode_DarkTheme" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Toolbox\DarkTheme\CollapsedTreeNode.DarkTheme.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Copy" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\DesignerContextMenu\Copy.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Copy_DarkTheme" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\DesignerContextMenu\Copy.DarkTheme.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Cut" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\DesignerContextMenu\Cut.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Cut_DarkTheme" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\DesignerContextMenu\Cut.DarkTheme.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Delete" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\DesignerContextMenu\Delete.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Event" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ComponentPropertiesExplorer\Event.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Delete_DarkTheme" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\DesignerContextMenu\Delete.DarkTheme.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ExpandedTreeNode" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Toolbox\ExpandedTreeNode.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ExpandedTreeNode_DarkTheme" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Toolbox\DarkTheme\ExpandedTreeNode.DarkTheme.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Form" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\DesignerContextMenu\ComponentsNotInToolbox\Form.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Form_DarkTheme" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\DesignerContextMenu\ComponentsNotInToolbox\Form.DarkTheme.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="HoveredClearSearch" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Toolbox\HoveredClearSearch.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="HoveredClearSearch_DarkTheme" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Toolbox\DarkTheme\HoveredClearSearch.DarkTheme.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="HoveredSearch" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Toolbox\HoveredSearch.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="HoveredSearch_DarkTheme" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Toolbox\DarkTheme\HoveredSearch.DarkTheme.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Paste" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\DesignerContextMenu\Paste.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Paste_DarkTheme" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\DesignerContextMenu\Paste.DarkTheme.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Property" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\DesignerContextMenu\Property.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Property_DarkTheme" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\DesignerContextMenu\Property.DarkTheme.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Search" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\OutputPanel\Search.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\Resources\Toolbox\Search.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SearchText" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\OutputPanel\SearchText.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SearchText_DarkTheme" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\OutputPanel\SearchText.DarkTheme.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Search_DarkTheme" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Toolbox\DarkTheme\Search.DarkTheme.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SelectedAndCollapsedTreeNode" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Toolbox\SelectedAndCollapsedTreeNode.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SelectedAndCollapsedTreeNode_DarkTheme" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Toolbox\DarkTheme\SelectedAndCollapsedTreeNode.DarkTheme.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SelectedAndExpandedTreeNode" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Toolbox\SelectedAndExpandedTreeNode.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SelectedAndExpandedTreeNode_DarkTheme" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Toolbox\DarkTheme\SelectedAndExpandedTreeNode.DarkTheme.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="SendtoBack" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\DesignerContextMenu\SendtoBack.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="SendToBack_DarkTheme" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\DesignerContextMenu\SendToBack.DarkTheme.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ShowEvents" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ComponentPropertiesExplorer\ShowEvents.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ShowEvents_DarkTheme" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ComponentPropertiesExplorer\ShowEvents.DarkTheme.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ShowProperties" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ComponentPropertiesExplorer\ShowProperties.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ShowProperties_DarkTheme" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ComponentPropertiesExplorer\ShowProperties.DarkTheme.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SortedView" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ComponentPropertiesExplorer\SortedView.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SortedView_DarkTheme" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ComponentPropertiesExplorer\SortedView.DarkTheme.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SplitterPanel" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\DesignerContextMenu\ComponentsNotInToolbox\SplitterPanel.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SplitterPanel_DarkTheme" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\DesignerContextMenu\ComponentsNotInToolbox\SplitterPanel.DarkTheme.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TabPage" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\DesignerContextMenu\ComponentsNotInToolbox\TabPage.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TabPage_DarkTheme" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\DesignerContextMenu\ComponentsNotInToolbox\TabPage.DarkTheme.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="TimeStamp" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\OutputPanel\TimeStamp.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="TimeStamp_DarkTheme" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\OutputPanel\TimeStamp.DarkTheme.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="WordWrap" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\OutputPanel\WordWrap.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="WordWrap_DarkTheme" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\OutputPanel\WordWrap.DarkTheme.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

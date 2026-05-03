@@ -95,6 +95,14 @@
   "license": "SEE LICENSE IN LICENSE.txt",
   "pricing": "Free",
   "icon": "./icon.png",
+  "bugs": {
+    "url": "https://github.com/a-yumashin/UiTools.WinForms.Designer/issues",
+    "email": "a.yumashin@yandex.ru"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/a-yumashin/UiTools.WinForms.Designer"
+  },
   "categories": [
     "Visualization",
     "Other"

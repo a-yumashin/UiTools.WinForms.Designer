@@ -11,6 +11,9 @@ namespace UiTools.WinForms.Designer.Core
         event EventHandler<string> RecentFileClicked;
         void AddOrMoveFileToTheTop(string filePath);
         void HandleNonExistingFileInList(string filePath);
+        Image DeleteIcon { get; set; }
+        Image OpenFolderIcon { get; set; }
+        Font Font { get; set; }
     }
 
     public class RecentFilesManager : IRecentFilesManager
@@ -19,25 +22,21 @@ namespace UiTools.WinForms.Designer.Core
         private readonly List<string> mruList;
         private readonly int mruListMaxSize;
         private readonly Action saveAction;
-        private readonly Image deleteIcon;
-        private readonly Image openFolderIcon;
-
         private readonly ContextMenuStrip itemContextMenu;
+        private readonly ThemedMenuStrip menuStrip;
         private ToolStripMenuItem lastRightClickedItem;
         private bool isContextMenuVisible;
 
         public event EventHandler<string> RecentFileClicked;
 
-        public RecentFilesManager(ToolStripDropDownItem recentFilesRootMenu, List<string> mruList, int mruListMaxSize, Action saveAction,
-            Image deleteIcon = null, Image openFolderIcon = null)
+        public RecentFilesManager(ToolStripDropDownItem recentFilesRootMenu, List<string> mruList, int mruListMaxSize, Action saveAction)
         {
             this.recentFilesRootMenu = recentFilesRootMenu ?? throw new ArgumentNullException(nameof(recentFilesRootMenu));
             this.mruList = mruList ?? throw new ArgumentNullException(nameof(mruList));
             this.mruListMaxSize = mruListMaxSize;
             this.saveAction = saveAction ?? throw new ArgumentNullException(nameof(saveAction));
-            this.deleteIcon = deleteIcon;
-            this.openFolderIcon = openFolderIcon;
 
+            menuStrip = (recentFilesRootMenu.Owner as ToolStripDropDownMenu)?.OwnerItem?.Owner as ThemedMenuStrip;
             itemContextMenu = PrepareContextMenu();
 
             // Initial menu build from the configuration:
@@ -48,23 +47,31 @@ namespace UiTools.WinForms.Designer.Core
         {
             var itemContextMenu = new ContextMenuStrip();
 
-            var miOpenContainingFolder = new ToolStripMenuItem("Open containing folder", openFolderIcon);
-            miOpenContainingFolder.Click += OnOpenContainingFolder; ;
+            var miOpenContainingFolder = new ToolStripMenuItem("Open containing folder") { Name = "miOpenContainingFolder" };
+            miOpenContainingFolder.Click += OnOpenContainingFolder;
             itemContextMenu.Items.Add(miOpenContainingFolder);
 
             itemContextMenu.Items.Add(new ToolStripSeparator());
 
-            var miRemoveFromList = new ToolStripMenuItem("Remove from this list", deleteIcon);
+            var miRemoveFromList = new ToolStripMenuItem("Remove from this list") { Name = "miRemoveFromList" };
             miRemoveFromList.Click += (s, e) => RemoveItemWithConfirmation(lastRightClickedItem);
             itemContextMenu.Items.Add(miRemoveFromList);
 
             // To keep the menu open when removing items via the right-click context menu:
             itemContextMenu.Closed += (s, e) => isContextMenuVisible = false;
-            this.recentFilesRootMenu.DropDown.Closing += DropDownChain_Closing;
-            if (this.recentFilesRootMenu.Owner is ToolStripDropDown parentDropDown)
+            recentFilesRootMenu.DropDown.Closing += DropDownChain_Closing;
+            if (recentFilesRootMenu.Owner is ToolStripDropDown parentDropDown)
                 parentDropDown.Closing += DropDownChain_Closing;
 
+            itemContextMenu.HandleCreated += ItemContextMenu_HandleCreated;
+
             return itemContextMenu;
+        }
+
+        private void ItemContextMenu_HandleCreated(object sender, EventArgs e)
+        {
+            if (menuStrip != null)
+                (sender as ContextMenuStrip).Renderer = new ThemedMenuStripRenderer(menuStrip);
         }
 
         private void OnOpenContainingFolder(object sender, EventArgs e)
@@ -231,6 +238,22 @@ namespace UiTools.WinForms.Designer.Core
             {
                 MessageBox.Show($"Could not open folder: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        public Image DeleteIcon
+        {
+            get => itemContextMenu.Items["miRemoveFromList"].Image;
+            set => itemContextMenu.Items["miRemoveFromList"].Image = value;
+        }
+        public Image OpenFolderIcon
+        {
+            get => itemContextMenu.Items["miOpenContainingFolder"].Image;
+            set => itemContextMenu.Items["miOpenContainingFolder"].Image = value;
+        }
+        public Font Font
+        {
+            get => itemContextMenu.Font;
+            set => itemContextMenu.Font = value;
         }
     }
 }

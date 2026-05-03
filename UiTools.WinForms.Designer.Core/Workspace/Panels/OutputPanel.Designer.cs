@@ -16,6 +16,7 @@
             if (disposing && (components != null))
             {
                 components.Dispose();
+                exceptionCache.Clear();
             }
             base.Dispose(disposing);
         }
@@ -28,18 +29,19 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.toolStrip1 = new UiTools.WinForms.Designer.Core.ThemedToolStrip();
             this.tsbClear = new System.Windows.Forms.ToolStripButton();
             this.tsbToggleWrap = new System.Windows.Forms.ToolStripButton();
             this.tsbTimestamp = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.tsbSearch = new System.Windows.Forms.ToolStripButton();
-            this.browserOutput = new System.Windows.Forms.WebBrowser();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStrip1
             // 
+            this.toolStrip1.CheckedColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(232)))), ((int)(((byte)(255)))));
+            this.toolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.toolStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsbClear,
@@ -92,7 +94,7 @@
             // tsbSearch
             // 
             this.tsbSearch.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tsbSearch.Image = global::UiTools.WinForms.Designer.Core.Properties.Resources.Search;
+            this.tsbSearch.Image = global::UiTools.WinForms.Designer.Core.Properties.Resources.SearchText;
             this.tsbSearch.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbSearch.Name = "tsbSearch";
             this.tsbSearch.Size = new System.Drawing.Size(29, 24);
@@ -100,23 +102,10 @@
             this.tsbSearch.ToolTipText = "Search";
             this.tsbSearch.Click += new System.EventHandler(this.tsbSearch_Click);
             // 
-            // browserOutput
-            // 
-            this.browserOutput.AllowWebBrowserDrop = false;
-            this.browserOutput.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.browserOutput.Location = new System.Drawing.Point(0, 27);
-            this.browserOutput.MinimumSize = new System.Drawing.Size(20, 20);
-            this.browserOutput.Name = "browserOutput";
-            this.browserOutput.ScriptErrorsSuppressed = true;
-            this.browserOutput.Size = new System.Drawing.Size(417, 195);
-            this.browserOutput.TabIndex = 1;
-            this.browserOutput.Navigating += new System.Windows.Forms.WebBrowserNavigatingEventHandler(this.browserOutput_Navigating);
-            // 
             // OutputPanel
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.browserOutput);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.Controls.Add(this.toolStrip1);
             this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.Name = "OutputPanel";
@@ -130,10 +119,9 @@
 
         #endregion
 
-        private System.Windows.Forms.ToolStrip toolStrip1;
+        private ThemedToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripButton tsbClear;
         private System.Windows.Forms.ToolStripButton tsbToggleWrap;
-        private System.Windows.Forms.WebBrowser browserOutput;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton tsbSearch;
         private System.Windows.Forms.ToolStripButton tsbTimestamp;

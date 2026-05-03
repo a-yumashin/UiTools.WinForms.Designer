@@ -236,7 +236,7 @@ namespace UiTools.WinForms.Designer.Core
                            .Select(u => u.Name.ToString())
                            .ToList();
 
-            if (string.IsNullOrEmpty(csProjFileWrapper.ProjectFilePath))
+            if (string.IsNullOrEmpty(csProjFileWrapper?.ProjectFilePath))
                 return usings;
 
             // Try to supplement with "Implicit Usings" from the MSBuild-generated file (makes sense for SDK-style project files only)

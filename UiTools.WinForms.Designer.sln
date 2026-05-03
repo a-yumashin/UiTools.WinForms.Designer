@@ -23,11 +23,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ScreenShots", "ScreenShots"
 	ProjectSection(SolutionItems) = preProject
 		ScreenShots\AddFileInVsCode.png = ScreenShots\AddFileInVsCode.png
 		ScreenShots\FormOpenInDesigner.png = ScreenShots\FormOpenInDesigner.png
+		ScreenShots\FormOpenInDesigner.DarkTheme.png = ScreenShots\FormOpenInDesigner.DarkTheme.png
 		ScreenShots\NewFileDialog.png = ScreenShots\NewFileDialog.png
 		ScreenShots\OpenFileDialog.png = ScreenShots\OpenFileDialog.png
 		ScreenShots\OpenFileInVsCode.png = ScreenShots\OpenFileInVsCode.png
 		ScreenShots\OutputPanelSample.png = ScreenShots\OutputPanelSample.png
 		ScreenShots\SourceCodeViewer.png = ScreenShots\SourceCodeViewer.png
+		ScreenShots\SourceCodeViewer.DarkTheme.png = ScreenShots\SourceCodeViewer.DarkTheme.png
 	EndProjectSection
 EndProject
 Global

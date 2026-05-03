@@ -61,122 +61,12 @@ namespace UiTools.WinForms.Designer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap AddControl {
-            get {
-                object obj = ResourceManager.GetObject("AddControl", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap AddForm {
-            get {
-                object obj = ResourceManager.GetObject("AddForm", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap AlignBottom {
-            get {
-                object obj = ResourceManager.GetObject("AlignBottom", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap AlignCenter {
-            get {
-                object obj = ResourceManager.GetObject("AlignCenter", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap AlignLeft {
-            get {
-                object obj = ResourceManager.GetObject("AlignLeft", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap AlignMiddle {
-            get {
-                object obj = ResourceManager.GetObject("AlignMiddle", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap AlignRight {
-            get {
-                object obj = ResourceManager.GetObject("AlignRight", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap AlignTop {
-            get {
-                object obj = ResourceManager.GetObject("AlignTop", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
         internal static System.Drawing.Icon AppLogo {
             get {
                 object obj = ResourceManager.GetObject("AppLogo", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap BringToFront {
-            get {
-                object obj = ResourceManager.GetObject("BringToFront", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap CenterHorizontally {
-            get {
-                object obj = ResourceManager.GetObject("CenterHorizontally", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap CenterVertically {
-            get {
-                object obj = ResourceManager.GetObject("CenterVertically", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
             }
         }
         
@@ -193,80 +83,10 @@ namespace UiTools.WinForms.Designer.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap CloseSelectedTab {
+        internal static System.Drawing.Bitmap Close_DarkTheme {
             get {
-                object obj = ResourceManager.GetObject("CloseSelectedTab", resourceCulture);
+                object obj = ResourceManager.GetObject("Close_DarkTheme", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap CloseTab {
-            get {
-                object obj = ResourceManager.GetObject("CloseTab", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap Copy {
-            get {
-                object obj = ResourceManager.GetObject("Copy", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap Cut {
-            get {
-                object obj = ResourceManager.GetObject("Cut", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap DecreaseHorizontalSpacing {
-            get {
-                object obj = ResourceManager.GetObject("DecreaseHorizontalSpacing", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap DecreaseVerticalSpacing {
-            get {
-                object obj = ResourceManager.GetObject("DecreaseVerticalSpacing", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap Delete {
-            get {
-                object obj = ResourceManager.GetObject("Delete", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
-        /// </summary>
-        internal static System.Drawing.Icon Delete2 {
-            get {
-                object obj = ResourceManager.GetObject("Delete2", resourceCulture);
-                return ((System.Drawing.Icon)(obj));
             }
         }
         
@@ -276,6 +96,16 @@ namespace UiTools.WinForms.Designer.Properties {
         internal static System.Drawing.Bitmap Help {
             get {
                 object obj = ResourceManager.GetObject("Help", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Help_DarkTheme {
+            get {
+                object obj = ResourceManager.GetObject("Help_DarkTheme", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -293,66 +123,6 @@ namespace UiTools.WinForms.Designer.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap HorizontalSpacingMakeEqual {
-            get {
-                object obj = ResourceManager.GetObject("HorizontalSpacingMakeEqual", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap IncreaseHorizontalSpacing {
-            get {
-                object obj = ResourceManager.GetObject("IncreaseHorizontalSpacing", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap IncreaseVerticalSpacing {
-            get {
-                object obj = ResourceManager.GetObject("IncreaseVerticalSpacing", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap MakeSameHeight {
-            get {
-                object obj = ResourceManager.GetObject("MakeSameHeight", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap MakeSameWidth {
-            get {
-                object obj = ResourceManager.GetObject("MakeSameWidth", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap MakeSameWidthAndHeight {
-            get {
-                object obj = ResourceManager.GetObject("MakeSameWidthAndHeight", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap OpenContainingFolder {
             get {
                 object obj = ResourceManager.GetObject("OpenContainingFolder", resourceCulture);
@@ -363,9 +133,29 @@ namespace UiTools.WinForms.Designer.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap OpenFile {
+        internal static System.Drawing.Bitmap OpenContainingFolder_DarkTheme {
             get {
-                object obj = ResourceManager.GetObject("OpenFile", resourceCulture);
+                object obj = ResourceManager.GetObject("OpenContainingFolder_DarkTheme", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        internal static System.Drawing.Icon OptionsDialog {
+            get {
+                object obj = ResourceManager.GetObject("OptionsDialog", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Remove {
+            get {
+                object obj = ResourceManager.GetObject("Remove", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -373,9 +163,9 @@ namespace UiTools.WinForms.Designer.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Options {
+        internal static System.Drawing.Bitmap Remove_DarkTheme {
             get {
-                object obj = ResourceManager.GetObject("Options", resourceCulture);
+                object obj = ResourceManager.GetObject("Remove_DarkTheme", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -383,9 +173,9 @@ namespace UiTools.WinForms.Designer.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Output {
+        internal static System.Drawing.Bitmap UiThemeConfigFolder {
             get {
-                object obj = ResourceManager.GetObject("Output", resourceCulture);
+                object obj = ResourceManager.GetObject("UiThemeConfigFolder", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -393,119 +183,9 @@ namespace UiTools.WinForms.Designer.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Paste {
+        internal static System.Drawing.Bitmap UiThemeConfigFolder_DarkTheme {
             get {
-                object obj = ResourceManager.GetObject("Paste", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap Property {
-            get {
-                object obj = ResourceManager.GetObject("Property", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap Redo {
-            get {
-                object obj = ResourceManager.GetObject("Redo", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap RemoveHorizontalSpacing {
-            get {
-                object obj = ResourceManager.GetObject("RemoveHorizontalSpacing", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap RemoveVerticalSpacing {
-            get {
-                object obj = ResourceManager.GetObject("RemoveVerticalSpacing", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap Save {
-            get {
-                object obj = ResourceManager.GetObject("Save", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap SelectAll {
-            get {
-                object obj = ResourceManager.GetObject("SelectAll", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap SendtoBack {
-            get {
-                object obj = ResourceManager.GetObject("SendtoBack", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap TabOrder {
-            get {
-                object obj = ResourceManager.GetObject("TabOrder", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap Toolbox {
-            get {
-                object obj = ResourceManager.GetObject("Toolbox", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap Undo {
-            get {
-                object obj = ResourceManager.GetObject("Undo", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap VerticalSpacingMakeEqual {
-            get {
-                object obj = ResourceManager.GetObject("VerticalSpacingMakeEqual", resourceCulture);
+                object obj = ResourceManager.GetObject("UiThemeConfigFolder_DarkTheme", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
