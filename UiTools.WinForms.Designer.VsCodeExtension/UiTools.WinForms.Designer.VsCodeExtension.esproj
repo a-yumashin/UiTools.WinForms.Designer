@@ -29,4 +29,11 @@
     <Folder Include="scripts\" />
     <None Include="..\LICENSE.txt" Link="LICENSE.txt" />
   </ItemGroup>
+  <Target Name="PrepareMarketplaceAssets" BeforeTargets="Build;Package">
+    <Copy SourceFiles="..\README.md" DestinationFiles="README.md" SkipUnchangedFiles="true" />
+    <ItemGroup>
+      <SourceImages Include="..\ScreenShots\**\*.*" />
+    </ItemGroup>
+    <Copy SourceFiles="@(SourceImages)" DestinationFiles="@(SourceImages->'ScreenShots\%(RecursiveDir)%(Filename)%(Extension)')" SkipUnchangedFiles="true" />
+  </Target>
 </Project>

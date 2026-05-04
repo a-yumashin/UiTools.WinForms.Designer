@@ -29,9 +29,12 @@ const whitelist = [
     '!out/**',
     '!package.json',
     '!README.md',
+    '!DEVELOPER_GUIDE.md',
     '!CHANGELOG.md',
     '!LICENSE.txt',
-    '!icon.png'
+    '!icon.png',
+    '!ExternalToolsSubMenu.png',
+    '!RootToolsMenu.png'
 ];
 
 // 1.3. Add the 'VSIX-bin' folder only if we are NOT in the "light"" mode:

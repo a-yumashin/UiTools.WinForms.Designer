@@ -36,7 +36,7 @@ Due to certain distribution limitations, this extension is not available on the 
 
 **To get started with the VS Code integration:**
 1. Navigate to the **VSIX project folder** in this repository (`UiTools.WinForms.Designer.VsCodeExtension`).
-2. Consult the **dedicated [README.md](UiTools.WinForms.Designer.VsCodeExtension/README.md)** inside that folder for step-by-step instructions on packaging the extension.
+2. Consult the **dedicated [Extension README](UiTools.WinForms.Designer.VsCodeExtension/DEVELOPER_GUIDE.md)** inside that folder for step-by-step instructions on packaging the extension.
 3. You can choose between two build configurations:
    *  **SelfContained:** Includes all necessary runtimes for a "plug-and-play" experience.
    *  **LightWeight:** A smaller package that relies on existing `UiTools.WinForms.Designer` installation.
@@ -49,13 +49,13 @@ Due to certain distribution limitations, this extension is not available on the 
 Open File in VS Code:
 
 <p align="center">
-  <img src="ScreenShots\OpenFileInVsCode.png" alt="Open File in VS Code" width="600">
+  <img src="ScreenShots/OpenFileInVsCode.png" alt="Open File in VS Code" width="600">
 </p>
 
 Add File in VS Code:
 
 <p align="center">
-  <img src="ScreenShots\AddFileInVsCode.png" alt="Add File in VS Code" width="500">
+  <img src="ScreenShots/AddFileInVsCode.png" alt="Add File in VS Code" width="500">
 </p>
 
 ---
@@ -78,7 +78,7 @@ The designer now supports full UI theming, allowing you to match your environmen
 * **Selection:** Themes can be switched in the "Options" dialog under the "UI theme" parameter.
 * **Native Mode:** The "None" option (default) reverts all controls to standard WinForms colors. Switching to "None" requires an application restart. 
   _**Note: The "Light" theme is visually almost identical to the "None" option.**_
-* Customization:
+* **Customization:**
   * Upon the first launch, the designer extracts `UiTools.WinForms.Designer.UiThemes.xml` and its schema `UiTools.WinForms.Designer.UiThemes.xsd` to the application directory. 
   * You can edit existing themes or define your own by modifying this XML file. The XSD schema is provided to prevent errors during manual editing.
 * **Syntax Highlighting:** The "Source code" tab uses [`Highlight.js`](https://highlightjs.org). Highlighting is controlled by CSS files (e.g., `Light.css`, `Dark.css`) located in the application folder. 

@@ -68,6 +68,12 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="..\ScreenShots\**\*.*">
+      <Link>ScreenShots\%(RecursiveDir)%(Filename)%(Extension)</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
     <Folder Include="Resources\DarkTheme\EditMenu\" />
     <Folder Include="Resources\DarkTheme\FileMenu\" />
     <Folder Include="Resources\DarkTheme\FormatMenu\" />
