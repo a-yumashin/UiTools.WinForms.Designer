@@ -8,9 +8,9 @@
 	<UseWindowsForms>true</UseWindowsForms>
 	<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 	<Title>UiTools.WinForms.Designer.Core</Title>
-	<AssemblyVersion>1.0.0.0</AssemblyVersion>
-	<FileVersion>1.0.0.0</FileVersion>
-	<Version>1.0.0</Version>
+	<AssemblyVersion>1.0.1.0</AssemblyVersion>
+	<FileVersion>1.0.1.0</FileVersion>
+	<Version>1.0.1</Version>
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
     <WarningLevel>4</WarningLevel>
     <EmbeddedResourceUseDependentUponConvention>true</EmbeddedResourceUseDependentUponConvention>

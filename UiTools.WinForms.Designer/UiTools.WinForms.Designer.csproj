@@ -9,6 +9,9 @@
     <LangVersion>10.0</LangVersion>
 	<UseWindowsForms>true</UseWindowsForms>
     <Title>UiTools.WinForms.Designer</Title>
+    <AssemblyVersion>1.0.1.0</AssemblyVersion>
+    <FileVersion>1.0.1.0</FileVersion>
+    <Version>1.0.1</Version>
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
     <WarningLevel>4</WarningLevel>
     <ApplicationManifest>app.manifest</ApplicationManifest>

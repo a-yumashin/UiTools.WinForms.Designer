@@ -1,7 +1,7 @@
 {
   "name": "uitools-winforms-designer",
   "displayName": "UiTools WinForms Designer",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "VSCode extension providing Visual Designer for WinForms forms and usercontrols",
   "main": "./out/extension.js",
   "contributes": {

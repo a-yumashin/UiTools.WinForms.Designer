@@ -32,14 +32,22 @@ New File Dialog:
 
 ## Installation & VS Code Extension
 
-Due to certain distribution limitations, this extension is not available on the Visual Studio Marketplace. To use the designer within VS Code, you will need to build it from the source code and install it manually.
+You can integrate the WinForms Designer into your VS Code workflow in two ways:
 
-**To get started with the VS Code integration:**
-1. Navigate to the **VSIX project folder** in this repository (`UiTools.WinForms.Designer.VsCodeExtension`).
-2. Consult the **dedicated [Extension README](UiTools.WinForms.Designer.VsCodeExtension/DEVELOPER_GUIDE.md)** inside that folder for step-by-step instructions on packaging the extension.
+### 1. Visual Studio Marketplace (Recommended)
+The extension is officially available on the **Visual Studio Marketplace**. This is the **SelfContained** version, which works "out of the box" and does not require any additional software to be installed on your machine.
+
+* **Install from Marketplace:** [UiTools WinForms Designer](https://marketplace.visualstudio.com/items?itemName=AlexeyYumashin.uitools-winforms-designer)
+
+### 2. Manual Installation from GitHub
+If you prefer to use a specific version, need the **LightWeight** variant, or want to customize the tool, you can install it manually from this repository.
+
+**To build the extension from source code:**
+1. Navigate to the **VSIX project folder** in this repository: `UiTools.WinForms.Designer.VsCodeExtension`.
+2. Consult the **dedicated [Extension Developer Guide](UiTools.WinForms.Designer.VsCodeExtension/DEVELOPER_GUIDE.md)** inside that folder for step-by-step instructions on packaging the extension.
 3. You can choose between two build configurations:
-   *  **SelfContained:** Includes all necessary runtimes for a "plug-and-play" experience.
-   *  **LightWeight:** A smaller package that relies on existing `UiTools.WinForms.Designer` installation.
+   * **SelfContained:** Includes all necessary runtimes within the `.vsix` package for a "plug-and-play" experience.
+   * **LightWeight:** A significantly smaller package that relies on an existing local installation of the `UiTools.WinForms.Designer` standalone app.
 4. Once the `.vsix` file is generated, simply open VS Code, go to the "EXTENSIONS" view, click the "..." menu, and select **"Install from VSIX..."**.
 
 ---

@@ -119,6 +119,7 @@
         </Control>
         <Control type="System.Windows.Forms.PropertyGrid">
             <ColorProperty name="LineColor" value="InactiveBorder" />
+            <ColorProperty name="CategoryForeColor" value="ControlText" />
             <ColorProperty name="DisabledItemForeColor" value="GrayText" />
         </Control>
         <Control type="System.Windows.Forms.PropertyGridInternal.PropertyGridView">
@@ -236,6 +237,7 @@
         </Control>
         <Control type="System.Windows.Forms.PropertyGrid">
             <ColorProperty name="LineColor" value="#2E2E2E" />
+            <ColorProperty name="CategoryForeColor" value="#FAFAFA" />
             <ColorProperty name="DisabledItemForeColor" value="LightGray" />
         </Control>
     </UiTheme>

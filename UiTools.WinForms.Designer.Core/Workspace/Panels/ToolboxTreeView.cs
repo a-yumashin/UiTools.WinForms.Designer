@@ -45,7 +45,6 @@ namespace UiTools.WinForms.Designer.Core
             treeView1.ShowLines = false;
             treeView1.ShowNodeToolTips = true;
 
-            treeView1.ImageList = imageList16px;
             float scaleFactor = DeviceDpi / 120f;
             treeView1.Indent = (int)(22 * scaleFactor);
             treeView1.ItemHeight = (int)(26 * scaleFactor);
